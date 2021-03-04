@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
-		Debug.Log(jump);
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{
