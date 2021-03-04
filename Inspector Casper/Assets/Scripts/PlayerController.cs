@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
+		Debug.Log(jump);
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
 			// Otherwise if the input is moving the player left and the player is facing right...
 			else if (move < 0 && m_FacingRight)
 			{
-				// ... flip the player.
+				// ... flip the player, like a burger.
 				Flip();
 			}
 		}
