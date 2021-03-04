@@ -20,11 +20,11 @@ public class PlayerMovement : MonoBehaviour
             jump = true;
         }
 
-        if (Input.GetButtonDown("Crouch"))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             crouch = true;
         }
-        else if (Input.GetButtonUp("Crouch"))
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             crouch = false;
         }
