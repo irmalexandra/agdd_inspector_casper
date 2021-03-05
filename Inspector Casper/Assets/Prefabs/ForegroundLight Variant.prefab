@@ -57,23 +57,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6783499125766180191, guid: 6453aa37d3420c84fab23294296ead8b, type: 3}
       propertyPath: m_Color.b
-      value: 0.4339623
+      value: 0.6226415
       objectReference: {fileID: 0}
     - target: {fileID: 6783499125766180191, guid: 6453aa37d3420c84fab23294296ead8b, type: 3}
       propertyPath: m_Color.g
-      value: 0.4339623
+      value: 0.6226415
       objectReference: {fileID: 0}
     - target: {fileID: 6783499125766180191, guid: 6453aa37d3420c84fab23294296ead8b, type: 3}
       propertyPath: m_Color.r
-      value: 0.33333334
+      value: 0.27901387
       objectReference: {fileID: 0}
     - target: {fileID: 6783499125766180191, guid: 6453aa37d3420c84fab23294296ead8b, type: 3}
       propertyPath: m_Intensity
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6783499125766180191, guid: 6453aa37d3420c84fab23294296ead8b, type: 3}
       propertyPath: m_ApplyToSortingLayers.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6783499125766180191, guid: 6453aa37d3420c84fab23294296ead8b, type: 3}
       propertyPath: m_ApplyToSortingLayers.Array.data[0]
