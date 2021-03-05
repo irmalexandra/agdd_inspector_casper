@@ -132,8 +132,6 @@ public class PlayerController : MonoBehaviour
 			mayJump = 0.2f;
 		}
 		mayJump -= Time.deltaTime;
-		Debug.Log(grounded);
-		Debug.Log(mayJump);
 		if (mayJump > 0 && jump)
 		{
 			// Add a vertical force to the player.
