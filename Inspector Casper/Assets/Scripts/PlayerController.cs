@@ -94,8 +94,6 @@ public class PlayerController : MonoBehaviour
 						onLandEvent.Invoke();
 				}
 				
-				
-				
 			}
 		}
 		
@@ -177,7 +175,7 @@ public class PlayerController : MonoBehaviour
 				Flip();
 			}
 			
-		}
+		
 		// If the player should jump...
 
 		if (grounded)
@@ -194,10 +192,6 @@ public class PlayerController : MonoBehaviour
 		}
 
 	}
-
-	
-
-
 	private void Flip()
 	{
 		// Switch the way the player is labelled as facing.
@@ -208,4 +202,8 @@ public class PlayerController : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
+	
+
+
+
 }
