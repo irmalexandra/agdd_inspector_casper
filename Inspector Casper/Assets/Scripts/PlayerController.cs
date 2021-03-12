@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		rigidbody2D = GetComponent<Rigidbody2D>();
-
 		if (onLandEvent == null)
 			onLandEvent = new UnityEvent();
 
@@ -89,6 +88,17 @@ public class PlayerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
+		if (move == 0 && grounded)
+		{
+			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+		}
+		else
+		{
+			rigidbody2D.constraints = RigidbodyConstraints2D.None;
+			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
+		
+
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{
@@ -135,7 +145,7 @@ public class PlayerController : MonoBehaviour
 			Vector3 targetVelocity = new Vector2(move * 10f, rigidbody2D.velocity.y);
 			// And then smoothing it out and applying it to the character
 			rigidbody2D.velocity = Vector3.SmoothDamp(rigidbody2D.velocity, targetVelocity, ref velocity, movementSmoothing);
-
+			
 			// If the input is moving the player right and the player is facing left...
 			if (move > 0 && !facingRight)
 			{
@@ -148,6 +158,7 @@ public class PlayerController : MonoBehaviour
 				// ... flip the player, like a burger.
 				Flip();
 			}
+			
 		}
 		// If the player should jump...
 
@@ -163,6 +174,7 @@ public class PlayerController : MonoBehaviour
 			grounded = false;
 			rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 		}
+
 	}
 
 
