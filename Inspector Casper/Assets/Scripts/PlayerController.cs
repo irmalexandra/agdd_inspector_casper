@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
 	private float mayJump;
 	private const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
-	private bool grounded; // Whether or not the player is grounded.
+	public bool grounded; // Whether or not the player is grounded.
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private new Rigidbody2D rigidbody2D;
 	private bool facingRight = true; // For determining which way the player is currently facing.
@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
 			onCrouchEvent = new BoolEvent();
 
 		Physics.IgnoreLayerCollision(6, 7);
+		Physics.IgnoreLayerCollision(0, 8);
 
 	}
 
