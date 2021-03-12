@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Start()
 	{
-		flashController = GameObject.FindWithTag("FlashImage").GetComponent<FlashController>();
+		//flashController = GameObject.FindWithTag("FlashImage").GetComponent<FlashController>();
 	}
 
 	private void Update()
@@ -74,9 +74,14 @@ public class PlayerController : MonoBehaviour
 		{
 			if (colliders[i].gameObject != gameObject)
 			{
-				grounded = true;
-				if (!wasGrounded)
-					onLandEvent.Invoke();
+				Debug.Log("hello?");
+				if (!colliders[i].gameObject.CompareTag("Enemy"))
+				{
+					grounded = true;
+					if (!wasGrounded)
+						onLandEvent.Invoke();
+				}
+				
 			}
 		}
 	}
