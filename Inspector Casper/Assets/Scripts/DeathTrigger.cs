@@ -16,7 +16,6 @@ public class DeathTrigger : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log(other.gameObject.tag);
         if (!deathTags.Contains(other.gameObject.tag)) return;
         player.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         player.gameObject.GetComponent<PlayerController>().enabled = false;
