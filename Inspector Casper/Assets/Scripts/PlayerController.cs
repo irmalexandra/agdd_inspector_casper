@@ -21,9 +21,9 @@ public class PlayerController : MonoBehaviour
 	private new Rigidbody2D rigidbody2D;
 	private bool facingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
-	private FlashController flashController;
-	private Collider2D[] _colliders;
 	private bool _fallingThroughGround;
+	private Collider2D[] _colliders;
+	private FlashController flashController;
 
 	[Header("Events")]
 	[Space]
@@ -38,8 +38,6 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake()
 	{
-		_colliders = transform.GetComponents<Collider2D>();
-		_fallingThroughGround = false;
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
 			onLandEvent = new UnityEvent();
@@ -158,14 +156,6 @@ public class PlayerController : MonoBehaviour
 					onCrouchEvent.Invoke(false);
 				}
 			}
-			if (Input.GetKeyDown("s"))
-			{
-				_fallingThroughGround = true;
-				Collider2D ground = Physics2D.OverlapCircle(groundCheck.position, GroundedRadius, whatIsGround).transform.GetComponent<Collider2D>();
-				foreach (Collider2D collider in _colliders)
-				{
-					Physics2D.IgnoreCollision(ground, collider, true);
-				}
 
 			}
 
