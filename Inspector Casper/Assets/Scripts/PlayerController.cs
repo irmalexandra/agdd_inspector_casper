@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 	private bool facingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 	private FlashController flashController;
-	
+	private Collider2D[] _colliders;
 	private bool _fallingThroughGround;
 
 	[Header("Events")]
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake()
 	{
+		_colliders = transform.GetComponents<Collider2D>();
 		_fallingThroughGround = false;
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
@@ -52,8 +53,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Start()
 	{
-		//flashController = GameObject.FindWithTag("FlashImage").GetComponent<FlashController>();
-		
+		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
 	}
 
 	private void Update()
@@ -71,7 +71,16 @@ public class PlayerController : MonoBehaviour
 		
 		bool wasGrounded = grounded;
 		grounded = false;
+		if (_fallingThroughGround)
+		{
+			Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround).GetComponent<Collider2D>();
+			foreach (var collider in _colliders)
+			{
+				Physics2D.IgnoreCollision(collider, ceiling, false);
 
+			}
+
+		}
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, GroundedRadius, whatIsGround);
@@ -91,12 +100,13 @@ public class PlayerController : MonoBehaviour
 				
 			}
 		}
+		
 	}
 
 
 	public void Move(float move, bool crouch, bool jump)
 	{
-		if (move == 0 && grounded)
+		if (move == 0 && grounded && !_fallingThroughGround)
 		{
 			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
@@ -113,7 +123,6 @@ public class PlayerController : MonoBehaviour
 			// If the character has a ceiling preventing them from standing up, keep them crouching
 			if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 			{
-				Debug.Log("am crouching");
 				crouch = true;
 			}
 		}
@@ -153,15 +162,10 @@ public class PlayerController : MonoBehaviour
 			{
 				_fallingThroughGround = true;
 				Collider2D ground = Physics2D.OverlapCircle(groundCheck.position, GroundedRadius, whatIsGround).transform.GetComponent<Collider2D>();
-				Debug.Log(ground);
-				Collider2D[] thing = transform.GetComponents<Collider2D>();
-				foreach (var yee in thing)
+				foreach (Collider2D collider in _colliders)
 				{
-					Debug.Log(yee);
+					Physics2D.IgnoreCollision(ground, collider, true);
 				}
-				Debug.Log(thing);
-				//Physics2D.IgnoreCollision(ground, thing, true);
-				
 
 			}
 
