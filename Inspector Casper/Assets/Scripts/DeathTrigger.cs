@@ -21,7 +21,6 @@ public class DeathTrigger : MonoBehaviour
         player.gameObject.GetComponent<PlayerController>().enabled = false;
         player.gameObject.GetComponent<PlayerMovement>().enabled = false;
         player.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
-        player.gameObject.GetComponent<Light2D>().enabled = false;
         StartCoroutine(Wait());
     }
     
