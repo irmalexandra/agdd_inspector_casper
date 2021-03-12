@@ -7,6 +7,7 @@ using UnityEngine;
 public class BaseGhostAI : MonoBehaviour
 {
     public Transform player;
+    public Animator animator; 
 
     private Rigidbody2D body;
 
@@ -36,6 +37,7 @@ public class BaseGhostAI : MonoBehaviour
         if (targetVisible)
         {
             MoveCharacter(movement);
+            
         }
         
     }
@@ -50,6 +52,7 @@ public class BaseGhostAI : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             targetVisible = true;
+            animator.SetBool("Chasing", true);
         }
     }
 
@@ -58,6 +61,7 @@ public class BaseGhostAI : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             targetVisible = false;
+            animator.SetBool("Chasing", false);
         }
     }
 }
