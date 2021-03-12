@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalMove;
     private bool jump;
     private bool crouch;
+    
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;

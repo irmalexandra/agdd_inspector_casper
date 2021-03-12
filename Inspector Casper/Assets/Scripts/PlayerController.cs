@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
 	private Vector3 velocity = Vector3.zero;
 	private FlashController flashController;
 	
+	private bool _fallingThroughGround;
+
 	[Header("Events")]
 	[Space]
 
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake()
 	{
+		_fallingThroughGround = false;
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
 			onLandEvent = new UnityEvent();
@@ -146,6 +149,21 @@ public class PlayerController : MonoBehaviour
 					onCrouchEvent.Invoke(false);
 				}
 			}
+			if (Input.GetKeyDown("s"))
+			{
+				_fallingThroughGround = true;
+				Collider2D ground = Physics2D.OverlapCircle(groundCheck.position, GroundedRadius, whatIsGround).transform.GetComponent<Collider2D>();
+				Debug.Log(ground);
+				Collider2D[] thing = transform.GetComponents<Collider2D>();
+				foreach (var yee in thing)
+				{
+					Debug.Log(yee);
+				}
+				Debug.Log(thing);
+				//Physics2D.IgnoreCollision(ground, thing, true);
+				
+
+			}
 
 			// Move the character by finding the target velocity
 			Vector3 targetVelocity = new Vector2(move * 10f, rigidbody2D.velocity.y);
@@ -182,6 +200,8 @@ public class PlayerController : MonoBehaviour
 		}
 
 	}
+
+	
 
 
 	private void Flip()
