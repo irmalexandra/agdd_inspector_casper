@@ -49,8 +49,7 @@ public class PlayerController : MonoBehaviour
 		if (onCrouchEvent == null)
 			onCrouchEvent = new BoolEvent();
 
-		Physics.IgnoreLayerCollision(6, 7);
-		Physics.IgnoreLayerCollision(0, 8);
+		
 
 	}
 
