@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
 	private Collider2D[] _colliders;
 	private FlashController flashController;
 	private bool _fallingThroughGround;
+	private Collider2D _ceiling;
+	private Collider2D _ground;
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -41,7 +44,9 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		_fallingThroughGround = false;
-		_colliders = GetComponents<Collider2D>();
+		_colliders = GetComponentsInChildren<Collider2D>();
+	
+
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
 			onLandEvent = new UnityEvent();
@@ -88,12 +93,17 @@ public class PlayerController : MonoBehaviour
 
 		if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 		{
+			
 			Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround);
-			foreach (var collider in _colliders)
+			if (ceiling.CompareTag("Stairs"))
 			{
-				Physics2D.IgnoreCollision(collider, ceiling, true);
+				foreach (var collider in _colliders)
+				{
+					Physics2D.IgnoreCollision(collider, ceiling, true);
 
+				}
 			}
+
 		}
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -130,12 +140,52 @@ public class PlayerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
+
+		if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
+		{
+			_ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround);
+		}
+		else
+		{
+			_ceiling = null;
+		}
+
+		if (Physics2D.OverlapCircle(groundCheck.position, GroundedRadius, whatIsGround))
+		{
+			_ground = Physics2D.OverlapCircle(groundCheck.position, GroundedRadius, whatIsGround);
+		}
+		else
+		{
+			_ground = null;
+		}
+
+		if (_ceiling && _ceiling.CompareTag("Stairs"))
+		{
+			
+			foreach (Collider2D collider in _colliders)
+			{
+				Physics2D.IgnoreCollision(collider, _ceiling, true);
+			}
+		}
+
+
+		
+		
+		
 		if (move == 0 && grounded && !_fallingThroughGround &&!jump)
 		{
 			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
 		else
 		{
+			/*Debug.Log("grounded: ");
+			Debug.Log(grounded);
+			Debug.Log("crouch: ");
+			Debug.Log(crouch);
+			Debug.Log("jumpo");
+			Debug.Log(jump);
+			Debug.Log("move");
+			Debug.Log(move);*/
 			rigidbody2D.constraints = RigidbodyConstraints2D.None;
 			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
 		}
@@ -145,11 +195,12 @@ public class PlayerController : MonoBehaviour
 		if (!crouch)
 		{
 			// If the character has a ceiling preventing them from standing up, keep them crouching
-			if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
+			if (_ceiling && !_ceiling.CompareTag("Stairs"))
 			{
 				crouch = true;
 			}
 		}
+		
 
 		//only control the player if grounded or airControl is turned on
 		if (grounded || airControl)
@@ -184,14 +235,12 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKeyDown("s") && Physics2D.OverlapCircle(groundCheck.position, GroundedRadius, whatIsGround))
+			if (Input.GetKeyDown("s") && _ground.CompareTag("Stairs"))
 			{
 				_fallingThroughGround = true;
-				Collider2D ground = Physics2D.OverlapCircle(groundCheck.position, GroundedRadius, whatIsGround)
-					.transform.GetComponent<Collider2D>();
 				foreach (var collider in _colliders)
 				{
-					Physics2D.IgnoreCollision(ground, collider, true);
+					Physics2D.IgnoreCollision(_ground, collider, true);
 				}
 
 
@@ -232,7 +281,13 @@ public class PlayerController : MonoBehaviour
 				grounded = false;
 				rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 			}
-
+		}
+		if (_ground && _ground.CompareTag("Stairs") && !_fallingThroughGround)
+		{
+			foreach (Collider2D collider in _colliders)
+			{
+				Physics2D.IgnoreCollision(collider, _ground, false);
+			}
 		}
 	}
 }
