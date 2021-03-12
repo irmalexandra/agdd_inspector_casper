@@ -86,6 +86,16 @@ public class PlayerController : MonoBehaviour
 
 		}
 
+		if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
+		{
+			Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround);
+			foreach (var collider in _colliders)
+			{
+				Physics2D.IgnoreCollision(collider, ceiling, true);
+
+			}
+		}
+
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, GroundedRadius, whatIsGround);
