@@ -42,12 +42,15 @@ public class PlayerController : MonoBehaviour
 
 		if (onCrouchEvent == null)
 			onCrouchEvent = new BoolEvent();
+		
+		Physics.IgnoreLayerCollision(6, 7);
 
 	}
 
 	private void Start()
 	{
 		//flashController = GameObject.FindWithTag("FlashImage").GetComponent<FlashController>();
+		
 	}
 
 	private void Update()
@@ -73,13 +76,15 @@ public class PlayerController : MonoBehaviour
 		{
 			if (colliders[i].gameObject != gameObject)
 			{
-				Debug.Log("hello?");
+				
 				if (!colliders[i].gameObject.CompareTag("Enemy"))
 				{
 					grounded = true;
 					if (!wasGrounded)
 						onLandEvent.Invoke();
 				}
+				
+				
 				
 			}
 		}
@@ -105,6 +110,7 @@ public class PlayerController : MonoBehaviour
 			// If the character has a ceiling preventing them from standing up, keep them crouching
 			if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 			{
+				Debug.Log("am crouching");
 				crouch = true;
 			}
 		}
