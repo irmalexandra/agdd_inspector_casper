@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -20,7 +21,8 @@ public class PlayerController : MonoBehaviour
 	private new Rigidbody2D rigidbody2D;
 	private bool facingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
-
+	private FlashController flashController;
+	
 	[Header("Events")]
 	[Space]
 
@@ -41,10 +43,27 @@ public class PlayerController : MonoBehaviour
 
 		if (onCrouchEvent == null)
 			onCrouchEvent = new BoolEvent();
+
+	}
+
+	private void Start()
+	{
+		flashController = GameObject.FindWithTag("FlashImage").GetComponent<FlashController>();
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown("f"))
+		{
+			flashController.CameraFlash();
+		}
 	}
 
 	private void FixedUpdate()
 	{
+
+
+		
 		bool wasGrounded = grounded;
 		grounded = false;
 
