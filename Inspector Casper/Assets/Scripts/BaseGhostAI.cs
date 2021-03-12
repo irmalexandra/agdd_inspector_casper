@@ -13,6 +13,8 @@ public class BaseGhostAI : MonoBehaviour
 
     private Vector2 movement;
 
+    private bool facingLeft = true;
+
     public float moveSpeed = 5f;
 
     private bool targetVisible = false;
@@ -43,9 +45,17 @@ public class BaseGhostAI : MonoBehaviour
     }
 
     private void MoveCharacter(Vector2 direction)
-    {
+    {   
         body.MovePosition((Vector2)transform.position + (direction * (moveSpeed * Time.deltaTime)));   
+        
+        if (direction.y < 0 && !facingLeft){
+            Flip();
+        }
+        else if (direction.y > 0 && facingLeft){
+            Flip();
+        }	
     }
+
     
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -53,6 +63,9 @@ public class BaseGhostAI : MonoBehaviour
         {
             targetVisible = true;
             animator.SetBool("Chasing", true);
+            if (other.gameObject.GetComponent<PlayerController>().enabled == false){
+                animator.SetBool("Chasing", false);
+            }
         }
     }
 
@@ -64,4 +77,15 @@ public class BaseGhostAI : MonoBehaviour
             animator.SetBool("Chasing", false);
         }
     }
+
+    private void Flip()
+	{
+		// Switch the way the player is labelled as facing.
+		facingLeft = !facingLeft;
+
+		// Multiply the player's x local scale by -1.
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+	}
 }
