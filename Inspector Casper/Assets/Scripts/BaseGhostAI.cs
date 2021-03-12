@@ -63,6 +63,9 @@ public class BaseGhostAI : MonoBehaviour
         {
             targetVisible = true;
             animator.SetBool("Chasing", true);
+            if (other.gameObject.GetComponent<PlayerController>().enabled == false){
+                animator.SetBool("Chasing", false);
+            }
         }
     }
 
