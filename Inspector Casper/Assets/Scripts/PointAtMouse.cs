@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class PointAtMouse : MonoBehaviour
 {
-    private Camera camera;
+    private new Camera _camera;
     private void Start()
     {
-        camera = Camera.main;
+        _camera = Camera.main;
     }
 
     void Update () 
     {
         //Get the Screen positions of the object
-        Vector2 positionOnScreen = camera.WorldToViewportPoint (transform.position);
+        Vector2 positionOnScreen = _camera.WorldToViewportPoint (transform.position);
          
         //Get the Screen position of the mouse
-        Vector2 mouseOnScreen = camera.ScreenToViewportPoint(Input.mousePosition);
+        Vector2 mouseOnScreen = _camera.ScreenToViewportPoint(Input.mousePosition);
          
         //Get the angle between the points
         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
