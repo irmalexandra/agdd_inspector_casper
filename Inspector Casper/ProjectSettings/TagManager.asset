@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - FlashImage
+  - Enemy
+  - Stairs
+  - Vision
   layers:
   - Default
   - TransparentFX
@@ -12,9 +15,9 @@ TagManager:
   - Player
   - Water
   - UI
-  - 
-  - 
-  - 
+  - CeilingCheck
+  - Enemies
+  - Stairs
   - 
   - 
   - 
@@ -47,6 +50,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2843798983
+    locked: 0
+  - name: Enemies
+    uniqueID: 972476837
     locked: 0
   - name: UI
     uniqueID: 3036407153
