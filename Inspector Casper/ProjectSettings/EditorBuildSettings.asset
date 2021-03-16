@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Emils Scene.unity
     guid: 43f5f0f20fc5acb49856b445926f0002
+  - enabled: 1
+    path: Assets/Scenes/EndScreen.unity
+    guid: a17dcc1903dd3694897226043f80e931
   m_configObjects: {}
