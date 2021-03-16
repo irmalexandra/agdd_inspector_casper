@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
 		Physics.IgnoreLayerCollision(0, 8);
 		Physics.IgnoreLayerCollision(3, 8);
 
-
 	}
 
 	private void Start()
