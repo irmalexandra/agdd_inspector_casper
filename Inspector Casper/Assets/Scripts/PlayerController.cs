@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
 		Physics.IgnoreLayerCollision(6, 7);
 		Physics.IgnoreLayerCollision(0, 8);
+		Physics.IgnoreLayerCollision(3, 8);
 
 	}
 
@@ -81,13 +82,13 @@ public class PlayerController : MonoBehaviour
 		grounded = false;
 		if (_fallingThroughGround && Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 		{
-			Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround)
+			/*Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround)
 				.GetComponent<Collider2D>();
 			foreach (var collider in _colliders)
 			{
 				Physics2D.IgnoreCollision(collider, ceiling, false);
-
-			}
+			}*/
+			_fallingThroughGround = false;
 
 		}
 
@@ -113,13 +114,20 @@ public class PlayerController : MonoBehaviour
 		{
 			if (colliders[i].gameObject != gameObject)
 			{
-
-				if (!colliders[i].gameObject.CompareTag("Enemy"))
+				if (colliders[i].CompareTag("Stairs") && !_fallingThroughGround)
 				{
-					grounded = true;
+					foreach (Collider2D playerCollider in _colliders)
+					{
+						Physics2D.IgnoreCollision(playerCollider, colliders[i], false);
+					}
+				}
+
+				else if (!colliders[i].gameObject.CompareTag("Enemy"))
+				{
 					if (!wasGrounded)
 						onLandEvent.Invoke();
 				}
+				grounded = true;
 
 			}
 		}
@@ -168,19 +176,33 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
+		/*
+		if (!_fallingThroughGround && _ground && _ground.CompareTag("Stairs") && !grounded )
+		{
+			Debug.Log("what?");
+			Debug.Log(groundCheck.position.y > _ground.transform.position.y);
+			
+			foreach (Collider2D collider in _colliders)
+			{
+				Physics2D.IgnoreCollision(collider, _ground, false);
+			}
+		}*/
+
 
 		
 		
 		
-		if (move == 0 && grounded && !_fallingThroughGround &&!jump)
+		if (move == 0 && grounded && !_fallingThroughGround && !jump)
 		{
 			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
 		else
 		{
 			/*Debug.Log("grounded: ");
-			Debug.Log(grounded);
-			Debug.Log("crouch: ");
+			Debug.Log(grounded);*/
+			Debug.Log("falling through ground:");
+			Debug.Log(_fallingThroughGround);
+			/*Debug.Log("crouch: ");
 			Debug.Log(crouch);
 			Debug.Log("jumpo");
 			Debug.Log(jump);
@@ -235,7 +257,7 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKeyDown("s") && _ground.CompareTag("Stairs"))
+			if (Input.GetKey("s") && _ground && _ground.CompareTag("Stairs"))
 			{
 				_fallingThroughGround = true;
 				foreach (var collider in _colliders)
@@ -282,13 +304,13 @@ public class PlayerController : MonoBehaviour
 				rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 			}
 		}
-		if (_ground && _ground.CompareTag("Stairs") && !_fallingThroughGround)
+		/*if (_ground && _ground.CompareTag("Stairs") && !_fallingThroughGround)
 		{
 			foreach (Collider2D collider in _colliders)
 			{
 				Physics2D.IgnoreCollision(collider, _ground, false);
 			}
-		}
+		}*/
 	}
 }
 
