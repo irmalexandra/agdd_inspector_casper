@@ -1005,8 +1005,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 829424165
+  m_SortingLayer: -1
   m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -1215,7 +1215,7 @@ GameObject:
   - component: {fileID: 7245759133325774143}
   - component: {fileID: 7095127798829073780}
   - component: {fileID: 7465207166049312495}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MaingroundTileMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2380,7 +2380,7 @@ GameObject:
   - component: {fileID: 1204144222500936764}
   - component: {fileID: 1058819210865991859}
   - component: {fileID: 2117800702}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stairs
   m_TagString: Stairs
   m_Icon: {fileID: 0}
@@ -2950,8 +2950,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 829424165
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
