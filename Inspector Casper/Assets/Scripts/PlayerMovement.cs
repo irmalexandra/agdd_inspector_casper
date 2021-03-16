@@ -9,11 +9,10 @@ public class PlayerMovement : MonoBehaviour
     public PlayerController controller;
     public Animator animator;
     public float runSpeed = 40f;
-    
     private float horizontalMove;
     private bool jump;
     private bool crouch;
-    
+
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
