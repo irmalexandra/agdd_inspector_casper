@@ -94,4 +94,9 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         deathCanvas.SetActive(true);
     }
+
+    public void setCheckpoint(Vector3 newPos)
+    {
+        _checkPointPosition = newPos;
+    }
 }

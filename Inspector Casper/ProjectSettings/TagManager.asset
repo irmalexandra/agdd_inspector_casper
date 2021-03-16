@@ -10,6 +10,7 @@ TagManager:
   - Vision
   - RespawnText
   - YouDiedText
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

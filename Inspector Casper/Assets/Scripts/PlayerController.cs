@@ -312,6 +312,14 @@ public class PlayerController : MonoBehaviour
 			}
 		}*/
 	}
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("Checkpoint"))
+		{
+			GameManager.instance.setCheckpoint(other.transform.position);
+		}
+	}
 }
 
 	
