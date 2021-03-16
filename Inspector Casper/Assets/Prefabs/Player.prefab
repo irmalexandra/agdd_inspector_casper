@@ -47,8 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathTags:
   - Enemy
-  canvas: {fileID: 0}
-  player: {fileID: 7662606690394485223}
 --- !u!61 &857992713
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -336,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5821665c00a7634f9cf39fac96f1d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 600
+  jumpForce: 800
   crouchSpeed: 0.36
   movementSmoothing: 0.05
   airControl: 1
