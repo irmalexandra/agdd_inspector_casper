@@ -8,25 +8,14 @@ using UnityEngine.Experimental.Rendering.Universal;
 public class DeathTrigger : MonoBehaviour
 {
     public List<string> deathTags;
-    public GameObject canvas;
 
-    public Transform player;
-    
     // Start is called before the first frame update
     
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (!deathTags.Contains(other.gameObject.tag)) return;
-        player.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        player.gameObject.GetComponent<PlayerController>().enabled = false;
-        player.gameObject.GetComponent<PlayerMovement>().enabled = false;
-        player.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
-        StartCoroutine(Wait());
+        GameManager.instance.KillPlayer();
     }
     
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(1);
-        canvas.SetActive(true);
-    }
+    
 }

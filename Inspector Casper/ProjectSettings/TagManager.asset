@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - Stairs
   - Vision
+  - RespawnText
+  - YouDiedText
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
