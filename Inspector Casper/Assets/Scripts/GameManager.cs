@@ -15,15 +15,13 @@ public class GameManager : MonoBehaviour
     
     public GameObject player;
     public GameObject[] enemies;
-
-    public GameObject test;
     
     private Vector3 _checkPointPosition;
     
-    private SpriteRenderer playerSpriteRenderer;
-    private PlayerController playerController;
-    private PlayerMovement playerMovement;
-    private Rigidbody2D playerRigidBody;
+    private SpriteRenderer _playerSpriteRenderer;
+    private PlayerController _playerController;
+    private PlayerMovement _playerMovement;
+    private Rigidbody2D _playerRigidBody;
 
     private  bool _isDead = false;
 
@@ -36,35 +34,46 @@ public class GameManager : MonoBehaviour
         _checkPointPosition = player.transform.position;
     }
 
+
+    public PlayerController getPlayerController()
+    {
+        return _playerController;
+    }
+
+    public GameObject getPlayer()
+    {
+        return player;
+    }
+
     void Start()
     {
         Physics2D.IgnoreLayerCollision(6, 7);
         Physics2D.IgnoreLayerCollision(0, 7);
 
-        playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
-        playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
-        playerController = player.gameObject.GetComponent<PlayerController>();
-        playerMovement = player.gameObject.GetComponent<PlayerMovement>();
+        _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
+        _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
+        _playerController = player.gameObject.GetComponent<PlayerController>();
+        _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         
     }
 
     public void KillPlayer()
     {
-        playerSpriteRenderer.enabled = false;
-        playerMovement.enabled = false;
-        playerController.enabled = false;
-        playerRigidBody.velocity = new Vector2(0,0);
+        _playerSpriteRenderer.enabled = false;
+        _playerMovement.enabled = false;
+        _playerController.enabled = false;
+        _playerRigidBody.velocity = new Vector2(0,0);
         _isDead = true;
         StartCoroutine(Wait());
     }
 
     private void RevivePlayer()
     {
-        playerSpriteRenderer.enabled = true;
-        playerMovement.enabled = true;
-        playerController.enabled = true;
-        playerRigidBody.velocity = new Vector2(0,0);
+        _playerSpriteRenderer.enabled = true;
+        _playerMovement.enabled = true;
+        _playerController.enabled = true;
+        _playerRigidBody.velocity = new Vector2(0,0);
         player.transform.position = _checkPointPosition;
         foreach (var enemy in enemies)
         {

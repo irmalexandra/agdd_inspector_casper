@@ -1,8 +1,6 @@
-using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
 	private float mayJump;
 	private const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+	public GameObject interactiveButton;
+
 	public bool grounded; // Whether or not the player is grounded.
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private new Rigidbody2D rigidbody2D;
@@ -132,6 +132,9 @@ public class PlayerController : MonoBehaviour
 
 	private void Flip()
 	{
+		Vector3 button = interactiveButton.transform.localScale;
+		button.x *= -1;
+		interactiveButton.transform.localScale = button;
 		// Switch the way the player is labelled as facing.
 		facingRight = !facingRight;
 
@@ -196,8 +199,8 @@ public class PlayerController : MonoBehaviour
 		{
 			/*Debug.Log("grounded: ");
 			Debug.Log(grounded);*/
-			Debug.Log("falling through ground:");
-			Debug.Log(_fallingThroughGround);
+			/*Debug.Log("falling through ground:");
+			Debug.Log(_fallingThroughGround);*/
 			/*Debug.Log("crouch: ");
 			Debug.Log(crouch);
 			Debug.Log("jumpo");
@@ -308,13 +311,9 @@ public class PlayerController : MonoBehaviour
 			}
 		}*/
 	}
-
-	private void OnTriggerEnter2D(Collider2D other)
+	public void showInteractiveButton(bool set)
 	{
-		if (other.CompareTag("Checkpoint"))
-		{
-			GameManager.instance.setCheckpoint(other.transform.position);
-		}
+		interactiveButton.SetActive(set);
 	}
 }
 
