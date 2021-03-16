@@ -54,10 +54,6 @@ public class PlayerController : MonoBehaviour
 		if (onCrouchEvent == null)
 			onCrouchEvent = new BoolEvent();
 
-		Physics.IgnoreLayerCollision(6, 7);
-		Physics.IgnoreLayerCollision(0, 8);
-		Physics.IgnoreLayerCollision(3, 8);
-
 	}
 
 	private void Start()
@@ -311,6 +307,14 @@ public class PlayerController : MonoBehaviour
 				Physics2D.IgnoreCollision(collider, _ground, false);
 			}
 		}*/
+	}
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("Checkpoint"))
+		{
+			GameManager.instance.setCheckpoint(other.transform.position);
+		}
 	}
 }
 
