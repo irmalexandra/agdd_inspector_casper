@@ -1,34 +1,34 @@
 fileFormatVersion: 2
-guid: b049a2aab135867428da5fab69b154b6
+guid: 0f20eeaeacf7ec54486a54f4d190cb55
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 768861694388376527
-    second: torch_flame_0
+      213: 6058382095750734794
+    second: animated_torch_edited_0
   - first:
-      213: -4831979621196749323
-    second: torch_flame_1
+      213: 5359437275638526335
+    second: animated_torch_edited_1
   - first:
-      213: 6240405084340521119
-    second: torch_flame_2
+      213: -1483773876610721178
+    second: animated_torch_edited_2
   - first:
-      213: 6381941491769794901
-    second: torch_flame_3
+      213: -5803140949376549130
+    second: animated_torch_edited_3
   - first:
-      213: -2545497065038783437
-    second: torch_flame_4
+      213: 3626819789358487223
+    second: animated_torch_edited_4
   - first:
-      213: 5189849286794865213
-    second: torch_flame_5
+      213: -2749042851424117548
+    second: animated_torch_edited_5
   - first:
-      213: -8228366598652604889
-    second: torch_flame_6
+      213: 6537987055758682667
+    second: animated_torch_edited_6
   - first:
-      213: 5244720036312930802
-    second: torch_flame_7
+      213: 4240804184294606307
+    second: animated_torch_edited_7
   - first:
-      213: 5340558042577687689
-    second: torch_flame_8
+      213: -8933957034466825065
+    second: animated_torch_edited_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -73,7 +73,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -130,13 +130,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: torch_flame_0
+      name: animated_torch_edited_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 39
-        width: 18
-        height: 20
+        x: 0
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,20 +144,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc39c6f23ab8baa00800000000000000
-      internalID: 768861694388376527
+      spriteID: ac32fcada62b31450800000000000000
+      internalID: 6058382095750734794
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: torch_flame_1
+      name: animated_torch_edited_1
       rect:
         serializedVersion: 2
-        x: 38
-        y: 39
-        width: 18
-        height: 20
+        x: 32
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,20 +165,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f524aca22c51fcb0800000000000000
-      internalID: -4831979621196749323
+      spriteID: f71fb628ecb806a40800000000000000
+      internalID: 5359437275638526335
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: torch_flame_2
+      name: animated_torch_edited_2
       rect:
         serializedVersion: 2
-        x: 71
-        y: 39
-        width: 18
-        height: 20
+        x: 64
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,20 +186,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9888a27c5f5a9650800000000000000
-      internalID: 6240405084340521119
+      spriteID: 66a1d954583986be0800000000000000
+      internalID: -1483773876610721178
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: torch_flame_3
+      name: animated_torch_edited_3
       rect:
         serializedVersion: 2
-        x: 103
-        y: 39
-        width: 18
-        height: 20
+        x: 96
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -207,20 +207,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 551e34a49f5319850800000000000000
-      internalID: 6381941491769794901
+      spriteID: 6fe33ea8d0a177fa0800000000000000
+      internalID: -5803140949376549130
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: torch_flame_4
+      name: animated_torch_edited_4
       rect:
         serializedVersion: 2
-        x: 135
-        y: 39
-        width: 18
-        height: 20
+        x: 128
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,20 +228,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33c509de7e39cacd0800000000000000
-      internalID: -2545497065038783437
+      spriteID: 7b6d119f16d055230800000000000000
+      internalID: 3626819789358487223
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: torch_flame_5
+      name: animated_torch_edited_5
       rect:
         serializedVersion: 2
-        x: 167
-        y: 39
-        width: 18
-        height: 20
+        x: 160
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -249,20 +249,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3ae839ed6c060840800000000000000
-      internalID: 5189849286794865213
+      spriteID: 4dcd988771079d9d0800000000000000
+      internalID: -2749042851424117548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: torch_flame_6
+      name: animated_torch_edited_6
       rect:
         serializedVersion: 2
-        x: 199
-        y: 39
-        width: 18
-        height: 20
+        x: 192
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -270,20 +270,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72e4f9d9c28fecd80800000000000000
-      internalID: -8228366598652604889
+      spriteID: b2a299466989bba50800000000000000
+      internalID: 6537987055758682667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: torch_flame_7
+      name: animated_torch_edited_7
       rect:
         serializedVersion: 2
-        x: 231
-        y: 39
-        width: 18
-        height: 20
+        x: 224
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -291,20 +291,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f95ec6d51df8c840800000000000000
-      internalID: 5244720036312930802
+      spriteID: 3e5ced6dfec5ada30800000000000000
+      internalID: 4240804184294606307
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: torch_flame_8
+      name: animated_torch_edited_8
       rect:
         serializedVersion: 2
-        x: 264
-        y: 39
-        width: 18
-        height: 20
+        x: 256
+        y: 0
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -312,8 +312,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 984d2368e397d1a40800000000000000
-      internalID: 5340558042577687689
+      spriteID: 79ca00a4965340480800000000000000
+      internalID: -8933957034466825065
       vertices: []
       indices: 
       edges: []
