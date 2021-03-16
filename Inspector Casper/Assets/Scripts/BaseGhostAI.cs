@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BaseGhostAI : MonoBehaviour
 {
-    public Transform player;
+    private Transform _player;
     public Animator animator; 
 
     private Rigidbody2D body;
@@ -24,6 +24,7 @@ public class BaseGhostAI : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        _player = GameManager.instance.getPlayer().GetComponent<Transform>();
         body = GetComponent<Rigidbody2D>();
         originalPosition = transform.position;
 
@@ -32,7 +33,7 @@ public class BaseGhostAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = player.position - transform.position;
+        Vector3 direction = _player.position - transform.position;
         
         direction.Normalize();
         movement = direction;
