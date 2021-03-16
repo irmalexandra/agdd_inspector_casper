@@ -2,15 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoorHandler : MonoBehaviour
 {
     // Start is called before the first frame update
     public int sceneIndex;
-    private PlayerController _playerController;
-    private void Awake()
+    private bool _inRange = false;
+
+
+    private void FixedUpdate()
     {
-        _playerController = gameObject.GetComponentInChildren<PlayerController>();
+        if (_inRange)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("what?");
+                SceneManager.LoadScene(sceneIndex);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -18,8 +28,8 @@ public class DoorHandler : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("what?");
-            _playerController.showInteractiveButton(true);
+            GameManager.instance.getPlayerController().showInteractiveButton(true);
+            _inRange = true;
         }
     }
 
@@ -27,7 +37,8 @@ public class DoorHandler : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _playerController.showInteractiveButton(false);
+            GameManager.instance.getPlayerController().showInteractiveButton(false);
+            _inRange = false;
         }
     }
 }

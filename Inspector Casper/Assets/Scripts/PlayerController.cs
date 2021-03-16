@@ -132,6 +132,9 @@ public class PlayerController : MonoBehaviour
 
 	private void Flip()
 	{
+		Vector3 button = interactiveButton.transform.localScale;
+		button.x *= -1;
+		interactiveButton.transform.localScale = button;
 		// Switch the way the player is labelled as facing.
 		facingRight = !facingRight;
 
