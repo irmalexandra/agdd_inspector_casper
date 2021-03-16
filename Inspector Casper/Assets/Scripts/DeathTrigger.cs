@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class DeathTrigger : MonoBehaviour
 {
@@ -10,8 +11,7 @@ public class DeathTrigger : MonoBehaviour
     public GameObject canvas;
 
     public Transform player;
-
-    private bool display = false;
+    
     // Start is called before the first frame update
     
     private void OnCollisionEnter2D(Collision2D other)
@@ -20,6 +20,7 @@ public class DeathTrigger : MonoBehaviour
         player.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         player.gameObject.GetComponent<PlayerController>().enabled = false;
         player.gameObject.GetComponent<PlayerMovement>().enabled = false;
+        player.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
         StartCoroutine(Wait());
     }
     
