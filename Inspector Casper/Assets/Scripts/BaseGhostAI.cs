@@ -15,13 +15,17 @@ public class BaseGhostAI : MonoBehaviour
 
     private bool facingLeft = true;
 
-    public float moveSpeed = 5f;
+    public float roamSpeed = 2.5f;
+    public float chaseSpeed = 5f;
 
     private bool targetVisible = false;
+
+    public Vector3 originalPosition;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        originalPosition = transform.position;
 
     }
 
@@ -38,13 +42,20 @@ public class BaseGhostAI : MonoBehaviour
     {
         if (targetVisible)
         {
-            MoveCharacter(movement);
+            MoveCharacter(movement, chaseSpeed);
             
+        }
+        else
+        {
+            if (transform.position == originalPosition) return;
+            StartCoroutine(Wait(3f));
+            
+
         }
         
     }
 
-    private void MoveCharacter(Vector2 direction)
+    private void MoveCharacter(Vector2 direction, float moveSpeed)
     {   
         body.MovePosition((Vector2)transform.position + (direction * (moveSpeed * Time.deltaTime)));   
         
@@ -88,4 +99,15 @@ public class BaseGhostAI : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
+
+    private IEnumerator Wait(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        MoveCharacter((originalPosition - transform.position).normalized, roamSpeed);
+    }
+
+    public void Reset()
+    {
+        transform.position = originalPosition;
+    }
 }
