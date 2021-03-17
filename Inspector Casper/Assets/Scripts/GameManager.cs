@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         _playerMovement.enabled = false;
         _playerController.enabled = false;
         _playerRigidBody.velocity = new Vector2(0,0);
-        _isDead = true;
+        
         StartCoroutine(Wait());
     }
 
@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
         _playerController.enabled = true;
         _playerRigidBody.velocity = new Vector2(0,0);
         player.transform.position = _checkPointPosition;
+        _isDead = false;
         foreach (var enemy in enemies)
         {
             var aiComponent = enemy.GetComponent<BaseGhostAI>();
@@ -103,11 +104,13 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         deathCanvas.SetActive(true);
-        _isDead = false;
+        _isDead = true;
+        
     }
 
     public void setCheckpoint(Vector3 newPos)
     {
         _checkPointPosition = newPos;
+        
     }
 }
