@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         _checkPointPosition = player.transform.position;
+        Physics2D.IgnoreLayerCollision(10,10);
     }
 
 
@@ -47,8 +48,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Physics2D.IgnoreLayerCollision(6, 7);
-        Physics2D.IgnoreLayerCollision(0, 7);
+        Physics2D.IgnoreLayerCollision(6, 7); // Ceiling check layer and Enemy layer
+        Physics2D.IgnoreLayerCollision(9, 7); // Grid layer and Enemy layer
 
         _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
@@ -60,11 +61,17 @@ public class GameManager : MonoBehaviour
 
     public void KillPlayer()
     {
+        
         _playerSpriteRenderer.enabled = false;
         _playerMovement.enabled = false;
         _playerController.enabled = false;
-        _playerRigidBody.velocity = new Vector2(0,0);
-        _isDead = true;
+        _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+      
+        Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D found_collider in colliders)
+        {
+            found_collider.enabled = false;
+        }
         StartCoroutine(Wait());
     }
 
@@ -75,6 +82,12 @@ public class GameManager : MonoBehaviour
         _playerController.enabled = true;
         _playerRigidBody.velocity = new Vector2(0,0);
         player.transform.position = _checkPointPosition;
+        Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D found_collider in colliders)
+        {
+            found_collider.enabled = true;
+        }
+        _isDead = false;
         foreach (var enemy in enemies)
         {
             var aiComponent = enemy.GetComponent<BaseGhostAI>();
@@ -84,7 +97,7 @@ public class GameManager : MonoBehaviour
             }
         }
         deathCanvas.SetActive(false);
-        _isDead = false;
+        
     }
 
     // Update is called once per frame
@@ -102,10 +115,12 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         deathCanvas.SetActive(true);
+        _isDead = true;
     }
 
     public void setCheckpoint(Vector3 newPos)
     {
         _checkPointPosition = newPos;
+        
     }
 }

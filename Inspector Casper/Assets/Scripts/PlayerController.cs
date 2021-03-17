@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	private float mayJump;
 	private const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	public GameObject interactiveButton;
+	
 
 	public bool grounded; // Whether or not the player is grounded.
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
 	private bool _fallingThroughGround;
 	private Collider2D _ceiling;
 	private Collider2D _ground;
+	private BloodSplatter _bloodScript;
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -45,7 +47,7 @@ public class PlayerController : MonoBehaviour
 	{
 		_fallingThroughGround = false;
 		_colliders = GetComponentsInChildren<Collider2D>();
-	
+
 
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
