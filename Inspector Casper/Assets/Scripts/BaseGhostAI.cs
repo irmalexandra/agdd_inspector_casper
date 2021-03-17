@@ -28,11 +28,12 @@ public class BaseGhostAI : MonoBehaviour
     private void Start()
     {
         _spriteRenderer = transform.gameObject.GetComponent<SpriteRenderer>();
+        _player = GameManager.instance.getPlayer().GetComponent<Transform>();
     }
 
     void Awake()
     {
-        _player = GameManager.instance.getPlayer().GetComponent<Transform>();
+        
         body = GetComponent<Rigidbody2D>();
         originalPosition = transform.position;
 
@@ -53,6 +54,7 @@ public class BaseGhostAI : MonoBehaviour
         {
             if (targetVisible)
             {
+                Debug.Log("Target found!");
                 MoveCharacter(movement, chaseSpeed);
             
             }
@@ -67,7 +69,11 @@ public class BaseGhostAI : MonoBehaviour
     }
 
     private void MoveCharacter(Vector2 direction, float moveSpeed)
-    {   
+    {
+        if (transform.position == (Vector3)direction)
+        {
+            return;
+        }
         body.MovePosition((Vector2)transform.position + (direction * (moveSpeed * Time.deltaTime)));   
         
         if (direction.x < 0 && !facingLeft){
@@ -78,7 +84,18 @@ public class BaseGhostAI : MonoBehaviour
         }	
     }
 
-    
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log(other.gameObject.tag);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("clashed with player, returning home");
+            targetVisible = false;
+            Reset();
+        }
+    }
+
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -171,5 +188,6 @@ public class BaseGhostAI : MonoBehaviour
     public void Reset()
     {
         transform.position = originalPosition;
+        targetVisible = false;
     }
 }
