@@ -12,10 +12,12 @@ public class BloodSplatter : MonoBehaviour
     public float  destroyAfter = 3.0f;
     public bool dripper = false;
     public float dripPerSec = 1.0f;
+    public List<Collider2D> ignorables;
     
 
     private float _timer = 0f;
     private List<GameObject> _bloodList;
+    
 
 
     
@@ -32,7 +34,7 @@ public class BloodSplatter : MonoBehaviour
         {
             if (_timer <= 0)
             {
-                dripSpawner();
+                spawnBlood();
                 _timer = dripPerSec;
             }
             else
@@ -48,24 +50,19 @@ public class BloodSplatter : MonoBehaviour
         float randomy = Random.Range(-5, 5);
         return new Vector2(randomx, randomy);
     }
+    
 
-    private void dripSpawner()
-    {
-  
-        GameObject cell = Instantiate(bloodDrop);
-        cell.transform.position = transform.position;
-        if (splash)
-        {
-            cell.GetComponent<Rigidbody2D>().velocity = (get_direction());
-        }
-        StartCoroutine(destroyCell(cell));
-    }
-
-    private void spawnBlood()
+    public void spawnBlood()
     {
         for (int i = 0; i < amount; i++)
         {
+            
             GameObject cell = Instantiate(bloodDrop);
+            foreach (Collider2D ignorable in ignorables)
+            {
+                Physics2D.IgnoreCollision(cell.GetComponent<Collider2D>(), ignorable);
+            }
+            cell.transform.position = transform.position;
             if (splash)
             {
                 cell.GetComponent<Rigidbody2D>().velocity = (get_direction());
