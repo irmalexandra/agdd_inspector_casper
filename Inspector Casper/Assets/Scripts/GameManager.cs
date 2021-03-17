@@ -82,6 +82,11 @@ public class GameManager : MonoBehaviour
         _playerController.enabled = true;
         _playerRigidBody.velocity = new Vector2(0,0);
         player.transform.position = _checkPointPosition;
+        Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D found_collider in colliders)
+        {
+            found_collider.enabled = true;
+        }
         _isDead = false;
         foreach (var enemy in enemies)
         {
