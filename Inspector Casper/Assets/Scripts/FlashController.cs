@@ -7,95 +7,72 @@ using UnityEngine.UI;
 
 public class FlashController : MonoBehaviour
 {
-    public float flashTimelength = .2f;
-
-    public float freezeEnemy = 5.0f;
-    // public bool doCameraFlash = false;
+    public float flashDuration;
     
     private float startTime;
-    private bool flashing;
+    [HideInInspector]
+    public bool flashing;
     private Light2D flash;
-    private Collider2D flashCone;
- 
+    
     void Start()
     {
         flash = GetComponent<Light2D>();
-        flashCone = GetComponent<Collider2D>();
     }
-    
+
     public void CameraFlash()
     {
-        
         startTime = Time.time;
-
-        flashing = true;
         StartCoroutine(FlashCoroutine());
-        flashing = false;
     }
  
     IEnumerator FlashCoroutine()
     {
         bool done = false;
- 
+        flashing = true;
+
         while(!done)
         {
-            
             flash.intensity = 3; 
 
             float perc;
-
-
+            
             perc = Time.time - startTime;
-            perc = perc / flashTimelength;
-
-            if(perc > 1.0f)
+            perc = perc / flashDuration;
+            if(perc > flashDuration)
             {
-                perc = 1.0f;
                 done = true;
             }
-            flashing = true;
-
             yield return null;
         }
-
         flash.intensity = 0;
-
-
+        flashing = false;
     }
     
-    IEnumerator FreezeCoroutine(Rigidbody2D target)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        var originalVelocity = target.velocity;
-
-        bool done = false;
-        while (!done)
+        if (!other.gameObject.CompareTag("Enemy")) { return; }
+        if (flashing)
         {
-            float perc;
-            target.velocity = new Vector2(0, 0);
-
-            perc = Time.time - startTime;
-            perc = perc / flashTimelength;
-
-            if(perc > 1.0f)
+            if (!other.gameObject.GetComponent<SpriteRenderer>().enabled && other is BoxCollider2D)
             {
-                perc = 1.0f;
-                done = true;
+                other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
             }
-            yield return null;
         }
-
-        target.velocity = originalVelocity;
-
-    }
-
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.gameObject.layer == 7) // Enemies layer
+        else
         {
-            Debug.Log("Successfull detection");
-            StartCoroutine(FreezeCoroutine(other.rigidbody));
+            other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.gameObject.CompareTag("Enemy")) { return; }
+        if (other.gameObject.GetComponent<SpriteRenderer>().enabled && other is BoxCollider2D)
+        {
+            other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
+    
 }
 
 
