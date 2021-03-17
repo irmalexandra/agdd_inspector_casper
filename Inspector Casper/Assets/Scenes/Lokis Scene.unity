@@ -190,7 +190,7 @@ PrefabInstance:
     - target: {fileID: 3844169596598478980, guid: 859540935358b03489ae3afc6293febb, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 877071652}
     - target: {fileID: 3844169596635476696, guid: 859540935358b03489ae3afc6293febb, type: 3}
       propertyPath: m_Name
       value: Camera
@@ -244,6 +244,11 @@ PrefabInstance:
 --- !u!1 &877071644 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7662606690394485220, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
+  m_PrefabInstance: {fileID: 1095556086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &877071652 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7662606690394485223, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
   m_PrefabInstance: {fileID: 1095556086}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1058265564
@@ -415,6 +420,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5500354969603326477, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
+      propertyPath: cooldownTimer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500354969603326477, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
+      propertyPath: flashDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500354969603326477, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
+      propertyPath: freezeDuration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7662606690394485220, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
       propertyPath: m_Name
       value: Player

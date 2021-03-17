@@ -128,7 +128,6 @@ public class BaseGhostAI : MonoBehaviour
             float perc;
         
             perc = Time.time - startTime;
-            perc = perc / duration;
             if(perc > duration)
             {
                 done = true;
@@ -153,7 +152,6 @@ public class BaseGhostAI : MonoBehaviour
             float perc;
         
             perc = Time.time - startTime;
-            perc = perc / duration;
             if(perc > duration)
             {
                 done = true;
