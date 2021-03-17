@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3604910786684454629}
   - component: {fileID: 3319528663352642264}
   - component: {fileID: 565049472449398561}
+  - component: {fileID: 2298410150125569902}
   m_Layer: 3
   m_Name: VisionCone
   m_TagString: Untagged
@@ -81,10 +82,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4609959334774963841}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -118,5 +119,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7029536aea2e4a48bc35f3b7b0f1367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2298410150125569902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609959334774963841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b6a5065c76a164ab5b03c23dbcbb8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
