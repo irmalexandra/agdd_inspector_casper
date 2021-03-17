@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown("f"))
+		if (Input.GetButtonDown("Fire1"))
 		{
 			flashController.CameraFlash();
 		}

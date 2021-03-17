@@ -125,9 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0032137e6d84d4f9d0b26052e87311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashDuration: 0.5
-  freezeDuration: 1.5
-  flashing: 0
+  flashDuration: 0.3
+  freezeDuration: 2
+  cooldownTimer: 5
 --- !u!114 &576931261707379365
 MonoBehaviour:
   m_ObjectHideFlags: 0
