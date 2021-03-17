@@ -121,7 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0032137e6d84d4f9d0b26052e87311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashDuration: 0.5
+  flashDuration: 0.2
+  freezeDuration: 2
   flashing: 0
 --- !u!114 &1594980620641623710
 MonoBehaviour:
