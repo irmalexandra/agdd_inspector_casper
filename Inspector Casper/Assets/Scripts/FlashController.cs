@@ -10,9 +10,10 @@ public class FlashController : MonoBehaviour
     public float flashDuration;
     public float freezeDuration;
     private float _startTime;
-    [HideInInspector]
-    public bool flashing;
+    public float cooldownTimer;
+    private bool onCooldown;
     private Light2D _flash;
+    
 
     private List<GameObject> _targets = new List<GameObject>();
     
@@ -23,35 +24,57 @@ public class FlashController : MonoBehaviour
 
     public void CameraFlash()
     {
-        _startTime = Time.time;
-        StartCoroutine(FlashCoroutine());
-        foreach (var target in _targets)
+        Debug.Log(onCooldown);
+        if (!onCooldown)
         {
-            target.GetComponent<BaseGhostAI>().RevealGhost(flashDuration);
-            target.GetComponent<BaseGhostAI>().FreezeGhost(freezeDuration);
+            _startTime = Time.time;
+            StartCoroutine(FlashCoroutine());
+            foreach (var target in _targets)
+            {
+                target.GetComponent<BaseGhostAI>().RevealGhost(flashDuration);
+                target.GetComponent<BaseGhostAI>().FreezeGhost(freezeDuration);
+            }
+            StartCoroutine(CooldownCoroutine());
         }
     }
 
-    private IEnumerator FlashCoroutine()
+    private IEnumerator CooldownCoroutine()
     {
+        onCooldown = true;
         bool done = false;
-        flashing = true;
         while(!done)
         {
-            _flash.intensity = 3; 
 
             float perc;
-            
             perc = Time.time - _startTime;
-            perc = perc / flashDuration;
-            if(perc > flashDuration)
+            if(perc > cooldownTimer)
             {
                 done = true;
             }
             yield return null;
         }
-        _flash.intensity = 0;
-        flashing = false;
+        onCooldown = false;
+    }
+    
+    private IEnumerator FlashCoroutine()
+    {
+        if (!onCooldown){
+            bool done = false;
+            _flash.intensity = 3;
+
+            while(!done)
+            {
+                float perc;
+                
+                perc = Time.time - _startTime;
+                if(perc > flashDuration)
+                {
+                    done = true;
+                }
+                yield return null;
+            }
+            _flash.intensity = 0;
+        }
     }
     
     private void OnTriggerEnter2D(Collider2D other)
