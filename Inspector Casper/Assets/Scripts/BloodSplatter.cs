@@ -53,6 +53,7 @@ public class BloodSplatter : MonoBehaviour
     {
   
         GameObject cell = Instantiate(bloodDrop);
+        cell.transform.position = transform.position;
         if (splash)
         {
             cell.GetComponent<Rigidbody2D>().velocity = (get_direction());
