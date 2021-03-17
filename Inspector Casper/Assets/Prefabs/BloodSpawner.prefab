@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8013569829992181713}
   - component: {fileID: 8013569829992181710}
   m_Layer: 0
-  m_Name: blooder
+  m_Name: BloodSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,3 +49,6 @@ MonoBehaviour:
   destroyAfter: 3
   dripper: 1
   dripPerSec: 1
+  ignorables: []
+  velocityHigh: 10
+  velocityLow: -10

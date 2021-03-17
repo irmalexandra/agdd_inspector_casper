@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathTags:
   - Enemy
+  - DeadlyProp
   personalBlood: {fileID: 8412554286001293238}
 --- !u!61 &857992713
 BoxCollider2D:
@@ -525,7 +526,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8013569829992181710, guid: 6259b225aace22945b2105ed4566effe, type: 3}
       propertyPath: amount
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8013569829992181710, guid: 6259b225aace22945b2105ed4566effe, type: 3}
       propertyPath: splash

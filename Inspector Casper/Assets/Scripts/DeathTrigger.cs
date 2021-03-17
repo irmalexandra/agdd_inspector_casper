@@ -22,9 +22,9 @@ public class DeathTrigger : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        
         if (!deathTags.Contains(other.gameObject.tag)) return;
         _bloodScript.spawnBlood();
-        
         GameManager.instance.KillPlayer();
     }
     
