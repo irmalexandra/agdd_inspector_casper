@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
             }
         }
         deathCanvas.SetActive(false);
-        _isDead = false;
+        
     }
 
     // Update is called once per frame
@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         deathCanvas.SetActive(true);
+        _isDead = false;
     }
 
     public void setCheckpoint(Vector3 newPos)
