@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         _checkPointPosition = player.transform.position;
+        Physics2D.IgnoreLayerCollision(10,10);
     }
 
 
