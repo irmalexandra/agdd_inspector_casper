@@ -72,8 +72,6 @@ public class GameManager : MonoBehaviour
         {
             found_collider.enabled = false;
         }
-        
-        _isDead = true;
         StartCoroutine(Wait());
     }
 
@@ -113,7 +111,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         deathCanvas.SetActive(true);
         _isDead = true;
-        
     }
 
     public void setCheckpoint(Vector3 newPos)
