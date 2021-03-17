@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Physics2D.IgnoreLayerCollision(6, 7);
-        Physics2D.IgnoreLayerCollision(0, 7);
+        Physics2D.IgnoreLayerCollision(6, 7); // Ceiling check layer and Enemy layer
+        Physics2D.IgnoreLayerCollision(9, 7); // Grid layer and Enemy layer
 
         _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
