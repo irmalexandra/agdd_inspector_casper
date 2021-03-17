@@ -32,6 +32,14 @@ public class PlayerMovement : MonoBehaviour
         {
             crouch = false;
         }
+        else if (Input.GetButtonDown("Fire1"))
+        {
+            animator.SetBool("Aiming", true);
+        }
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            animator.SetBool("Aiming", false);
+        }
 
         
 
