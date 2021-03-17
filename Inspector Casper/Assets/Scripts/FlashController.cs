@@ -8,35 +8,42 @@ using UnityEngine.UI;
 public class FlashController : MonoBehaviour
 {
     public float flashDuration;
-    
-    private float startTime;
+    public float freezeDuration;
+    private float _startTime;
     [HideInInspector]
     public bool flashing;
-    private Light2D flash;
+    private Light2D _flash;
+
+    private List<GameObject> _targets = new List<GameObject>();
     
     void Start()
     {
-        flash = GetComponent<Light2D>();
+        _flash = GetComponent<Light2D>();
     }
 
     public void CameraFlash()
     {
-        startTime = Time.time;
+        Debug.Log(_targets);
+        _startTime = Time.time;
         StartCoroutine(FlashCoroutine());
+        foreach (var target in _targets)
+        {
+            target.GetComponent<BaseGhostAI>().RevealGhost(flashDuration);
+            target.GetComponent<BaseGhostAI>().FreezeGhost(freezeDuration);
+        }
     }
- 
-    IEnumerator FlashCoroutine()
+
+    private IEnumerator FlashCoroutine()
     {
         bool done = false;
         flashing = true;
-
         while(!done)
         {
-            flash.intensity = 3; 
+            _flash.intensity = 3; 
 
             float perc;
             
-            perc = Time.time - startTime;
+            perc = Time.time - _startTime;
             perc = perc / flashDuration;
             if(perc > flashDuration)
             {
@@ -44,35 +51,40 @@ public class FlashController : MonoBehaviour
             }
             yield return null;
         }
-        flash.intensity = 0;
+        _flash.intensity = 0;
         flashing = false;
     }
     
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Enemy")) { return; }
-        if (flashing)
-        {
-            if (!other.gameObject.GetComponent<SpriteRenderer>().enabled && other is BoxCollider2D)
-            {
-                other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            }
-        }
-        else
-        {
-            other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        }
+        _targets.Add(other.gameObject);
+        Debug.Log("Added to targets");
+        // if (flashing)
+        // {
+        //     if (!other.gameObject.GetComponent<SpriteRenderer>().enabled && other is BoxCollider2D)
+        //     {
+        //         other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        //     }
+        // }
+        // else
+        // {
+        //     other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        // }
     }
     
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Enemy")) { return; }
-        if (other.gameObject.GetComponent<SpriteRenderer>().enabled && other is BoxCollider2D)
-        {
-            other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        }
+        _targets.Remove(other.gameObject);
+
+        // Debug.Log("DID I DISABLE?");
+        //
+        // if (other.gameObject.GetComponent<SpriteRenderer>().enabled && other is BoxCollider2D)
+        // {
+        //     other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        // }
     }
-    
 }
 
 

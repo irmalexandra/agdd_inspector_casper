@@ -19207,6 +19207,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2056892986237587585, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
+      propertyPath: freezeDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2056892986237587585, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
       propertyPath: flashTimelength
       value: 1
       objectReference: {fileID: 0}
