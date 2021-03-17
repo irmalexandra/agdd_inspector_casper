@@ -23,7 +23,7 @@ public class FlashController : MonoBehaviour
 
     public void CameraFlash()
     {
-        Debug.Log(_targets);
+        Debug.Log(_targets.Count);
         _startTime = Time.time;
         StartCoroutine(FlashCoroutine());
         foreach (var target in _targets)
@@ -58,32 +58,16 @@ public class FlashController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Enemy")) { return; }
+        if (_targets.Contains(other.gameObject)) { return; }
         _targets.Add(other.gameObject);
         Debug.Log("Added to targets");
-        // if (flashing)
-        // {
-        //     if (!other.gameObject.GetComponent<SpriteRenderer>().enabled && other is BoxCollider2D)
-        //     {
-        //         other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        //     }
-        // }
-        // else
-        // {
-        //     other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        // }
     }
     
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         _targets.Remove(other.gameObject);
-
-        // Debug.Log("DID I DISABLE?");
-        //
-        // if (other.gameObject.GetComponent<SpriteRenderer>().enabled && other is BoxCollider2D)
-        // {
-        //     other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        // }
+        Debug.Log("removed from targets");
     }
 }
 
