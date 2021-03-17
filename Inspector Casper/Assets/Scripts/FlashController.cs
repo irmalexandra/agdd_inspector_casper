@@ -60,14 +60,12 @@ public class FlashController : MonoBehaviour
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         if (_targets.Contains(other.gameObject)) { return; }
         _targets.Add(other.gameObject);
-        Debug.Log("Added to targets");
     }
     
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         _targets.Remove(other.gameObject);
-        Debug.Log("removed from targets");
     }
 }
 
