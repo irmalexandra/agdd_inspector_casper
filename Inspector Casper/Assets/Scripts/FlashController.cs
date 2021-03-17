@@ -23,7 +23,6 @@ public class FlashController : MonoBehaviour
 
     public void CameraFlash()
     {
-        Debug.Log(_targets.Count);
         _startTime = Time.time;
         StartCoroutine(FlashCoroutine());
         foreach (var target in _targets)
@@ -59,15 +58,19 @@ public class FlashController : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         if (_targets.Contains(other.gameObject)) { return; }
-        _targets.Add(other.gameObject);
-        Debug.Log("Added to targets");
+        if (other is BoxCollider2D)
+        {
+            _targets.Add(other.gameObject);
+        }
     }
     
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Enemy")) { return; }
-        _targets.Remove(other.gameObject);
-        Debug.Log("removed from targets");
+        if (other is BoxCollider2D)
+        {
+            _targets.Remove(other.gameObject);
+        }
     }
 }
 
