@@ -65,11 +65,12 @@ public class GameManager : MonoBehaviour
         _playerSpriteRenderer.enabled = false;
         _playerMovement.enabled = false;
         _playerController.enabled = false;
-        _playerRigidBody.velocity = new Vector2(0,0);
+        _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+      
         Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
-        foreach (Collider2D collider in colliders)
-            collider.enabled = false;
+        foreach (Collider2D found_collider in colliders)
         {
+            found_collider.enabled = false;
         }
         
         _isDead = true;

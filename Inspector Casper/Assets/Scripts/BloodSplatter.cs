@@ -13,6 +13,8 @@ public class BloodSplatter : MonoBehaviour
     public bool dripper = false;
     public float dripPerSec = 1.0f;
     public List<Collider2D> ignorables;
+    public int velocityHigh;
+    public int velocityLow;
     
 
     private float _timer = 0f;
@@ -46,8 +48,8 @@ public class BloodSplatter : MonoBehaviour
 
     private Vector2 get_direction()
     {
-        float randomx = Random.Range(-5, 5);
-        float randomy = Random.Range(-5, 5);
+        float randomx = Random.Range(velocityLow, velocityHigh);
+        float randomy = Random.Range(velocityLow, velocityHigh);
         return new Vector2(randomx, randomy);
     }
     
