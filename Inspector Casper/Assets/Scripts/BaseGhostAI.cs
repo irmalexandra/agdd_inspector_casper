@@ -17,11 +17,19 @@ public class BaseGhostAI : MonoBehaviour
 
     public float roamSpeed = 2.5f;
     public float chaseSpeed = 5f;
-
+    
     private bool targetVisible = false;
-
+    private bool frozen;
     public Vector3 originalPosition;
+
+    private SpriteRenderer _spriteRenderer;
+
     // Start is called before the first frame update
+    private void Start()
+    {
+        _spriteRenderer = transform.gameObject.GetComponent<SpriteRenderer>();
+    }
+
     void Awake()
     {
         _player = GameManager.instance.getPlayer().GetComponent<Transform>();
@@ -41,18 +49,20 @@ public class BaseGhostAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (targetVisible)
+        if (!frozen)
         {
-            MoveCharacter(movement, chaseSpeed);
+            if (targetVisible)
+            {
+                MoveCharacter(movement, chaseSpeed);
             
+            }
+            else
+            {
+                if (transform.position == originalPosition) return;
+                StartCoroutine(Wait(3f));
+            }
         }
-        else
-        {
-            if (transform.position == originalPosition) return;
-            StartCoroutine(Wait(3f));
-            
 
-        }
         
     }
 
@@ -101,6 +111,59 @@ public class BaseGhostAI : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
+    
+    public void RevealGhost(float duration)
+    {
+        StartCoroutine(RevealGhostCoroutine(duration));
+    }
+
+    private IEnumerator RevealGhostCoroutine(float duration)
+    {
+        _spriteRenderer.enabled = true;
+        float startTime = Time.time;
+        bool done = false;
+        while(!done)
+        {
+
+            float perc;
+        
+            perc = Time.time - startTime;
+            perc = perc / duration;
+            if(perc > duration)
+            {
+                done = true;
+            }
+            yield return null;
+        }
+        _spriteRenderer.enabled = false;
+    }    
+    public void FreezeGhost(float duration)
+    {
+        StartCoroutine(FreezeGhostCoroutine(duration));
+    }
+
+    IEnumerator FreezeGhostCoroutine(float duration)
+    {
+        frozen = true;
+        float startTime = Time.time;
+        bool done = false;
+        while(!done)
+        {
+
+            float perc;
+        
+            perc = Time.time - startTime;
+            perc = perc / duration;
+            if(perc > duration)
+            {
+                done = true;
+            }
+            yield return null;
+        }
+        frozen = false;
+    }
+    
+    
     private IEnumerator Wait(float seconds)
     {
         yield return new WaitForSeconds(seconds);
