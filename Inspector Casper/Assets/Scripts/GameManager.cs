@@ -60,12 +60,10 @@ public class GameManager : MonoBehaviour
         _playerController = player.gameObject.GetComponent<PlayerController>();
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        
     }
 
     public void KillPlayer()
     {
-        _isDead = true;
         player.SetActive(false);
         /*_playerSpriteRenderer.enabled = false;
         _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -76,8 +74,6 @@ public class GameManager : MonoBehaviour
             Debug.Log(found_collider.name);
             found_collider.enabled = false;
         }*/
-        
-  
         StartCoroutine(Wait());
     }
 
@@ -108,7 +104,6 @@ public class GameManager : MonoBehaviour
         {
             RevivePlayer();
         }
-
     }
 
     IEnumerator Wait()
@@ -121,7 +116,5 @@ public class GameManager : MonoBehaviour
     public void setCheckpoint(Vector3 newPos)
     {
         _checkPointPosition = newPos;
-        _isDead = true;
-        
     }
 }

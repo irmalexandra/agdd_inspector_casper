@@ -82,19 +82,7 @@ public class BaseGhostAI : MonoBehaviour
             Flip();
         }	
     }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        Debug.Log(other.gameObject.tag);
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("clashed with player, returning home");
-            targetVisible = false;
-            Reset();
-        }
-    }
-
-
+    
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
