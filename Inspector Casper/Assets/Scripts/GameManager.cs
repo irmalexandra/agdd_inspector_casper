@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         _checkPointPosition = player.transform.position;
-        Physics2D.IgnoreLayerCollision(10,10);
     }
 
 
@@ -50,6 +49,11 @@ public class GameManager : MonoBehaviour
     {
         Physics2D.IgnoreLayerCollision(6, 7); // Ceiling check layer and Enemy layer
         Physics2D.IgnoreLayerCollision(9, 7); // Grid layer and Enemy layer
+        Physics2D.IgnoreLayerCollision(10, 10);
+        Physics.IgnoreLayerCollision(7,10);
+        Physics2D.IgnoreLayerCollision(6, 7);
+        Physics2D.IgnoreLayerCollision(0, 7);
+        Physics2D.IgnoreLayerCollision(10,10);
 
         _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
@@ -61,32 +65,29 @@ public class GameManager : MonoBehaviour
 
     public void KillPlayer()
     {
-        
-        _playerSpriteRenderer.enabled = false;
-        _playerMovement.enabled = false;
-        _playerController.enabled = false;
+        _isDead = true;
+        player.SetActive(false);
+        /*_playerSpriteRenderer.enabled = false;
         _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
       
         Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
         foreach (Collider2D found_collider in colliders)
         {
+            Debug.Log(found_collider.name);
             found_collider.enabled = false;
-        }
+        }*/
+        
+  
         StartCoroutine(Wait());
     }
 
     private void RevivePlayer()
     {
-        _playerSpriteRenderer.enabled = true;
-        _playerMovement.enabled = true;
-        _playerController.enabled = true;
-        _playerRigidBody.velocity = new Vector2(0,0);
         player.transform.position = _checkPointPosition;
-        Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
-        foreach (Collider2D found_collider in colliders)
-        {
-            found_collider.enabled = true;
-        }
+        player.SetActive(true);
+        /*_playerSpriteRenderer.enabled = true;
+        _playerRigidBody.velocity = new Vector2(0,0);
+        player.transform.position = _checkPointPosition;*/
         _isDead = false;
         foreach (var enemy in enemies)
         {
@@ -97,7 +98,6 @@ public class GameManager : MonoBehaviour
             }
         }
         deathCanvas.SetActive(false);
-        
     }
 
     // Update is called once per frame
@@ -121,6 +121,7 @@ public class GameManager : MonoBehaviour
     public void setCheckpoint(Vector3 newPos)
     {
         _checkPointPosition = newPos;
+        _isDead = true;
         
     }
 }
