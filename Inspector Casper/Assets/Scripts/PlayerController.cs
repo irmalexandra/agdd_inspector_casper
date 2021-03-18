@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
 
 		bool wasGrounded = grounded;
 		grounded = false;
+		
 		if (_fallingThroughGround && Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 		{
 			/*Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround)
@@ -126,10 +127,8 @@ public class PlayerController : MonoBehaviour
 						onLandEvent.Invoke();
 				}
 				grounded = true;
-
 			}
 		}
-
 	}
 
 	private void Flip()
@@ -149,7 +148,6 @@ public class PlayerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
-
 		if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 		{
 			_ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround);
