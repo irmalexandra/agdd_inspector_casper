@@ -62,20 +62,22 @@ public class GameManager : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
-    public void KillPlayer()
+    /*public void KillPlayer()
     {
-        player.SetActive(false);
-        /*_playerSpriteRenderer.enabled = false;
+        
+        /*
+        _playerSpriteRenderer.enabled = false;
         _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+        #1#
       
-        Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
-        foreach (Collider2D found_collider in colliders)
+        /*GameObject[] colliders = player.GetComponentsInChildren<GameObject>();
+        foreach (GameObject found_collider in colliders)
         {
             Debug.Log(found_collider.name);
-            found_collider.enabled = false;
-        }*/
+            found_collider.SetActive(false);
+        }#1#
         StartCoroutine(Wait());
-    }
+    }*/
 
     private void RevivePlayer()
     {
@@ -102,19 +104,33 @@ public class GameManager : MonoBehaviour
         if (!_isDead) return;
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RevivePlayer();
+            _playerController.Revive();
+            
         }
     }
 
-    IEnumerator Wait()
+    public void DisplayDeathCanvas(bool show)
     {
-        yield return new WaitForSeconds(1);
-        deathCanvas.SetActive(true);
-        _isDead = true;
+        if (show)
+        {
+            // yield return new WaitForSeconds(1);
+            deathCanvas.SetActive(true);
+            // _isDead = true;
+        }
+        else
+        {
+            deathCanvas.SetActive(false);
+        }
+       
     }
 
     public void setCheckpoint(Vector3 newPos)
     {
         _checkPointPosition = newPos;
+    }
+
+    public Vector3 getCheckpointPosition()
+    {
+        return _checkPointPosition;
     }
 }
