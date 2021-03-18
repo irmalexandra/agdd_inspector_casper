@@ -28,14 +28,13 @@ public class BaseGhostAI : MonoBehaviour
     private void Start()
     {
         _spriteRenderer = transform.gameObject.GetComponent<SpriteRenderer>();
+        _player = GameManager.instance.getPlayer().GetComponent<Transform>();
     }
 
     void Awake()
     {
-        _player = GameManager.instance.getPlayer().GetComponent<Transform>();
         body = GetComponent<Rigidbody2D>();
         originalPosition = transform.position;
-
     }
 
     // Update is called once per frame
@@ -97,6 +96,18 @@ public class BaseGhostAI : MonoBehaviour
         {
             targetVisible = false;
             animator.SetBool("Chasing", false);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Reset();
+        }
+        else
+        {
+            Physics2D.IgnoreCollision(other.collider, gameObject.GetComponent<Collider2D>());
         }
     }
 
@@ -167,9 +178,9 @@ public class BaseGhostAI : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         MoveCharacter((originalPosition - transform.position).normalized, roamSpeed);
     }
-
     public void Reset()
     {
         transform.position = originalPosition;
+        targetVisible = false;
     }
 }

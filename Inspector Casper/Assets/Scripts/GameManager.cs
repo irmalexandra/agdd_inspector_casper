@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         _checkPointPosition = player.transform.position;
-        Physics2D.IgnoreLayerCollision(10,10);
+       
     }
 
 
@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     {
         Physics2D.IgnoreLayerCollision(6, 7);
         Physics2D.IgnoreLayerCollision(0, 7);
+        Physics2D.IgnoreLayerCollision(10,10);
 
         _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
@@ -61,8 +62,8 @@ public class GameManager : MonoBehaviour
 
     public void KillPlayer()
     {
-        
-        _playerSpriteRenderer.enabled = false;
+        player.SetActive(false);
+        /*_playerSpriteRenderer.enabled = false;
         _playerMovement.enabled = false;
         _playerController.enabled = false;
         _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -71,19 +72,20 @@ public class GameManager : MonoBehaviour
         foreach (Collider2D found_collider in colliders)
         {
             found_collider.enabled = false;
-        }
+        }*/
         
-        _isDead = true;
+  
         StartCoroutine(Wait());
     }
 
     private void RevivePlayer()
     {
-        _playerSpriteRenderer.enabled = true;
+        player.SetActive(true);
+        /*_playerSpriteRenderer.enabled = true;
         _playerMovement.enabled = true;
         _playerController.enabled = true;
         _playerRigidBody.velocity = new Vector2(0,0);
-        player.transform.position = _checkPointPosition;
+        player.transform.position = _checkPointPosition;*/
         _isDead = false;
         foreach (var enemy in enemies)
         {
@@ -119,6 +121,7 @@ public class GameManager : MonoBehaviour
     public void setCheckpoint(Vector3 newPos)
     {
         _checkPointPosition = newPos;
+        _isDead = true;
         
     }
 }
