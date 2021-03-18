@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
 		{
 			Revive();
 			GameManager.instance.DisplayDeathCanvas(false);
+			GameManager.instance.Reset();
 
 		}
 

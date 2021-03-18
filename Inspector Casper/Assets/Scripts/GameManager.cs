@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject deathCanvas;
     
     public GameObject player;
-    public BaseGhostAI[] enemies;
+    public GameObject[] enemies;
     
     private Vector3 _checkPointPosition;
     
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         _playerController = player.gameObject.GetComponent<PlayerController>();
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
         //enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        enemies = enemyNumberTwo.GetComponentsInChildren<BaseGhostAI>();
+        //enemies = enemyNumberTwo.GetComponentsInChildren<GameObject>();
         Debug.Log(enemies);
     }
 
@@ -70,15 +70,39 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (!_isDead) return;
-        if (Input.GetKeyDown(KeyCode.R) && !_playerController._alive)
+        /*if (Input.GetKeyDown(KeyCode.R) && !_playerController._alive)
         {
+            Debug.Log("what the shit");
             _playerController.Revive();
-            foreach (BaseGhostAI enemy in enemies)
-            {
-                enemy.Reset();
-                Debug.Log(enemy);
-            }
+            //Debug.Log(enemies.Length);
             
+            Transform thing = enemyNumberTwo.transform;
+            
+            foreach (Transform child in thing)
+            {
+                Debug.Log(child);
+            }
+            Debug.Log("lol");
+            /*foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<BaseGhostAI>().Reset();
+                Debug.Log(enemy);
+            }#1#
+
+        }*/
+    }
+
+    public void Reset()
+    {
+        Debug.Log("what the shit");
+        _playerController.Revive();
+        //Debug.Log(enemies.Length);
+            
+        Transform thing = enemyNumberTwo.transform;
+            
+        foreach (Transform child in thing)
+        {
+            Debug.Log("yes");
         }
     }
 
