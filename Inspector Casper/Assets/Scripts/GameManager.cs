@@ -62,41 +62,8 @@ public class GameManager : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
-    /*public void KillPlayer()
-    {
-        
-        /*
-        _playerSpriteRenderer.enabled = false;
-        _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
-        #1#
-      
-        /*GameObject[] colliders = player.GetComponentsInChildren<GameObject>();
-        foreach (GameObject found_collider in colliders)
-        {
-            Debug.Log(found_collider.name);
-            found_collider.SetActive(false);
-        }#1#
-        StartCoroutine(Wait());
-    }*/
 
-    private void RevivePlayer()
-    {
-        player.transform.position = _checkPointPosition;
-        player.SetActive(true);
-        /*_playerSpriteRenderer.enabled = true;
-        _playerRigidBody.velocity = new Vector2(0,0);
-        player.transform.position = _checkPointPosition;*/
-        _isDead = false;
-        foreach (var enemy in enemies)
-        {
-            var aiComponent = enemy.GetComponent<BaseGhostAI>();
-            if (aiComponent != null)
-            {
-                enemy.transform.position = aiComponent.originalPosition;
-            }
-        }
-        deathCanvas.SetActive(false);
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -113,9 +80,7 @@ public class GameManager : MonoBehaviour
     {
         if (show)
         {
-            // yield return new WaitForSeconds(1);
             deathCanvas.SetActive(true);
-            // _isDead = true;
         }
         else
         {
