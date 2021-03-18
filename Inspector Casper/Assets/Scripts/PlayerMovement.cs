@@ -53,5 +53,7 @@ public class PlayerMovement : MonoBehaviour
         if (controller.grounded){
             animator.SetBool("Jumping", false);
         }
+        
+        animator.SetBool("Dead", !controller._alive);
     }
 }

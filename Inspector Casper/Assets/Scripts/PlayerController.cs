@@ -8,27 +8,24 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private float jumpForce = 400f; // Amount of force added when the player jumps.
-
 	[Range(0, 1)] [SerializeField]
 	private float crouchSpeed = .36f; // Amount of maxSpeed applied to crouching movement. 1 = 100%
-
 	[Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f; // How much to smooth out the movement
 	[SerializeField] private bool airControl; // Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask whatIsGround; // A mask determining what is ground to the character
 	[SerializeField] private Transform groundCheck; // A position marking where to check if the player is grounded.
 	[SerializeField] private Transform ceilingCheck; // A position marking where to check for ceilings
 	[SerializeField] private Collider2D crouchDisableCollider; // A collider that will be disabled when crouching
-
 	private float mayJump;
 	private const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+	
+	
+	
 	public GameObject interactiveButton;
-	
-	
-	
 	public List<string> deathTags;
 	public GameObject personalBlood;
 	public bool grounded; // Whether or not the player is grounded.
-	public bool frozen = false;
+	
 	
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private new Rigidbody2D rigidbody2D;
@@ -40,7 +37,7 @@ public class PlayerController : MonoBehaviour
 	private Collider2D _ceiling;
 	private Collider2D _ground;
 	private BloodSplatter _bloodScript;
-	private bool _alive = true;
+	public bool _alive = true;
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -205,7 +202,7 @@ public class PlayerController : MonoBehaviour
 		
 		
 		
-		if ((move == 0 && grounded && !_fallingThroughGround && !jump) || frozen)
+		if ((move == 0 && grounded && !_fallingThroughGround && !jump))
 		{
 			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
@@ -332,11 +329,10 @@ public class PlayerController : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		if (!deathTags.Contains(other.gameObject.tag)) return;
+		if (!deathTags.Contains(other.gameObject.tag) || !_alive) return;
 		Debug.Log("ded");
 		_bloodScript.spawnBlood();
-		frozen = true;
-		//GameManager.instance.KillPlayer();
+		_alive = false;
 		StartCoroutine(Wait());
 	}
 
@@ -345,7 +341,6 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector3 spawnPosition = GameManager.instance.getCheckpointPosition();
 		transform.position = spawnPosition;
-		frozen = false;
 		_alive = true;
 	}
 
@@ -354,7 +349,6 @@ public class PlayerController : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1);
 		GameManager.instance.DisplayDeathCanvas(true);
-		_alive = false;
 	}
 }
 
