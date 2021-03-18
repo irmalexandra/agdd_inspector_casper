@@ -36,7 +36,6 @@ public class BaseGhostAI : MonoBehaviour
         
         body = GetComponent<Rigidbody2D>();
         originalPosition = transform.position;
-
     }
 
     // Update is called once per frame
@@ -117,6 +116,18 @@ public class BaseGhostAI : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Reset();
+        }
+        else
+        {
+            Physics2D.IgnoreCollision(other.collider, gameObject.GetComponent<Collider2D>());
+        }
+    }
+
     private void Flip()
 	{
 		// Switch the way the player is labelled as facing.
@@ -184,7 +195,6 @@ public class BaseGhostAI : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         MoveCharacter((originalPosition - transform.position).normalized, roamSpeed);
     }
-
     public void Reset()
     {
         transform.position = originalPosition;

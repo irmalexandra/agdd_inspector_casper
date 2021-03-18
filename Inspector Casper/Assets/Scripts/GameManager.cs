@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(9, 7); // Grid layer and Enemy layer
         Physics2D.IgnoreLayerCollision(10, 10);
         Physics.IgnoreLayerCollision(7,10);
+        Physics2D.IgnoreLayerCollision(6, 7);
+        Physics2D.IgnoreLayerCollision(0, 7);
+        Physics2D.IgnoreLayerCollision(10,10);
 
         _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
@@ -72,8 +75,9 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(found_collider.name);
             found_collider.enabled = false;
-        }
-        player.GetComponent<Collider2D>().enabled = false;*/
+        }*/
+        
+  
         StartCoroutine(Wait());
     }
 
@@ -83,13 +87,8 @@ public class GameManager : MonoBehaviour
         player.SetActive(true);
         /*_playerSpriteRenderer.enabled = true;
         _playerRigidBody.velocity = new Vector2(0,0);
-        player.transform.position = _checkPointPosition;
-        Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
-        foreach (Collider2D found_collider in colliders)
-        {
-            found_collider.enabled = true;
-        }
-        _isDead = false;*/
+        player.transform.position = _checkPointPosition;*/
+        _isDead = false;
         foreach (var enemy in enemies)
         {
             var aiComponent = enemy.GetComponent<BaseGhostAI>();
@@ -122,5 +121,7 @@ public class GameManager : MonoBehaviour
     public void setCheckpoint(Vector3 newPos)
     {
         _checkPointPosition = newPos;
+        _isDead = true;
+        
     }
 }
