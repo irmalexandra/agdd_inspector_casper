@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &857992711
 Transform:
   m_ObjectHideFlags: 0
@@ -56,7 +56,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857992710}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 49527d112ee201c4bb275b314a4d53bf, type: 2}
   m_IsTrigger: 0
@@ -82,7 +82,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857992710}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 49527d112ee201c4bb275b314a4d53bf, type: 2}
   m_IsTrigger: 0
@@ -336,6 +336,8 @@ MonoBehaviour:
   ceilingCheck: {fileID: 7662606689940246620}
   crouchDisableCollider: {fileID: 7662606690394485218}
   interactiveButton: {fileID: 5202909507960385621}
+  deathTags: []
+  personalBlood: {fileID: 8412554286001293238}
   grounded: 0
   onLandEvent:
     m_PersistentCalls:
@@ -547,7 +549,7 @@ PrefabInstance:
     - target: {fileID: 8013569829992181710, guid: 6259b225aace22945b2105ed4566effe, type: 3}
       propertyPath: ignorables.Array.data[1]
       value: 
-      objectReference: {fileID: 7662606690394485218}
+      objectReference: {fileID: 857992713}
     - target: {fileID: 8013569829992181710, guid: 6259b225aace22945b2105ed4566effe, type: 3}
       propertyPath: ignorables.Array.data[2]
       value: 

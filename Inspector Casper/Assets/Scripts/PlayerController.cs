@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,8 +23,13 @@ public class PlayerController : MonoBehaviour
 	private const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	public GameObject interactiveButton;
 	
-
+	
+	
+	public List<string> deathTags;
+	public GameObject personalBlood;
 	public bool grounded; // Whether or not the player is grounded.
+	public bool frozen = false;
+	
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private new Rigidbody2D rigidbody2D;
 	private bool facingRight = true; // For determining which way the player is currently facing.
@@ -32,6 +40,7 @@ public class PlayerController : MonoBehaviour
 	private Collider2D _ceiling;
 	private Collider2D _ground;
 	private BloodSplatter _bloodScript;
+	private bool _alive = true;
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -47,7 +56,7 @@ public class PlayerController : MonoBehaviour
 	{
 		_fallingThroughGround = false;
 		_colliders = GetComponentsInChildren<Collider2D>();
-
+		_bloodScript = personalBlood.GetComponent<BloodSplatter>();
 
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
@@ -74,7 +83,12 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 
+		if (Input.GetKeyDown(KeyCode.R) && !_alive)
+		{
+			Revive();
+			GameManager.instance.DisplayDeathCanvas(false);
 
+		}
 
 		bool wasGrounded = grounded;
 		grounded = false;
@@ -191,7 +205,7 @@ public class PlayerController : MonoBehaviour
 		
 		
 		
-		if (move == 0 && grounded && !_fallingThroughGround && !jump)
+		if ((move == 0 && grounded && !_fallingThroughGround && !jump) || frozen)
 		{
 			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
@@ -314,6 +328,33 @@ public class PlayerController : MonoBehaviour
 	public void showInteractiveButton(bool set)
 	{
 		interactiveButton.SetActive(set);
+	}
+
+	private void OnCollisionEnter2D(Collision2D other)
+	{
+		if (!deathTags.Contains(other.gameObject.tag)) return;
+		Debug.Log("ded");
+		_bloodScript.spawnBlood();
+		frozen = true;
+		//GameManager.instance.KillPlayer();
+		StartCoroutine(Wait());
+	}
+
+
+	public void Revive()
+	{
+		Vector3 spawnPosition = GameManager.instance.getCheckpointPosition();
+		transform.position = spawnPosition;
+		frozen = false;
+		_alive = true;
+	}
+
+
+	private IEnumerator Wait()
+	{
+		yield return new WaitForSeconds(1);
+		GameManager.instance.DisplayDeathCanvas(true);
+		_alive = false;
 	}
 }
 
