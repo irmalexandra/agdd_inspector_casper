@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         _checkPointPosition = player.transform.position;
-       
     }
 
 
@@ -48,6 +47,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Physics2D.IgnoreLayerCollision(6, 7); // Ceiling check layer and Enemy layer
+        Physics2D.IgnoreLayerCollision(9, 7); // Grid layer and Enemy layer
+        Physics2D.IgnoreLayerCollision(10, 10);
+        Physics.IgnoreLayerCollision(7,10);
         Physics2D.IgnoreLayerCollision(6, 7);
         Physics2D.IgnoreLayerCollision(0, 7);
         Physics2D.IgnoreLayerCollision(10,10);
@@ -62,15 +65,15 @@ public class GameManager : MonoBehaviour
 
     public void KillPlayer()
     {
+        _isDead = true;
         player.SetActive(false);
         /*_playerSpriteRenderer.enabled = false;
-        _playerMovement.enabled = false;
-        _playerController.enabled = false;
         _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
       
         Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
         foreach (Collider2D found_collider in colliders)
         {
+            Debug.Log(found_collider.name);
             found_collider.enabled = false;
         }*/
         
@@ -80,10 +83,9 @@ public class GameManager : MonoBehaviour
 
     private void RevivePlayer()
     {
+        player.transform.position = _checkPointPosition;
         player.SetActive(true);
         /*_playerSpriteRenderer.enabled = true;
-        _playerMovement.enabled = true;
-        _playerController.enabled = true;
         _playerRigidBody.velocity = new Vector2(0,0);
         player.transform.position = _checkPointPosition;*/
         _isDead = false;
@@ -96,7 +98,6 @@ public class GameManager : MonoBehaviour
             }
         }
         deathCanvas.SetActive(false);
-        
     }
 
     // Update is called once per frame
@@ -115,7 +116,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         deathCanvas.SetActive(true);
         _isDead = true;
-        
     }
 
     public void setCheckpoint(Vector3 newPos)
