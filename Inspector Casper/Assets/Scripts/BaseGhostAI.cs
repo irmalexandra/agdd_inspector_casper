@@ -1,17 +1,17 @@
-
  using System;
  using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseGhostAI : MonoBehaviour
 {
     private Transform _player;
-    public Animator animator; 
+    public Animator animator;
+    public Transform originalPosition;
 
     private Rigidbody2D body;
 
     private Vector2 movement;
+    private PlayerController _playerScript; 
 
     private bool facingLeft = true;
 
@@ -20,65 +20,74 @@ public class BaseGhostAI : MonoBehaviour
     
     private bool targetVisible = false;
     private bool frozen;
-    public Vector3 originalPosition;
+    //public Vector3 originalPosition;
 
     private SpriteRenderer _spriteRenderer;
 
     // Start is called before the first frame update
-    private void Start()
+  
+
+    void Start()
     {
         _spriteRenderer = transform.gameObject.GetComponent<SpriteRenderer>();
         _player = GameManager.instance.getPlayer().GetComponent<Transform>();
-    }
-
-    void Awake()
-    {
-        
+        _playerScript = _player.GetComponent<PlayerController>();
+        Physics2D.IgnoreLayerCollision(7, 10);
         body = GetComponent<Rigidbody2D>();
-        originalPosition = transform.position;
+        // originalPosition.position = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = _player.position - transform.position;
         
-        direction.Normalize();
-        movement = direction;
+        /*Vector3 directionToPlayer = _player.position - transform.position;  
+        
+        directionToPlayer.Normalize();
+        movement = directionToPlayer;*/
     }
 
     private void FixedUpdate()
     {
         if (!frozen)
         {
-            if (targetVisible)
+            if (targetVisible && _playerScript._alive)
             {
-                Debug.Log("Target found!");
-                MoveCharacter(movement, chaseSpeed);
-            
+                MoveCharacter(_player.position, chaseSpeed);
             }
             else
             {
-                if (transform.position == originalPosition) return;
-                StartCoroutine(Wait(3f));
+                if (transform.position.x < originalPosition.position.x + 5f && transform.position.x >
+                                                                            originalPosition.position.x - 5f
+                                                                            && transform.position.y >
+                                                                            originalPosition.position.y - 5f &&
+                                                                            transform.position.y <
+                                                                            originalPosition.position.y + 5f)
+                {
+                    body.velocity = Vector2.zero;
+                }
+                else
+                {
+                    StartCoroutine(Wait(3f));
+                }
             }
         }
-
-        
     }
 
-    private void MoveCharacter(Vector2 direction, float moveSpeed)
+    private void MoveCharacter(Vector3 position, float moveSpeed)
     {
-        if (transform.position == (Vector3)direction)
+        if (transform.position == position)
         {
             return;
         }
-        body.MovePosition((Vector2)transform.position + (direction * (moveSpeed * Time.deltaTime)));   
         
-        if (direction.x < 0 && !facingLeft){
+        // body.MovePosition((Vector2)transform.position + (direction * (moveSpeed * Time.deltaTime)));   
+        transform.position = Vector3.MoveTowards(transform.position, position,  (moveSpeed * Time.deltaTime));   
+
+        if (position.x < 0 && !facingLeft){
             Flip();
         }
-        else if (direction.x > 0 && facingLeft){
+        else if (position.x > 0 && facingLeft){
             Flip();
         }	
     }
@@ -87,11 +96,19 @@ public class BaseGhostAI : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            targetVisible = true;
-            animator.SetBool("Chasing", true);
-            if (other.gameObject.GetComponent<PlayerController>().enabled == false){
-                animator.SetBool("Chasing", false);
+            if (!_playerScript._alive)
+            {
+                targetVisible = false;
             }
+            else
+            {
+                targetVisible = true;
+                animator.SetBool("Chasing", true);
+                if (other.gameObject.GetComponent<PlayerController>().enabled == false){
+                    animator.SetBool("Chasing", false);
+                }
+            }
+ 
         }
     }
 
@@ -108,12 +125,16 @@ public class BaseGhostAI : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Reset();
+            Collider2D[] colliders = _player.GetComponents<Collider2D>();
+            Collider2D ghostCollider = GetComponent<BoxCollider2D>();
+            foreach (Collider2D collider in colliders)
+            {
+                Physics2D.IgnoreCollision(collider, ghostCollider, true);
+            }
+            return;
         }
-        else
-        {
-            Physics2D.IgnoreCollision(other.collider, gameObject.GetComponent<Collider2D>());
-        }
+        Physics2D.IgnoreCollision(other.collider, gameObject.GetComponent<Collider2D>());
+        
     }
 
     private void Flip()
@@ -176,16 +197,28 @@ public class BaseGhostAI : MonoBehaviour
         }
         frozen = false;
     }
-    
-    
+
     private IEnumerator Wait(float seconds)
     {
+  
         yield return new WaitForSeconds(seconds);
-        MoveCharacter((originalPosition - transform.position).normalized, roamSpeed);
+        Debug.Log("ET phone home");
+        MoveCharacter(originalPosition.position, roamSpeed);
     }
+    
     public void Reset()
     {
-        transform.position = originalPosition;
+        
+        Debug.Log("reset, take it eeeEEEEeasyyyy");
+        transform.position = originalPosition.position;
         targetVisible = false;
+        Collider2D[] colliders = _player.GetComponents<Collider2D>();
+        Collider2D ghostCollider = GetComponent<BoxCollider2D>();
+        foreach (Collider2D collider in colliders)
+        {
+            Debug.Log(collider);
+            Physics2D.IgnoreCollision(collider, ghostCollider, false);
+
+        }
     }
 }

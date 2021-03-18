@@ -737,7 +737,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad04851e05e892649a64bb47af51806a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 5651783040215882739}
   smoothSpeed: 0.125
   offset: {x: 0, y: 0, z: -500}
 --- !u!1 &6740576058789438311
@@ -814,6 +813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e00c265ac1045b4a8137384d8f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyNumberTwo: {fileID: 7833366611545206624}
   deathCanvas: {fileID: 6740576057455653357}
   player: {fileID: 7119066799139912959}
   enemies: []

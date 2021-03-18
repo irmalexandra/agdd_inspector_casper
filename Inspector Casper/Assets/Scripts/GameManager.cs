@@ -10,11 +10,11 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    
+    public GameObject enemyNumberTwo;
     public GameObject deathCanvas;
     
     public GameObject player;
-    public GameObject[] enemies;
+    public BaseGhostAI[] enemies;
     
     private Vector3 _checkPointPosition;
     
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private PlayerController _playerController;
     private PlayerMovement _playerMovement;
     private Rigidbody2D _playerRigidBody;
-
+    
     private  bool _isDead = false;
 
 
@@ -33,17 +33,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         _checkPointPosition = player.transform.position;
     }
-
-
-    public PlayerController getPlayerController()
-    {
-        return _playerController;
-    }
-
-    public GameObject getPlayer()
-    {
-        return player;
-    }
+    
 
     void Start()
     {
@@ -59,9 +49,20 @@ public class GameManager : MonoBehaviour
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
         _playerController = player.gameObject.GetComponent<PlayerController>();
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        //enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = enemyNumberTwo.GetComponentsInChildren<BaseGhostAI>();
+        Debug.Log(enemies);
     }
 
+    public PlayerController getPlayerController()
+    {
+        return _playerController;
+    }
+
+    public GameObject getPlayer()
+    {
+        return player;
+    }
 
 
 
@@ -69,9 +70,14 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (!_isDead) return;
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && !_playerController._alive)
         {
             _playerController.Revive();
+            foreach (BaseGhostAI enemy in enemies)
+            {
+                enemy.Reset();
+                Debug.Log(enemy);
+            }
             
         }
     }
