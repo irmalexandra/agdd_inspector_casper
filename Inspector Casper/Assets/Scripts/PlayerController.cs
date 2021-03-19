@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,23 +8,25 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private float jumpForce = 400f; // Amount of force added when the player jumps.
-
 	[Range(0, 1)] [SerializeField]
 	private float crouchSpeed = .36f; // Amount of maxSpeed applied to crouching movement. 1 = 100%
-
 	[Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f; // How much to smooth out the movement
 	[SerializeField] private bool airControl; // Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask whatIsGround; // A mask determining what is ground to the character
 	[SerializeField] private Transform groundCheck; // A position marking where to check if the player is grounded.
 	[SerializeField] private Transform ceilingCheck; // A position marking where to check for ceilings
 	[SerializeField] private Collider2D crouchDisableCollider; // A collider that will be disabled when crouching
-
 	private float mayJump;
 	private const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
-	public GameObject interactiveButton;
 	
-
+	
+	
+	public GameObject interactiveButton;
+	public List<string> deathTags;
+	public GameObject personalBlood;
 	public bool grounded; // Whether or not the player is grounded.
+	
+	
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private new Rigidbody2D rigidbody2D;
 	private bool facingRight = true; // For determining which way the player is currently facing.
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour
 	private Collider2D _ceiling;
 	private Collider2D _ground;
 	private BloodSplatter _bloodScript;
+	public bool _alive = true;
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -47,7 +53,7 @@ public class PlayerController : MonoBehaviour
 	{
 		_fallingThroughGround = false;
 		_colliders = GetComponentsInChildren<Collider2D>();
-
+		_bloodScript = personalBlood.GetComponent<BloodSplatter>();
 
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
@@ -74,10 +80,17 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 
+		if (Input.GetKeyDown(KeyCode.R) && !_alive)
+		{
+			Revive();
+			GameManager.instance.DisplayDeathCanvas(false);
+			GameManager.instance.Reset();
 
+		}
 
 		bool wasGrounded = grounded;
 		grounded = false;
+		
 		if (_fallingThroughGround && Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 		{
 			/*Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround)
@@ -126,10 +139,8 @@ public class PlayerController : MonoBehaviour
 						onLandEvent.Invoke();
 				}
 				grounded = true;
-
 			}
 		}
-
 	}
 
 	private void Flip()
@@ -149,7 +160,6 @@ public class PlayerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
-
 		if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 		{
 			_ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround);
@@ -193,7 +203,7 @@ public class PlayerController : MonoBehaviour
 		
 		
 		
-		if (move == 0 && grounded && !_fallingThroughGround && !jump)
+		if ((move == 0 && grounded && !_fallingThroughGround && !jump))
 		{
 			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
@@ -316,6 +326,30 @@ public class PlayerController : MonoBehaviour
 	public void showInteractiveButton(bool set)
 	{
 		interactiveButton.SetActive(set);
+	}
+
+	private void OnCollisionEnter2D(Collision2D other)
+	{
+		if (!deathTags.Contains(other.gameObject.tag) || !_alive) return;
+		Debug.Log("ded");
+		_bloodScript.spawnBlood();
+		_alive = false;
+		StartCoroutine(Wait());
+	}
+
+
+	public void Revive()
+	{
+		Vector3 spawnPosition = GameManager.instance.getCheckpointPosition();
+		transform.position = spawnPosition;
+		_alive = true;
+	}
+
+
+	private IEnumerator Wait()
+	{
+		yield return new WaitForSeconds(1);
+		GameManager.instance.DisplayDeathCanvas(true);
 	}
 }
 

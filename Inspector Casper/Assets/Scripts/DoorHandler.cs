@@ -17,7 +17,6 @@ public class DoorHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("what?");
                 SceneManager.LoadScene(sceneIndex);
             }
         }
