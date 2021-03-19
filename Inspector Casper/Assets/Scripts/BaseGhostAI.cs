@@ -208,17 +208,13 @@ public class BaseGhostAI : MonoBehaviour
     
     public void Reset()
     {
-        
-        Debug.Log("reset, take it eeeEEEEeasyyyy");
         transform.position = originalPosition.position;
         targetVisible = false;
         Collider2D[] colliders = _player.GetComponents<Collider2D>();
         Collider2D ghostCollider = GetComponent<BoxCollider2D>();
         foreach (Collider2D collider in colliders)
         {
-            Debug.Log(collider);
             Physics2D.IgnoreCollision(collider, ghostCollider, false);
-
         }
     }
 }
