@@ -24,7 +24,6 @@ public class FlashController : MonoBehaviour
 
     public void CameraFlash()
     {
-        Debug.Log(onCooldown);
         if (!onCooldown)
         {
             _startTime = Time.time;
@@ -92,8 +91,8 @@ public class FlashController : MonoBehaviour
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         if (other is BoxCollider2D)
         {
-        }
             _targets.Remove(other.gameObject);
+        }
     }
 }
 

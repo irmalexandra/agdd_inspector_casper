@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    
+    public GameObject enemyNumberTwo;
     public GameObject deathCanvas;
     
     public GameObject player;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private PlayerController _playerController;
     private PlayerMovement _playerMovement;
     private Rigidbody2D _playerRigidBody;
-
+    
     private  bool _isDead = false;
 
 
@@ -33,17 +33,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         _checkPointPosition = player.transform.position;
     }
-
-
-    public PlayerController getPlayerController()
-    {
-        return _playerController;
-    }
-
-    public GameObject getPlayer()
-    {
-        return player;
-    }
+    
 
     void Start()
     {
@@ -59,69 +49,83 @@ public class GameManager : MonoBehaviour
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
         _playerController = player.gameObject.GetComponent<PlayerController>();
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        
+        //enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        //enemies = enemyNumberTwo.GetComponentsInChildren<GameObject>();
+        Debug.Log(enemies);
     }
 
-    public void KillPlayer()
+    public PlayerController getPlayerController()
     {
-        _isDead = true;
-        player.SetActive(false);
-        /*_playerSpriteRenderer.enabled = false;
-        _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
-      
-        Collider2D[] colliders = player.GetComponentsInChildren<Collider2D>();
-        foreach (Collider2D found_collider in colliders)
-        {
-            Debug.Log(found_collider.name);
-            found_collider.enabled = false;
-        }*/
-        
-  
-        StartCoroutine(Wait());
+        return _playerController;
     }
 
-    private void RevivePlayer()
+    public GameObject getPlayer()
     {
-        player.transform.position = _checkPointPosition;
-        player.SetActive(true);
-        /*_playerSpriteRenderer.enabled = true;
-        _playerRigidBody.velocity = new Vector2(0,0);
-        player.transform.position = _checkPointPosition;*/
-        _isDead = false;
-        foreach (var enemy in enemies)
-        {
-            var aiComponent = enemy.GetComponent<BaseGhostAI>();
-            if (aiComponent != null)
-            {
-                enemy.transform.position = aiComponent.originalPosition;
-            }
-        }
-        deathCanvas.SetActive(false);
+        return player;
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
         if (!_isDead) return;
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R) && !_playerController._alive)
         {
-            RevivePlayer();
-        }
+            Debug.Log("what the shit");
+            _playerController.Revive();
+            //Debug.Log(enemies.Length);
+            
+            Transform thing = enemyNumberTwo.transform;
+            
+            foreach (Transform child in thing)
+            {
+                Debug.Log(child);
+            }
+            Debug.Log("lol");
+            /*foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<BaseGhostAI>().Reset();
+                Debug.Log(enemy);
+            }#1#
 
+        }*/
     }
 
-    IEnumerator Wait()
+    public void Reset()
     {
-        yield return new WaitForSeconds(1);
-        deathCanvas.SetActive(true);
-        _isDead = true;
+        Debug.Log("what the shit");
+        _playerController.Revive();
+        //Debug.Log(enemies.Length);
+            
+        Transform thing = enemyNumberTwo.transform;
+            
+        foreach (Transform child in thing)
+        {
+            Debug.Log("yes");
+        }
+    }
+
+    public void DisplayDeathCanvas(bool show)
+    {
+        if (show)
+        {
+            deathCanvas.SetActive(true);
+        }
+        else
+        {
+            deathCanvas.SetActive(false);
+        }
+       
     }
 
     public void setCheckpoint(Vector3 newPos)
     {
         _checkPointPosition = newPos;
-        _isDead = true;
-        
+    }
+
+    public Vector3 getCheckpointPosition()
+    {
+        return _checkPointPosition;
     }
 }
