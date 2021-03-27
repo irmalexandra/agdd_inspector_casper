@@ -133,7 +133,7 @@ PrefabInstance:
     - target: {fileID: 3844169596598478980, guid: 859540935358b03489ae3afc6293febb, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 309278261}
+      objectReference: {fileID: 0}
     - target: {fileID: 3844169596635476696, guid: 859540935358b03489ae3afc6293febb, type: 3}
       propertyPath: m_Name
       value: Camera
@@ -467,16 +467,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
---- !u!4 &309278261 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7662606690394485223, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
-  m_PrefabInstance: {fileID: 309278260}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &309278262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7662606690394485220, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
-  m_PrefabInstance: {fileID: 309278260}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &321281441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19056,7 +19046,7 @@ PrefabInstance:
     - target: {fileID: 1939598804602745409, guid: b94f9543a8e53a84b8d029e5e4b66749, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 309278262}
+      objectReference: {fileID: 0}
     - target: {fileID: 1939598804602745409, guid: b94f9543a8e53a84b8d029e5e4b66749, type: 3}
       propertyPath: deathCanvas
       value: 
@@ -19117,7 +19107,7 @@ PrefabInstance:
     - target: {fileID: 6340353147305774403, guid: ca548d52e0bcfb44bbb97f2e625cdc3c, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 309278261}
+      objectReference: {fileID: 0}
     - target: {fileID: 6340353147305774403, guid: ca548d52e0bcfb44bbb97f2e625cdc3c, type: 3}
       propertyPath: pathVectorList.Array.size
       value: 2
