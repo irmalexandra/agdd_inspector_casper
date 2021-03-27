@@ -10,12 +10,11 @@ public class CameraFollow : MonoBehaviour
 
     public Vector3 offset;
 
-
-    private void Awake()
+    private void Start()
     {
         _target = GameManager.instance.getPlayer().transform;
     }
-
+    
     private void FixedUpdate()
     {
         Vector3 desiredPosition = _target.position + offset;
