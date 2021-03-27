@@ -80,10 +80,11 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 
-		if (Input.GetKeyDown(KeyCode.R) && !_alive)
+		if (Input.GetKeyDown(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
 		{
 			Revive();
 			GameManager.instance.DisplayDeathCanvas(false);
+			
 			GameManager.instance.Reset();
 
 		}
@@ -331,9 +332,9 @@ public class PlayerController : MonoBehaviour
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		if (!deathTags.Contains(other.gameObject.tag) || !_alive) return;
-		Debug.Log("ded");
-		_bloodScript.spawnBlood();
+		SoundManager.PlaySoundEffect("Death");
 		_alive = false;
+		_bloodScript.spawnBlood();
 		StartCoroutine(Wait());
 	}
 
@@ -349,6 +350,7 @@ public class PlayerController : MonoBehaviour
 	private IEnumerator Wait()
 	{
 		yield return new WaitForSeconds(1);
+		
 		GameManager.instance.DisplayDeathCanvas(true);
 	}
 }

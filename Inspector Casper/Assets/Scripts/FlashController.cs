@@ -26,6 +26,7 @@ public class FlashController : MonoBehaviour
     {
         if (!onCooldown)
         {
+            SoundManager.PlaySoundEffect("ShutterEcho");
             _startTime = Time.time;
             StartCoroutine(FlashCoroutine());
             foreach (var target in _targets)
