@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,7 +11,6 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public GameObject enemyNumberTwo;
     public GameObject deathCanvas;
     
     public GameObject player;
@@ -39,19 +39,16 @@ public class GameManager : MonoBehaviour
     {
         Physics2D.IgnoreLayerCollision(6, 7); // Ceiling check layer and Enemy layer
         Physics2D.IgnoreLayerCollision(9, 7); // Grid layer and Enemy layer
-        Physics2D.IgnoreLayerCollision(10, 10);
-        Physics.IgnoreLayerCollision(7,10);
-        Physics2D.IgnoreLayerCollision(6, 7);
-        Physics2D.IgnoreLayerCollision(0, 7);
-        Physics2D.IgnoreLayerCollision(10,10);
+        Physics2D.IgnoreLayerCollision(10, 10); // Ignore self layer and Ignore self layer
+        Physics2D.IgnoreLayerCollision(7,10); // Enemy layer and Ignore self layer
+        Physics2D.IgnoreLayerCollision(0, 7); // Default layer and Enemy layer
 
         _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
         _playerController = player.gameObject.GetComponent<PlayerController>();
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
-        //enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        //enemies = enemyNumberTwo.GetComponentsInChildren<GameObject>();
-        Debug.Log(enemies);
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     public PlayerController getPlayerController()
@@ -64,45 +61,13 @@ public class GameManager : MonoBehaviour
         return player;
     }
 
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!_isDead) return;
-        /*if (Input.GetKeyDown(KeyCode.R) && !_playerController._alive)
-        {
-            Debug.Log("what the shit");
-            _playerController.Revive();
-            //Debug.Log(enemies.Length);
-            
-            Transform thing = enemyNumberTwo.transform;
-            
-            foreach (Transform child in thing)
-            {
-                Debug.Log(child);
-            }
-            Debug.Log("lol");
-            /*foreach (GameObject enemy in enemies)
-            {
-                enemy.GetComponent<BaseGhostAI>().Reset();
-                Debug.Log(enemy);
-            }#1#
-
-        }*/
-    }
-
+    
     public void Reset()
     {
-        Debug.Log("what the shit");
         _playerController.Revive();
-        //Debug.Log(enemies.Length);
-            
-        Transform thing = enemyNumberTwo.transform;
-            
-        foreach (Transform child in thing)
+        foreach (GameObject enemy in enemies)
         {
-            Debug.Log("yes");
+            enemy.GetComponent<BaseGhostAI>().Reset();
         }
     }
 

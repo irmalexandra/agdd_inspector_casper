@@ -51,7 +51,6 @@ MonoBehaviour:
   dripPerSec: 1
   ignorables:
   - {fileID: 7039790114807343831}
-  - {fileID: 0}
   velocityHigh: 10
   velocityLow: -10
 --- !u!1 &436005260549120747
