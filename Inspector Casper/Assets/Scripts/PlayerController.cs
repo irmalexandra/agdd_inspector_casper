@@ -75,7 +75,6 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log("Nervous: "+_nervous);
 		if (Input.GetButtonDown("Fire1"))
 		{
 			flashController.CameraFlash();
