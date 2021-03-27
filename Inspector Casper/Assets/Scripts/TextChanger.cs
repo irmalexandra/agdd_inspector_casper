@@ -32,7 +32,11 @@ public class TextChanger : MonoBehaviour
     private IEnumerator Wait()
     {
         yield return new WaitForSeconds(10);
-        speechSpriteRenderer.enabled = false;
-        textBox.text = "";
+        if (speechSpriteRenderer != null)
+        {
+            speechSpriteRenderer.enabled = false;
+            textBox.text = "";
+        }
+        
     }
 }

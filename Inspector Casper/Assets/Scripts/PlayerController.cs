@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
 	private Collider2D _ground;
 	private BloodSplatter _bloodScript;
 	public bool _alive = true;
+	public bool _nervous = false;
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -81,7 +83,6 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-
 		if (Input.GetKeyDown(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
 		{
 			Revive();
@@ -154,9 +155,13 @@ public class PlayerController : MonoBehaviour
 		// Switch the way the player is labelled as facing.
 		facingRight = !facingRight;
 
-		var quaternion = bubbleTextBox.GetComponent<RectTransform>().localScale;
-		quaternion.x *= -1;
-		bubbleTextBox.GetComponent<RectTransform>().localScale = quaternion;
+		if (bubbleTextBox != null)
+		{
+			var quaternion = bubbleTextBox.GetComponent<RectTransform>().localScale;
+			quaternion.x *= -1;
+			bubbleTextBox.GetComponent<RectTransform>().localScale = quaternion;
+		}
+		
 
 		// Multiply the player's x local scale by -1.
 		Vector3 theScale = transform.localScale;
