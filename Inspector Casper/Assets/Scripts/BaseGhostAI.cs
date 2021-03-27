@@ -34,7 +34,6 @@ public class BaseGhostAI : MonoBehaviour
         _playerScript = _player.GetComponent<PlayerController>();
         Physics2D.IgnoreLayerCollision(7, 10);
         body = GetComponent<Rigidbody2D>();
-        // originalPosition.position = transform.position;
     }
 
     // Update is called once per frame
