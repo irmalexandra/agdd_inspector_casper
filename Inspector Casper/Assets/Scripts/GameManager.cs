@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
-    void flipGhostType()
+    public void flipGhostType()
     {
         foreach (GameObject enemy in enemies)
         {

@@ -40,9 +40,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("Aiming", false);
         }
-
-        
-
+           
     }
 
     private void FixedUpdate()
@@ -55,5 +53,6 @@ public class PlayerMovement : MonoBehaviour
         }
         
         animator.SetBool("Dead", !controller._alive);
+        animator.SetBool("Nervous", controller._nervous);     
     }
 }
