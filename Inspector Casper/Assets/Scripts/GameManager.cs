@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,7 +11,6 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    
     public GameObject deathCanvas;
     
     public GameObject player;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private PlayerController _playerController;
     private PlayerMovement _playerMovement;
     private Rigidbody2D _playerRigidBody;
-
+    
     private  bool _isDead = false;
 
 
@@ -33,7 +33,23 @@ public class GameManager : MonoBehaviour
         instance = this;
         _checkPointPosition = player.transform.position;
     }
+    
 
+    void Start()
+    {
+        Physics2D.IgnoreLayerCollision(6, 7); // Ceiling check layer and Enemy layer
+        Physics2D.IgnoreLayerCollision(9, 7); // Grid layer and Enemy layer
+        Physics2D.IgnoreLayerCollision(10, 10); // Ignore self layer and Ignore self layer
+        Physics2D.IgnoreLayerCollision(7,10); // Enemy layer and Ignore self layer
+        Physics2D.IgnoreLayerCollision(0, 7); // Default layer and Enemy layer
+
+        _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
+        _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
+        _playerController = player.gameObject.GetComponent<PlayerController>();
+        _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    }
 
     public PlayerController getPlayerController()
     {
@@ -45,67 +61,13 @@ public class GameManager : MonoBehaviour
         return player;
     }
 
-    void Start()
+    
+    public void Reset()
     {
-        Physics2D.IgnoreLayerCollision(6, 7); // Ceiling check layer and Enemy layer
-        Physics2D.IgnoreLayerCollision(9, 7); // Grid layer and Enemy layer
-        Physics2D.IgnoreLayerCollision(10, 10);
-        Physics.IgnoreLayerCollision(7,10);
-        Physics2D.IgnoreLayerCollision(6, 7);
-        Physics2D.IgnoreLayerCollision(0, 7);
-        Physics2D.IgnoreLayerCollision(10,10);
-
-        _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
-        _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
-        _playerController = player.gameObject.GetComponent<PlayerController>();
-        _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-    }
-
-    /*public void KillPlayer()
-    {
-        
-        /*
-        _playerSpriteRenderer.enabled = false;
-        _playerRigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
-        #1#
-      
-        /*GameObject[] colliders = player.GetComponentsInChildren<GameObject>();
-        foreach (GameObject found_collider in colliders)
+        _playerController.Revive();
+        foreach (GameObject enemy in enemies)
         {
-            Debug.Log(found_collider.name);
-            found_collider.SetActive(false);
-        }#1#
-        StartCoroutine(Wait());
-    }*/
-
-    private void RevivePlayer()
-    {
-        player.transform.position = _checkPointPosition;
-        player.SetActive(true);
-        /*_playerSpriteRenderer.enabled = true;
-        _playerRigidBody.velocity = new Vector2(0,0);
-        player.transform.position = _checkPointPosition;*/
-        _isDead = false;
-        foreach (var enemy in enemies)
-        {
-            var aiComponent = enemy.GetComponent<BaseGhostAI>();
-            if (aiComponent != null)
-            {
-                enemy.transform.position = aiComponent.originalPosition;
-            }
-        }
-        deathCanvas.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!_isDead) return;
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            _playerController.Revive();
-            
+            enemy.GetComponent<BaseGhostAI>().Reset();
         }
     }
 
@@ -113,9 +75,7 @@ public class GameManager : MonoBehaviour
     {
         if (show)
         {
-            // yield return new WaitForSeconds(1);
             deathCanvas.SetActive(true);
-            // _isDead = true;
         }
         else
         {
