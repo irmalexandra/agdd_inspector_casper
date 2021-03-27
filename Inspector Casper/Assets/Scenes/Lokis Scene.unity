@@ -130,9 +130,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 895773988275820910, guid: 93e263a90f833984eb0adbae7f8ca502, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1315209282616480170, guid: 93e263a90f833984eb0adbae7f8ca502, type: 3}
       propertyPath: m_Name
       value: GhostHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954800342858303674, guid: 93e263a90f833984eb0adbae7f8ca502, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954800342858303675, guid: 93e263a90f833984eb0adbae7f8ca502, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3832553074947045459, guid: 93e263a90f833984eb0adbae7f8ca502, type: 3}
       propertyPath: m_RootOrder
@@ -178,6 +190,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5568026469244012093, guid: 93e263a90f833984eb0adbae7f8ca502, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8279590365740335718, guid: 93e263a90f833984eb0adbae7f8ca502, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a4e602411a267c24fa61b8af3de58386, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93e263a90f833984eb0adbae7f8ca502, type: 3}
 --- !u!1001 &383811100

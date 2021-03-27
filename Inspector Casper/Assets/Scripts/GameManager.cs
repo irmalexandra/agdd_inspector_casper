@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     public GameObject[] enemies;
+    public float ghostRespawnTimer;
 
     private Vector3 _checkPointPosition;
 
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject enemy in enemies)
         {
-            
+            enemy.SetActive(!enemy.activeSelf);
         }
     }
 
@@ -69,6 +70,28 @@ public class GameManager : MonoBehaviour
         return player;
     }
 
+    public void respawnGhost(GameObject target)
+    {
+        StartCoroutine(RespawnTimerCoroutine(ghostRespawnTimer, target));
+    }
+    
+    private IEnumerator RespawnTimerCoroutine(float duration, GameObject target)
+    {
+        float startTime = Time.time;
+        bool done = false;
+        while(!done)
+        {
+            float perc;
+        
+            perc = Time.time - startTime;
+            if(perc > duration)
+            {
+                done = true;
+            }
+            yield return null;
+        }
+        target.SetActive(true);
+    }
     
     public void Reset()
     {
