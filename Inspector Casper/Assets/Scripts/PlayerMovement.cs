@@ -40,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("Aiming", false);
         }
+        
+        animator.SetBool("Nervous", controller._nervous); 
            
     }
 
@@ -53,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         animator.SetBool("Dead", !controller._alive);
-        animator.SetBool("Nervous", controller._nervous);     
+            
     }
+
 }
