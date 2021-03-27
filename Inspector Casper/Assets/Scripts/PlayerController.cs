@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
 	
 	
 	public GameObject interactiveButton;
+	public TextMeshPro bubbleTextBox;
 	public List<string> deathTags;
 	public GameObject personalBlood;
 	public bool grounded; // Whether or not the player is grounded.
@@ -152,10 +154,16 @@ public class PlayerController : MonoBehaviour
 		// Switch the way the player is labelled as facing.
 		facingRight = !facingRight;
 
+		var quaternion = bubbleTextBox.GetComponent<RectTransform>().localScale;
+		quaternion.x *= -1;
+		bubbleTextBox.GetComponent<RectTransform>().localScale = quaternion;
+
 		// Multiply the player's x local scale by -1.
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+		
+		
 	}
 
 
