@@ -28,7 +28,10 @@ public class PlayerController : MonoBehaviour
 	public List<string> deathTags;
 	public GameObject personalBlood;
 	public bool grounded; // Whether or not the player is grounded.
-	
+
+
+	public PhysicsMaterial2D glue;
+	public PhysicsMaterial2D slippery;
 	
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private new Rigidbody2D rigidbody2D;
@@ -36,7 +39,7 @@ public class PlayerController : MonoBehaviour
 	private Vector3 velocity = Vector3.zero;
 	private Collider2D[] _colliders;
 	private FlashController flashController;
-	// private bool _fallingThroughGround;
+	private bool _fallingThroughGround;
 	private Collider2D _ceiling;
 	private Collider2D _ground;
 	private BloodSplatter _bloodScript;
@@ -59,22 +62,25 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake()
 	{
-		//_fallingThroughGround = false;
+		_fallingThroughGround = false;
 		_colliders = GetComponentsInChildren<Collider2D>();
 		_bloodScript = personalBlood.GetComponent<BloodSplatter>();
-
+		
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
 			onLandEvent = new UnityEvent();
 
 		if (onCrouchEvent == null)
 			onCrouchEvent = new BoolEvent();
-
+		
+		
 	}
 
 	private void Start()
 	{
 		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
+		Debug.Log(GetComponent<CircleCollider2D>().transform.position);
+		Debug.Log(rigidbody2D.transform.position);
 	}
 
 	private void Update()
@@ -99,17 +105,17 @@ public class PlayerController : MonoBehaviour
 		bool wasGrounded = grounded;
 		grounded = false;
 		
-		/*if (_fallingThroughGround && Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
+		if (_fallingThroughGround && Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 		{
 			/*Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround)
 				.GetComponent<Collider2D>();
 			foreach (var collider in _colliders)
 			{
 				Physics2D.IgnoreCollision(collider, ceiling, false);
-			}#1#
+			}*/
 			_fallingThroughGround = false;
 
-		}*/
+		}
 
 		if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
 		{
@@ -221,10 +227,14 @@ public class PlayerController : MonoBehaviour
 
 
 
-		// if ((move == 0 && grounded && !_fallingThroughGround && !jump))
-		if ((move == 0 && grounded && !jump) || rigidbody2D.velocity.magnitude > 0)
+		if (_ground && _ground.CompareTag("Stairs") )
 		{
+			//rigidbody2D.mass = 0;
 			//rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+
+			var thing = transform.GetComponent<CircleCollider2D>().sharedMaterial;
+			thing.friction = 20;
+			GetComponent<CircleCollider2D>().sharedMaterial = thing;
 		}
 		else
 		{
@@ -238,8 +248,9 @@ public class PlayerController : MonoBehaviour
 			Debug.Log(jump);
 			Debug.Log("move");
 			Debug.Log(move);*/
-			rigidbody2D.constraints = RigidbodyConstraints2D.None;
-			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+			/*rigidbody2D.constraints = RigidbodyConstraints2D.None;
+			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;*/
+			transform.GetComponent<CircleCollider2D>().sharedMaterial.friction = 0;
 		}
 
 
@@ -287,9 +298,9 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKeyDown("s") && _ground && _ground.CompareTag("Stairs") && !_fixing)
+			if (Input.GetKeyDown("s") && !_fallingThroughGround)
 			{
-				// _fallingThroughGround = true;
+				_fallingThroughGround = true;
 				/*foreach (var collider in _colliders)
 				{
 					Physics2D.IgnoreCollision(_ground, collider, true);
@@ -299,11 +310,15 @@ public class PlayerController : MonoBehaviour
 				{
 					_effector.rotationalOffset += 180;
 				}*/
-				StairsController stairsController = _ground.GetComponent<StairsController>();
-				if (stairsController)
+				if (_ground)
 				{
-					stairsController.flip_effector();
+					StairsController stairsController = _ground.GetComponent<StairsController>();
+					if (stairsController)
+					{
+						stairsController.flip_effector();
+					}
 				}
+			
 			}
 
 			/*if (_effector && _effector.rotationalOffset > 0)
