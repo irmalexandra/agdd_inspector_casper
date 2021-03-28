@@ -238,11 +238,11 @@ public class BaseGhostAI : MonoBehaviour
         }
     }
 
-    public void ResetPlayerGhost(GameObject player)
+    public void ResetPlayerGhost()
     {
         transform.gameObject.SetActive(true);
-        transform.position = player.transform.position;
-        originalPosition.position = player.transform.position;
+        transform.position = _player.transform.position;
+        originalPosition.position = _player.transform.position;
     }
     
 }

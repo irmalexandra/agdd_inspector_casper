@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     
     public void Reset()
     {
-        playerGhost.GetComponent<BaseGhostAI>().ResetPlayerGhost(player);
+        playerGhost.GetComponent<BaseGhostAI>().ResetPlayerGhost();
         foreach (GameObject enemy in enemies)
         {
             enemy.GetComponent<BaseGhostAI>().Reset();
