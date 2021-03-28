@@ -342,6 +342,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
+		Debug.Log(other.gameObject.name);
 		if (!deathTags.Contains(other.gameObject.tag) || !_alive) return;
 		GameManager.instance.getPlayerGhost().SetActive(false);
 		SoundManager.PlaySoundEffect("Death");
