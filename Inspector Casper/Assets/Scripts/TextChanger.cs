@@ -36,6 +36,7 @@ public class TextChanger : MonoBehaviour
         {
             speechSpriteRenderer.enabled = false;
             textBox.text = "";
+            
         }
         
     }
