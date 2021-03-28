@@ -70,6 +70,10 @@ public class GameManager : MonoBehaviour
     public GameObject getPlayer()
     {
         return player;
+    }    
+    public GameObject getPlayerGhost()
+    {
+        return playerGhost;
     }
 
     public void respawnGhost(GameObject target)
