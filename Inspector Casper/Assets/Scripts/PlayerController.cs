@@ -95,9 +95,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
 		{
-			// Revive();
 			GameManager.instance.DisplayDeathCanvas(false);
-			
 			GameManager.instance.Reset();
 
 		}
@@ -398,10 +396,13 @@ public class PlayerController : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
+		Debug.Log(other.gameObject.name);
 		if (!deathTags.Contains(other.gameObject.tag) || !_alive) return;
+		GameManager.instance.getPlayerGhost().SetActive(false);
 		SoundManager.PlaySoundEffect("Death");
 		_alive = false;
 		_bloodScript.spawnBlood();
+		transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		StartCoroutine(Wait());
 	}
 
