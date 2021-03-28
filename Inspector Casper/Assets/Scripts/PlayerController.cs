@@ -28,7 +28,10 @@ public class PlayerController : MonoBehaviour
 	public List<string> deathTags;
 	public GameObject personalBlood;
 	public bool grounded; // Whether or not the player is grounded.
-	
+
+
+	public PhysicsMaterial2D glue;
+	public PhysicsMaterial2D slippery;
 	
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private new Rigidbody2D rigidbody2D;
@@ -40,6 +43,10 @@ public class PlayerController : MonoBehaviour
 	private Collider2D _ceiling;
 	private Collider2D _ground;
 	private BloodSplatter _bloodScript;
+	
+	private bool _fixing = false;
+	private PlatformEffector2D _effector;
+	
 	public bool _alive = true;
 	public bool _nervous = false;
 
@@ -58,24 +65,27 @@ public class PlayerController : MonoBehaviour
 		_fallingThroughGround = false;
 		_colliders = GetComponentsInChildren<Collider2D>();
 		_bloodScript = personalBlood.GetComponent<BloodSplatter>();
-
+		
 		rigidbody2D = GetComponent<Rigidbody2D>();
 		if (onLandEvent == null)
 			onLandEvent = new UnityEvent();
 
 		if (onCrouchEvent == null)
 			onCrouchEvent = new BoolEvent();
-
+		
+		
 	}
 
 	private void Start()
 	{
 		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
+		Debug.Log(GetComponent<CircleCollider2D>().transform.position);
+		Debug.Log(rigidbody2D.transform.position);
 	}
 
 	private void Update()
 	{
-		if (Input.GetButtonDown("Fire1"))
+		if (Input.GetButtonDown("Fire1") && _alive)
 		{
 			flashController.CameraFlash();
 		}
@@ -103,7 +113,7 @@ public class PlayerController : MonoBehaviour
 			{
 				Physics2D.IgnoreCollision(collider, ceiling, false);
 			}*/
-			_fallingThroughGround = false;
+			//_fallingThroughGround = false;
 
 		}
 
@@ -111,14 +121,14 @@ public class PlayerController : MonoBehaviour
 		{
 			
 			Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround);
-			if (ceiling.CompareTag("Stairs"))
+			/*if (ceiling.CompareTag("Stairs"))
 			{
 				foreach (var collider in _colliders)
 				{
-					Physics2D.IgnoreCollision(collider, ceiling, true);
+					//Physics2D.IgnoreCollision(collider, ceiling, true);
 
 				}
-			}
+			}*/
 
 		}
 
@@ -129,15 +139,15 @@ public class PlayerController : MonoBehaviour
 		{
 			if (colliders[i].gameObject != gameObject)
 			{
-				if (colliders[i].CompareTag("Stairs") && !_fallingThroughGround)
+				/*if (colliders[i].CompareTag("Stairs") && !_fallingThroughGround)
 				{
 					foreach (Collider2D playerCollider in _colliders)
 					{
 						Physics2D.IgnoreCollision(playerCollider, colliders[i], false);
 					}
-				}
+				}*/
 
-				else if (!colliders[i].gameObject.CompareTag("Enemy"))
+				if (!colliders[i].gameObject.CompareTag("Enemy"))
 				{
 					if (!wasGrounded)
 						onLandEvent.Invoke();
@@ -192,14 +202,14 @@ public class PlayerController : MonoBehaviour
 			_ground = null;
 		}
 
-		if (_ceiling && _ceiling.CompareTag("Stairs"))
+		/*if (_ceiling && _ceiling.CompareTag("Stairs"))
 		{
-			
+
 			foreach (Collider2D collider in _colliders)
 			{
 				Physics2D.IgnoreCollision(collider, _ceiling, true);
 			}
-		}
+		}*/
 
 		/*
 		if (!_fallingThroughGround && _ground && _ground.CompareTag("Stairs") && !grounded )
@@ -214,12 +224,16 @@ public class PlayerController : MonoBehaviour
 		}*/
 
 
-		
-		
-		
-		if ((move == 0 && grounded && !_fallingThroughGround && !jump))
+
+
+
+		if (_ground && _ground.CompareTag("Stairs") && move == 0f)
 		{
-			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+			//rigidbody2D.mass = 0;
+			//rigidbody2D.constraints = RigidbodyConstraints2D.FreezePosition;
+			var thing = rigidbody2D.sharedMaterial;
+			thing.friction = 10000f;
+			rigidbody2D.sharedMaterial = thing;
 		}
 		else
 		{
@@ -233,21 +247,23 @@ public class PlayerController : MonoBehaviour
 			Debug.Log(jump);
 			Debug.Log("move");
 			Debug.Log(move);*/
-			rigidbody2D.constraints = RigidbodyConstraints2D.None;
-			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+			/*rigidbody2D.constraints = RigidbodyConstraints2D.None;
+			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;*/
+			var thing = rigidbody2D.sharedMaterial;
+			thing.friction = 0f;
+			rigidbody2D.sharedMaterial = thing;
 		}
-
-
+		
 		// If crouching, check to see if the character can stand up
-		if (!crouch)
+		/*if (!crouch)
 		{
 			// If the character has a ceiling preventing them from standing up, keep them crouching
 			if (_ceiling && !_ceiling.CompareTag("Stairs"))
 			{
 				crouch = true;
 			}
-		}
-		
+		}*/
+
 
 		//only control the player if grounded or airControl is turned on
 		if (grounded || airControl)
@@ -282,17 +298,43 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKey("s") && _ground && _ground.CompareTag("Stairs"))
+			if (Input.GetKey(KeyCode.S))
 			{
-				_fallingThroughGround = true;
-				foreach (var collider in _colliders)
+				//_fallingThroughGround = true;
+				/*foreach (var collider in _colliders)
 				{
 					Physics2D.IgnoreCollision(_ground, collider, true);
+				}*/
+				/*_effector = _ground.GetComponent<PlatformEffector2D>();
+				if (_effector)
+				{
+					_effector.rotationalOffset += 180;
+				}*/
+				Debug.Log(_ground+"this is ground");
+				if (_ground)
+				{
+					StairsController stairsController = _ground.GetComponent<StairsController>();
+					Debug.Log(stairsController+ "this is stairscontroller");
+					
+					if (stairsController)
+					{
+						Debug.Log("Stairs Controller is not null");
+						stairsController.flip_effector();
+					}
 				}
-
-
+			
 			}
 
+			/*if (_effector && _effector.rotationalOffset > 0)
+			{
+				if (!_fixing)
+				{
+					StartCoroutine(fix_platform(_effector));
+				}
+			}*/
+			
+			
+		
 			// Move the character by finding the target velocity
 			Vector3 targetVelocity = new Vector2(move * 10f, rigidbody2D.velocity.y);
 			// And then smoothing it out and applying it to the character
@@ -329,14 +371,26 @@ public class PlayerController : MonoBehaviour
 				rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 			}
 		}
-		/*if (_ground && _ground.CompareTag("Stairs") && !_fallingThroughGround)
-		{
-			foreach (Collider2D collider in _colliders)
-			{
-				Physics2D.IgnoreCollision(collider, _ground, false);
-			}
-		}*/
 	}
+	/*if (_ground && _ground.CompareTag("Stairs") && !_fallingThroughGround)
+	{
+		foreach (Collider2D collider in _colliders)
+		{
+			Physics2D.IgnoreCollision(collider, _ground, false);
+		}
+	}*/
+
+	private IEnumerator fix_platform(PlatformEffector2D effector)
+	{
+		_fixing = true;
+		Debug.Log(_fixing);
+		yield return new WaitForSeconds(0.5f);
+		effector.rotationalOffset -= 180;
+		_fixing = false;
+		Debug.Log(_fixing);
+
+	}
+	
 	public void showInteractiveButton(bool set)
 	{
 		interactiveButton.SetActive(set);
