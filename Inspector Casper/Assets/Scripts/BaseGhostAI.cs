@@ -33,7 +33,6 @@ public class BaseGhostAI : MonoBehaviour
         _spriteRenderer = transform.gameObject.GetComponent<SpriteRenderer>();
         _player = GameManager.instance.getPlayer().GetComponent<Transform>();
         _playerScript = _player.GetComponent<PlayerController>();
-        Physics2D.IgnoreLayerCollision(7, 10);
         body = GetComponent<Rigidbody2D>();
     }
 
@@ -238,4 +237,12 @@ public class BaseGhostAI : MonoBehaviour
             Physics2D.IgnoreCollision(collider, ghostCollider, false);
         }
     }
+
+    public void ResetPlayerGhost(GameObject player)
+    {
+        transform.gameObject.SetActive(true);
+        transform.position = player.transform.position;
+        originalPosition.position = player.transform.position;
+    }
+    
 }

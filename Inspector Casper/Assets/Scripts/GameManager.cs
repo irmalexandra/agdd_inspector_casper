@@ -97,9 +97,7 @@ public class GameManager : MonoBehaviour
     
     public void Reset()
     {
-        playerGhost.SetActive(true);
-        playerGhost.transform.position = player.transform.position;
-        playerGhost.GetComponent<BaseGhostAI>().originalPosition.position = player.transform.position;
+        playerGhost.GetComponent<BaseGhostAI>().ResetPlayerGhost(player);
         foreach (GameObject enemy in enemies)
         {
             enemy.GetComponent<BaseGhostAI>().Reset();
