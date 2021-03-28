@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using UnityEditor;
@@ -14,9 +15,9 @@ public class GameManager : MonoBehaviour
     public GameObject deathCanvas;
 
     public GameObject player;
+    public GameObject playerGhost;
     public GameObject[] enemies;
     public float ghostRespawnTimer;
-
     private Vector3 _checkPointPosition;
 
     private SpriteRenderer _playerSpriteRenderer;
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        
     }
 
     public void flipGhostType()
@@ -95,11 +97,14 @@ public class GameManager : MonoBehaviour
     
     public void Reset()
     {
-        _playerController.Revive();
+        playerGhost.SetActive(true);
+        playerGhost.transform.position = player.transform.position;
+        playerGhost.GetComponent<BaseGhostAI>().originalPosition.position = player.transform.position;
         foreach (GameObject enemy in enemies)
         {
             enemy.GetComponent<BaseGhostAI>().Reset();
         }
+        _playerController.Revive();
     }
 
     public void DisplayDeathCanvas(bool show)
