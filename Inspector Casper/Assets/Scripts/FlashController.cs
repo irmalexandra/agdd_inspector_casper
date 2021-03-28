@@ -33,14 +33,14 @@ public class FlashController : MonoBehaviour
             {
                 BaseGhostAI targetScript = target.GetComponent<BaseGhostAI>();
                 targetScript.RevealGhost(flashDuration);
-                if (target.gameObject.name == "GhostBig")
-                {
-                    targetScript.FreezeGhost(freezeDuration);
-                }
-                else
+                if (target.gameObject.name == "GhostSmall")
                 {
                     targetScript.KillGhost(0.35f);
                     GameManager.instance.respawnGhost(target);
+                }
+                else
+                {
+                    targetScript.FreezeGhost(freezeDuration);
                 }
             }
             StartCoroutine(CooldownCoroutine());
