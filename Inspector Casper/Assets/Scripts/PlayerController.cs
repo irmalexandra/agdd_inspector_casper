@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour
 		{
 			flashController.CameraFlash();
 		}
+		Debug.Log(grounded);
 	}
 
 	private void FixedUpdate()
@@ -227,14 +228,13 @@ public class PlayerController : MonoBehaviour
 
 
 
-		if (_ground && _ground.CompareTag("Stairs") )
+		if (_ground && _ground.CompareTag("Stairs") && move == 0f)
 		{
 			//rigidbody2D.mass = 0;
-			//rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
-
-			var thing = transform.GetComponent<CircleCollider2D>().sharedMaterial;
-			thing.friction = 20;
-			GetComponent<CircleCollider2D>().sharedMaterial = thing;
+			//rigidbody2D.constraints = RigidbodyConstraints2D.FreezePosition;
+			var thing = rigidbody2D.sharedMaterial;
+			thing.friction = 10000f;
+			rigidbody2D.sharedMaterial = thing;
 		}
 		else
 		{
@@ -250,10 +250,11 @@ public class PlayerController : MonoBehaviour
 			Debug.Log(move);*/
 			/*rigidbody2D.constraints = RigidbodyConstraints2D.None;
 			rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;*/
-			transform.GetComponent<CircleCollider2D>().sharedMaterial.friction = 0;
+			var thing = rigidbody2D.sharedMaterial;
+			thing.friction = 0f;
+			rigidbody2D.sharedMaterial = thing;
 		}
-
-
+		
 		// If crouching, check to see if the character can stand up
 		/*if (!crouch)
 		{
@@ -301,6 +302,8 @@ public class PlayerController : MonoBehaviour
 			if (Input.GetKeyDown("s") && !_fallingThroughGround)
 			{
 				_fallingThroughGround = true;
+				rigidbody2D.constraints = RigidbodyConstraints2D.None;
+				rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
 				/*foreach (var collider in _colliders)
 				{
 					Physics2D.IgnoreCollision(_ground, collider, true);
@@ -328,7 +331,9 @@ public class PlayerController : MonoBehaviour
 					StartCoroutine(fix_platform(_effector));
 				}
 			}*/
-
+			
+			
+		
 			// Move the character by finding the target velocity
 			Vector3 targetVelocity = new Vector2(move * 10f, rigidbody2D.velocity.y);
 			// And then smoothing it out and applying it to the character
