@@ -239,10 +239,11 @@ public class BaseGhostAI : MonoBehaviour
     }
 
     public void ResetPlayerGhost()
-    {
+    {        
+        _player = GameManager.instance.getPlayer().GetComponent<Transform>();
         transform.gameObject.SetActive(true);
-        transform.position = _player.transform.position;
-        originalPosition.position = _player.transform.position;
+        transform.position = _player.position;
+        originalPosition.position = _player.position;
     }
     
 }
