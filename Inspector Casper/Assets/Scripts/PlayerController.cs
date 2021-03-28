@@ -89,7 +89,6 @@ public class PlayerController : MonoBehaviour
 		{
 			flashController.CameraFlash();
 		}
-		Debug.Log(grounded);
 	}
 
 	private void FixedUpdate()
@@ -114,7 +113,7 @@ public class PlayerController : MonoBehaviour
 			{
 				Physics2D.IgnoreCollision(collider, ceiling, false);
 			}*/
-			_fallingThroughGround = false;
+			//_fallingThroughGround = false;
 
 		}
 
@@ -299,11 +298,9 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKeyDown("s") && !_fallingThroughGround)
+			if (Input.GetKey(KeyCode.S))
 			{
-				_fallingThroughGround = true;
-				rigidbody2D.constraints = RigidbodyConstraints2D.None;
-				rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+				//_fallingThroughGround = true;
 				/*foreach (var collider in _colliders)
 				{
 					Physics2D.IgnoreCollision(_ground, collider, true);
@@ -313,11 +310,15 @@ public class PlayerController : MonoBehaviour
 				{
 					_effector.rotationalOffset += 180;
 				}*/
+				Debug.Log(_ground+"this is ground");
 				if (_ground)
 				{
 					StairsController stairsController = _ground.GetComponent<StairsController>();
+					Debug.Log(stairsController+ "this is stairscontroller");
+					
 					if (stairsController)
 					{
+						Debug.Log("Stairs Controller is not null");
 						stairsController.flip_effector();
 					}
 				}
