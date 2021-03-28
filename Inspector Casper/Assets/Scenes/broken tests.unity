@@ -173,65 +173,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &759918325
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 759918328}
-  - component: {fileID: 759918327}
-  m_Layer: 9
-  m_Name: GameObject
-  m_TagString: Stairs
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!60 &759918327
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759918325}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.69519806, y: 1.4792147}
-      - {x: -0.69485384, y: -1.0673268}
-      - {x: 2.1119757, y: -1.0678811}
---- !u!4 &759918328
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759918325}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 85.91, y: -6.89, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &896614699
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,7 +223,7 @@ PlatformEffector2D:
   m_RotationalOffset: 45
   m_UseOneWay: 1
   m_UseOneWayGrouping: 1
-  m_SurfaceArc: 34.2
+  m_SurfaceArc: 180
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 0.2
@@ -295,7 +236,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 896614699}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: e8c71a0036e530b4fa14e0eef6739ce6, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
@@ -2026,8 +1967,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b1df6c445521047a35b3301a57750f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position1: 0
-  position2: 0
+  position1: 45
+  position2: 225
 --- !u!1 &1360161116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2078,7 +2019,7 @@ PlatformEffector2D:
   m_RotationalOffset: -45
   m_UseOneWay: 1
   m_UseOneWayGrouping: 1
-  m_SurfaceArc: 34.2
+  m_SurfaceArc: 180
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 0.2
@@ -4612,22 +4553,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5003597763459312235, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: e8c71a0036e530b4fa14e0eef6739ce6, type: 2}
-    - target: {fileID: 5003597763459312235, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
-      propertyPath: m_AngularDrag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6421893228849045927, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7039790114807343831, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 49527d112ee201c4bb275b314a4d53bf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c236eff1acffd645ae284c8185c10cc, type: 3}
 --- !u!1 &5165132660898072221
