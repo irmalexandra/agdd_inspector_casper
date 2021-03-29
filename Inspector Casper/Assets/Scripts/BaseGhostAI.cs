@@ -48,6 +48,11 @@ public class BaseGhostAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (transform.name == "PlayerGhost")
+        {
+            Debug.Log(frozen);
+
+        }
         if (!frozen)
         {
             if (targetVisible && _playerScript._alive)
@@ -122,17 +127,17 @@ public class BaseGhostAI : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Collider2D[] colliders = _player.GetComponents<Collider2D>();
-            Collider2D ghostCollider = GetComponent<BoxCollider2D>();
-            foreach (Collider2D collider in colliders)
-            {
-                Physics2D.IgnoreCollision(collider, ghostCollider, true);
-            }
-            return;
-        }
-        Physics2D.IgnoreCollision(other.collider, gameObject.GetComponent<Collider2D>());
+        // if (other.gameObject.CompareTag("Player"))
+        // {
+        //     Collider2D[] colliders = _player.GetComponents<Collider2D>();
+        //     Collider2D ghostCollider = GetComponent<BoxCollider2D>();
+        //     foreach (Collider2D collider in colliders)
+        //     {
+        //         Physics2D.IgnoreCollision(collider, ghostCollider, true);
+        //     }
+        //     return;
+        // }
+        // Physics2D.IgnoreCollision(other.collider, gameObject.GetComponent<Collider2D>());
         
     }
 
@@ -230,12 +235,12 @@ public class BaseGhostAI : MonoBehaviour
     {
         transform.position = originalPosition.position;
         targetVisible = false;
-        Collider2D[] colliders = _player.GetComponents<Collider2D>();
-        Collider2D ghostCollider = GetComponent<BoxCollider2D>();
-        foreach (Collider2D collider in colliders)
-        {
-            Physics2D.IgnoreCollision(collider, ghostCollider, false);
-        }
+        // Collider2D[] colliders = _player.GetComponents<Collider2D>();
+        // Collider2D ghostCollider = GetComponent<BoxCollider2D>();
+        // foreach (Collider2D collider in colliders)
+        // {
+        //     Physics2D.IgnoreCollision(collider, ghostCollider, false);
+        // }
     }
 
     public void ResetPlayerGhost()
@@ -243,6 +248,7 @@ public class BaseGhostAI : MonoBehaviour
         _player = GameManager.instance.getPlayer().GetComponent<Transform>();
         transform.gameObject.SetActive(true);
         transform.position = _player.position;
+        targetVisible = false;
         originalPosition.position = _player.position;
     }
     
