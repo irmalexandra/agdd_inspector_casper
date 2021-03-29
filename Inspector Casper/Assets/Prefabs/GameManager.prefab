@@ -46,4 +46,4 @@ MonoBehaviour:
   deathCanvas: {fileID: 0}
   player: {fileID: 0}
   enemies: []
-  test: {fileID: 0}
+  ghostRespawnTimer: 60

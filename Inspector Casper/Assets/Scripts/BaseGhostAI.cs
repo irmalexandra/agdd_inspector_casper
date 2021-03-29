@@ -1,6 +1,7 @@
  using System;
  using System.Collections;
-using UnityEngine;
+ using System.Collections.Generic;
+ using UnityEngine;
 
 public class BaseGhostAI : MonoBehaviour
 {
@@ -32,9 +33,7 @@ public class BaseGhostAI : MonoBehaviour
         _spriteRenderer = transform.gameObject.GetComponent<SpriteRenderer>();
         _player = GameManager.instance.getPlayer().GetComponent<Transform>();
         _playerScript = _player.GetComponent<PlayerController>();
-        Physics2D.IgnoreLayerCollision(7, 10);
         body = GetComponent<Rigidbody2D>();
-        // originalPosition.position = transform.position;
     }
 
     // Update is called once per frame
@@ -161,7 +160,6 @@ public class BaseGhostAI : MonoBehaviour
         bool done = false;
         while(!done)
         {
-
             float perc;
         
             perc = Time.time - startTime;
@@ -185,7 +183,6 @@ public class BaseGhostAI : MonoBehaviour
         bool done = false;
         while(!done)
         {
-
             float perc;
         
             perc = Time.time - startTime;
@@ -198,11 +195,34 @@ public class BaseGhostAI : MonoBehaviour
         frozen = false;
     }
 
+    public void KillGhost(float duration)
+    {
+        // TODO start death animation
+        StartCoroutine(DeathAnimationCoroutine(duration));
+    }
+    
+    private IEnumerator DeathAnimationCoroutine(float duration)
+    {
+        float startTime = Time.time;
+        bool done = false;
+        while(!done)
+        {
+            float perc;
+        
+            perc = Time.time - startTime;
+            if(perc > duration)
+            {
+                done = true;
+            }
+            yield return null;
+        }
+        transform.position = transform.parent.GetChild(0).position; // Index 0 is the game object "originalPosition"
+        transform.gameObject.SetActive(false);
+    }
+
     private IEnumerator Wait(float seconds)
     {
-  
         yield return new WaitForSeconds(seconds);
-        Debug.Log("ET phone home");
         MoveCharacter(originalPosition.position, roamSpeed);
     }
     
@@ -217,4 +237,13 @@ public class BaseGhostAI : MonoBehaviour
             Physics2D.IgnoreCollision(collider, ghostCollider, false);
         }
     }
+
+    public void ResetPlayerGhost()
+    {        
+        _player = GameManager.instance.getPlayer().GetComponent<Transform>();
+        transform.gameObject.SetActive(true);
+        transform.position = _player.position;
+        originalPosition.position = _player.position;
+    }
+    
 }

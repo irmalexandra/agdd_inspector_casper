@@ -12,6 +12,9 @@ TagManager:
   - YouDiedText
   - Checkpoint
   - EnemyShapeCollider
+  - DeadlyProp
+  - SpeechBubble
+  - BaseScene
   layers:
   - Default
   - TransparentFX

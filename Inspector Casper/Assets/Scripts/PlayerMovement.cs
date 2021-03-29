@@ -12,9 +12,11 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalMove;
     private bool jump;
     private bool crouch;
+    private bool canMove;
 
     void Update()
     {
+        canMove = controller._alive;
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
@@ -40,14 +42,17 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("Aiming", false);
         }
-
         
-
+        animator.SetBool("Nervous", controller._nervous); 
+           
     }
 
     private void FixedUpdate()
     {
-        controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+        if (canMove)
+        {
+            controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+        }
         jump = false;
         //animator.SetBool("Jumping", false);
         if (controller.grounded){
@@ -55,5 +60,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         animator.SetBool("Dead", !controller._alive);
+            
     }
+
 }
