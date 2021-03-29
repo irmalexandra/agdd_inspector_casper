@@ -396,9 +396,11 @@ public class PlayerController : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log(other.gameObject.name);
+		Debug.Log("player box collider:" + other.transform.name);
 		if (!deathTags.Contains(other.gameObject.tag) || !_alive) return;
+		
 		GameManager.instance.getPlayerGhost().SetActive(false);
+		
 		SoundManager.PlaySoundEffect("Death");
 		_alive = false;
 		_bloodScript.spawnBlood();
