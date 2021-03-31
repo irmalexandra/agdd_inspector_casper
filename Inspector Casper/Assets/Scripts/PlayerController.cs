@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		Debug.Log(rigidbody2D.velocity);
 		if (Input.GetButtonDown("Fire1") && _alive)
 		{
 			flashController.CameraFlash();
@@ -365,7 +366,9 @@ public class PlayerController : MonoBehaviour
 				// Add a vertical force to the player.
 				mayJump = 0;
 				grounded = false;
-				rigidbody2D.AddForce(new Vector2(0f, jumpForce));
+				Vector2 newVelocity = new Vector2(rigidbody2D.velocity.x, 20);
+				rigidbody2D.velocity = newVelocity;
+				//rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 			}
 		}
 	}
