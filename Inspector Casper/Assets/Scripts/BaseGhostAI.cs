@@ -199,6 +199,7 @@ public class BaseGhostAI : MonoBehaviour
     public void KillGhost(float duration)
     {
         // TODO start death animation
+        animator.SetBool("Dead", true);
         StartCoroutine(DeathAnimationCoroutine(duration));
     }
     
@@ -218,7 +219,9 @@ public class BaseGhostAI : MonoBehaviour
             yield return null;
         }
         transform.position = transform.parent.GetChild(0).position; // Index 0 is the game object "originalPosition"
+        animator.SetBool("Dead", false);
         transform.gameObject.SetActive(false);
+
     }
 
     private IEnumerator Wait(float seconds)

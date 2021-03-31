@@ -83,12 +83,10 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
 		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
-
 	}
 
 	private void Update()
 	{
-		Debug.Log(insideSafeZone);
 		if (Input.GetButtonDown("Fire1") && _alive)
 		{
 			flashController.CameraFlash();
