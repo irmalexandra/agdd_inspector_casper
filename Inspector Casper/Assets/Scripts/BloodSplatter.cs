@@ -13,8 +13,8 @@ public class BloodSplatter : MonoBehaviour
     public bool dripper = false;
     public float dripPerSec = 1.0f;
     public List<Collider2D> ignorables;
-    public int velocityHigh;
-    public int velocityLow;
+    public float velocityHigh;
+    public float velocityLow;
     
 
     private float _timer = 0f;
