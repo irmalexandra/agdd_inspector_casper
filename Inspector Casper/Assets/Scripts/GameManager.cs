@@ -40,19 +40,18 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         String playerSpawnPointKey = (PlayerPrefs.GetString("door"));
-        if (playerSpawnPointKey == "")
+        if (playerSpawnPointKey != "")
         {
-            return;
-        }
-
-        foreach (var point in spawnPoints)
-        {
-            if (point.name == playerSpawnPointKey)
+            foreach (var point in spawnPoints)
             {
-                player.transform.position = point.spawnPoint.position;
-                break;
+                if (point.name == playerSpawnPointKey)
+                {
+                    player.transform.position = point.spawnPoint.position;
+                    break;
+                }
             }
         }
+        
         _checkPointPosition = player.transform.position;
     }
 
