@@ -49,7 +49,7 @@ public class GhostSense : MonoBehaviour
             {
                 if (playerController._nervous)
                 {
-                    Debug.Log("Starting Coroutine in GhostSense");
+                    // Debug.Log("Starting Coroutine in GhostSense");
                     StartCoroutine(tutorial ? Wait(5) : Wait(2));
                 }
             }
@@ -65,7 +65,7 @@ public class GhostSense : MonoBehaviour
         SoundManager.PlaySoundEffect("Heartbeat");
         if (tutorial)
         {
-            Debug.Log("Turning off tutorial text");
+            // Debug.Log("Turning off tutorial text");
             speechSpriteRenderer.enabled = false;
             textBox.text = "";
             tutorial = false;

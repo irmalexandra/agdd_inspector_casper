@@ -48,11 +48,7 @@ public class BaseGhostAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (transform.name == "PlayerGhost")
-        {
-            Debug.Log(frozen);
 
-        }
         if (!frozen)
         {
             if (targetVisible && _playerScript._alive)

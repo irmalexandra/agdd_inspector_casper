@@ -79,8 +79,7 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
 		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
-		Debug.Log(GetComponent<CircleCollider2D>().transform.position);
-		Debug.Log(rigidbody2D.transform.position);
+
 	}
 
 	private void Update()
@@ -308,15 +307,15 @@ public class PlayerController : MonoBehaviour
 				{
 					_effector.rotationalOffset += 180;
 				}*/
-				Debug.Log(_ground+"this is ground");
+				// Debug.Log(_ground+"this is ground");
 				if (_ground)
 				{
 					StairsController stairsController = _ground.GetComponent<StairsController>();
-					Debug.Log(stairsController+ "this is stairscontroller");
+					// Debug.Log(stairsController+ "this is stairscontroller");
 					
 					if (stairsController)
 					{
-						Debug.Log("Stairs Controller is not null");
+						// Debug.Log("Stairs Controller is not null");
 						stairsController.flip_effector();
 					}
 				}
@@ -396,7 +395,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("player box collider:" + other.transform.name);
+		//  Debug.Log("player box collider:" + other.transform.name);
 		if (!deathTags.Contains(other.gameObject.tag) || !_alive) return;
 		
 		GameManager.instance.getPlayerGhost().SetActive(false);
