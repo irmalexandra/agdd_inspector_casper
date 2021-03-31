@@ -367,7 +367,7 @@ public class PlayerController : MonoBehaviour
 				// Add a vertical force to the player.
 				mayJump = 0;
 				grounded = false;
-				Vector2 newVelocity = new Vector2(rigidbody2D.velocity.x, 20);
+				Vector2 newVelocity = new Vector2(rigidbody2D.velocity.x, jumpForce);
 				rigidbody2D.velocity = newVelocity;
 				//rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 			}
