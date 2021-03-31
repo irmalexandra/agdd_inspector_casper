@@ -261,7 +261,7 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.90066224
   m_HasExitTime: 0
-  m_HasFixedDuration: 0
+  m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -388,7 +388,7 @@ AnimatorStateMachine:
     m_Position: {x: 700, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4505978003718115994}
-    m_Position: {x: 610, y: 500, z: 0}
+    m_Position: {x: 650, y: 500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2647534235427897347}
     m_Position: {x: 100, y: 160, z: 0}
@@ -397,10 +397,10 @@ AnimatorStateMachine:
     m_Position: {x: 400, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3225357216465351607}
-    m_Position: {x: 970, y: 190, z: 0}
+    m_Position: {x: 930, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5083379805710280757}
-    m_Position: {x: 930, y: 580, z: 0}
+    m_Position: {x: 660, y: 640, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -425,7 +425,6 @@ AnimatorState:
   - {fileID: 8262718259538510959}
   - {fileID: -2104377335624175684}
   - {fileID: -4176616092838098809}
-  - {fileID: 2804064416927241353}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -804,37 +803,37 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Jumping
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Aiming
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: HasKey
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Dead
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Nervous
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -993,7 +992,6 @@ AnimatorState:
   - {fileID: 3526463920035368122}
   - {fileID: -1076463355649638778}
   - {fileID: 3586525063423978613}
-  - {fileID: -7766486764512903835}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -1020,15 +1018,18 @@ AnimatorStateTransition:
   - m_ConditionMode: 4
     m_ConditionEvent: Speed
     m_EventTreshold: 0.01
+  - m_ConditionMode: 2
+    m_ConditionEvent: Nervous
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4157686720785949517}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0.09835452
-  m_ExitTime: 0.99901676
+  m_TransitionDuration: 0.10889348
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9006622
   m_HasExitTime: 1
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
