@@ -56,8 +56,8 @@ public class PlayerController : MonoBehaviour
 	private bool firstDeath = true;
 
 	public GameObject inventoryHUD;
-	private int keyImageOffsetX = -275;
-	private int keyImageOffsetY = -90;
+	private int keyImageOffsetX = -340;
+	private int keyImageOffsetY = -150;
 	private Dictionary<string, bool> keysHeld = new Dictionary<string, bool>();
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
@@ -468,12 +468,12 @@ public class PlayerController : MonoBehaviour
 		bubbleTextBox.text = "";
 	}
 
-	public void takeKey(string name, Sprite keySprite)
+	public void takeKey(string name, Sprite keySprite, Color keyColor)
 	{
 		
 		
 		keysHeld.Add(name, true);
-		addKeyToHUD(keySprite);
+		addKeyToHUD(keySprite, keyColor);
 		foreach (var key in keysHeld)
 		{
 			Debug.Log(key);
@@ -481,37 +481,33 @@ public class PlayerController : MonoBehaviour
 		
 	}
 
-	private void addKeyToHUD(Sprite keySprite)
+	private void addKeyToHUD(Sprite keySprite, Color keyColor)
 	{
 		GameObject newObj = new GameObject();
 		newObj.SetActive(true);
 		Image newImage = newObj.AddComponent<Image>();
 
-		newObj.GetComponent<RectTransform>().SetParent(inventoryHUD.transform);
-		newImage.sprite = keySprite;
-
 		
 		var transfrom = newObj.GetComponent<RectTransform>();
-
-		
-		
-		
-		var oldPos = transfrom.parent.position;
-		var newX = oldPos.x + keyImageOffsetX;
-		var newY = oldPos.y + keyImageOffsetY;
-		var newPos = new Vector3(newX, newY, 0);
-		var newpos1 = new Vector3(-200, -45, 0);
-		transfrom.position = newpos1;
-		
-		keyImageOffsetX += 40;
+		transfrom.SetParent(inventoryHUD.transform);
 		var scale = transfrom.localScale;
 		scale.x = 0.25f;
 		scale.y = 0.25f;
 		scale.z = 0.25f;
 		transfrom.localScale = scale;
+		
+		newImage.sprite = keySprite;
+		newImage.color = keyColor;
+		
+		var newPos = new Vector3(keyImageOffsetX, keyImageOffsetY, 0);
+		transfrom.localPosition = newPos;
+		
+		keyImageOffsetX += 40;
+	}
 
-		
-		
+	public Dictionary<string, bool> GetKeys()
+	{
+		return keysHeld;
 	}
 }
 
