@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 	
 	public bool _alive = true;
 	public bool _nervous = false;
+	public bool insideSafeZone = false;
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		Debug.Log(insideSafeZone);
 		if (Input.GetButtonDown("Fire1") && _alive)
 		{
 			flashController.CameraFlash();
@@ -97,7 +99,6 @@ public class PlayerController : MonoBehaviour
 		{
 			GameManager.instance.DisplayDeathCanvas(false);
 			GameManager.instance.Reset();
-
 		}
 
 		bool wasGrounded = grounded;
