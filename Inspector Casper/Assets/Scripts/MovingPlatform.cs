@@ -75,7 +75,7 @@ public class MovingPlatform : MonoBehaviour
     private void OnCollisionExit2D(Collision2D other)
     {
         var player = other.gameObject;
-        Debug.Log(player);
+        // Debug.Log(player);
         player.transform.parent = GameObject.FindGameObjectWithTag("BaseScene").transform;
     }
 }
