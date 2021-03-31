@@ -17333,8 +17333,12 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3483663000072441863, guid: 8d7bffd2d87956e43a50b5521baafa49, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483663000072441863, guid: 8d7bffd2d87956e43a50b5521baafa49, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.4
+      value: -3.33
       objectReference: {fileID: 0}
     - target: {fileID: 3483663000072441863, guid: 8d7bffd2d87956e43a50b5521baafa49, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17344,6 +17348,11 @@ PrefabInstance:
       propertyPath: bubbleTextBox
       value: 
       objectReference: {fileID: 1463186416}
+    - target: {fileID: 4156780547598093211, guid: 8d7bffd2d87956e43a50b5521baafa49, type: 3}
+      propertyPath: textToDisplay
+      value: Cold spot... There must be a ghost nearby! I can see my breath and hear
+        my heart beating!
+      objectReference: {fileID: 0}
     - target: {fileID: 4161018053919482299, guid: 8d7bffd2d87956e43a50b5521baafa49, type: 3}
       propertyPath: m_RootOrder
       value: 3
