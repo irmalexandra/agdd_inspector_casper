@@ -18,8 +18,14 @@ public class GameManager : MonoBehaviour
     public GameObject playerGhost;
     public GameObject[] enemies;
     public float ghostRespawnTimer;
+    [Serializable]
+    public struct SpawnPoints {
+        public string name;
+        public GameObject spawnPoint;
+    }
+    public SpawnPoints[] spawnPoints;
+    
     private Vector3 _checkPointPosition;
-
     private SpriteRenderer _playerSpriteRenderer;
     private PlayerController _playerController;
     private PlayerMovement _playerMovement;
@@ -51,6 +57,11 @@ public class GameManager : MonoBehaviour
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        
+        Debug.Log(spawnPoints[0].name);
+        Debug.Log(spawnPoints[0].spawnPoint);
+        
+       
         
     }
 
