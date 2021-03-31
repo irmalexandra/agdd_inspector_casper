@@ -20,7 +20,8 @@ public class KeySystem : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 var keySprite = gameObject.GetComponent<SpriteRenderer>().sprite;
-                GameManager.instance.getPlayerController().takeKey(name, keySprite);
+                var keyColor = gameObject.GetComponent<SpriteRenderer>().color;
+                GameManager.instance.getPlayerController().takeKey(name, keySprite, keyColor);
                 GameManager.instance.getPlayerController().showInteractiveButton(false);
             }
         }
@@ -37,6 +38,13 @@ public class KeySystem : MonoBehaviour
         {
             playerInRange = true;
         }
-        
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
     }
 }
