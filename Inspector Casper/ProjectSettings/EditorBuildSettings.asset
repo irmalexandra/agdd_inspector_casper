@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KeyChamber.unity
     guid: d4a9ab163f5a16b44b62e64ac8f5c699
+  - enabled: 1
+    path: Assets/Scenes/JailCell.unity
+    guid: 37fb270ae6c7df2468b86f74c259a834
   m_configObjects: {}
