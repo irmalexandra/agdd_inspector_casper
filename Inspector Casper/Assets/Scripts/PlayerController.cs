@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 public class PlayerController : MonoBehaviour
@@ -53,7 +54,10 @@ public class PlayerController : MonoBehaviour
 	public bool _nervous = false;
 	public bool insideSafeZone = false;
 	private bool firstDeath = true;
-	
+
+	public GameObject inventoryHUD;
+	private int keyImageOffsetX = -275;
+	private int keyImageOffsetY = -90;
 	private Dictionary<string, bool> keysHeld = new Dictionary<string, bool>();
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
@@ -168,9 +172,9 @@ public class PlayerController : MonoBehaviour
 
 		if (bubbleTextBox != null)
 		{
-			var quaternion = bubbleTextBox.GetComponent<RectTransform>().localScale;
+			var quaternion = bubbleTextBox.GetComponentInChildren<RectTransform>().localScale;
 			quaternion.x *= -1;
-			bubbleTextBox.GetComponent<RectTransform>().localScale = quaternion;
+			bubbleTextBox.GetComponentInChildren<RectTransform>().localScale = quaternion;
 		}
 		
 
@@ -464,9 +468,50 @@ public class PlayerController : MonoBehaviour
 		bubbleTextBox.text = "";
 	}
 
-	public void takeKey(string name)
+	public void takeKey(string name, Sprite keySprite)
 	{
+		
+		
 		keysHeld.Add(name, true);
+		addKeyToHUD(keySprite);
+		foreach (var key in keysHeld)
+		{
+			Debug.Log(key);
+		}
+		
+	}
+
+	private void addKeyToHUD(Sprite keySprite)
+	{
+		GameObject newObj = new GameObject();
+		newObj.SetActive(true);
+		Image newImage = newObj.AddComponent<Image>();
+
+		newObj.GetComponent<RectTransform>().SetParent(inventoryHUD.transform);
+		newImage.sprite = keySprite;
+
+		
+		var transfrom = newObj.GetComponent<RectTransform>();
+
+		
+		
+		
+		var oldPos = transfrom.parent.position;
+		var newX = oldPos.x + keyImageOffsetX;
+		var newY = oldPos.y + keyImageOffsetY;
+		var newPos = new Vector3(newX, newY, 0);
+		var newpos1 = new Vector3(-200, -45, 0);
+		transfrom.position = newpos1;
+		
+		keyImageOffsetX += 40;
+		var scale = transfrom.localScale;
+		scale.x = 0.25f;
+		scale.y = 0.25f;
+		scale.z = 0.25f;
+		transfrom.localScale = scale;
+
+		
+		
 	}
 }
 

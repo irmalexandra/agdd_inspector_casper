@@ -6,8 +6,7 @@ using UnityEngine;
 public class KeySystem : MonoBehaviour
 {
     // Start is called before the first frame update
-
-    public GameObject button_display;
+    
 
     private bool playerInRange = false;
     public string name;
@@ -20,25 +19,24 @@ public class KeySystem : MonoBehaviour
             if (Input.GetKey("e"))
             {
                 gameObject.SetActive(false);
-                GameManager.instance.getPlayerController().takeKey(name);
+                var keySprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+                GameManager.instance.getPlayerController().takeKey(name, keySprite);
+                GameManager.instance.getPlayerController().showInteractiveButton(false);
             }
         }
         else
         {
-            button_display.SetActive(false);
+            GameManager.instance.getPlayerController().showInteractiveButton(false);
         }
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        playerInRange = true;
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+        
     }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        playerInRange = false;
-    }
-    
-    
 }
