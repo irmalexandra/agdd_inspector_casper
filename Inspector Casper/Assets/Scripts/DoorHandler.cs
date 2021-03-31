@@ -8,7 +8,9 @@ public class DoorHandler : MonoBehaviour
 {
     // Start is called before the first frame update
     public int sceneIndex;
+    public string doorName;
     private bool _inRange = false;
+    
 
 
     private void FixedUpdate()
@@ -17,6 +19,7 @@ public class DoorHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                PlayerPrefs.SetString("door", doorName);
                 SceneManager.LoadScene(sceneIndex);
             }
         }
