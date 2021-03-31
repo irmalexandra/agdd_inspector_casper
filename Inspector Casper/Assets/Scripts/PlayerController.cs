@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
 	public bool _nervous = false;
 	public bool insideSafeZone = false;
 	private bool firstDeath = true;
+	
+	private Dictionary<string, bool> keysHeld = new Dictionary<string, bool>();
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -460,6 +462,11 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds(7);
 		speechRenderer.enabled = false;
 		bubbleTextBox.text = "";
+	}
+
+	public void takeKey(string name)
+	{
+		keysHeld.Add(name, true);
 	}
 }
 
