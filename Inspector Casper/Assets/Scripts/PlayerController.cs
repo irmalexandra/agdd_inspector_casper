@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 	
 	
 	public GameObject interactiveButton;
+	private GameObject speechBubble;
+	private SpriteRenderer speechRenderer;
 	public TextMeshPro bubbleTextBox;
 	public List<string> deathTags;
 	public GameObject personalBlood;
@@ -49,6 +51,8 @@ public class PlayerController : MonoBehaviour
 	
 	public bool _alive = true;
 	public bool _nervous = false;
+	public bool insideSafeZone = false;
+	private bool firstDeath = true;
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -79,12 +83,10 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
 		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
-
 	}
 
 	private void Update()
 	{
-		Debug.Log(rigidbody2D.velocity);
 		if (Input.GetButtonDown("Fire1") && _alive)
 		{
 			flashController.CameraFlash();
@@ -97,7 +99,6 @@ public class PlayerController : MonoBehaviour
 		{
 			GameManager.instance.DisplayDeathCanvas(false);
 			GameManager.instance.Reset();
-
 		}
 
 		bool wasGrounded = grounded;
@@ -416,6 +417,34 @@ public class PlayerController : MonoBehaviour
 		Vector3 spawnPosition = GameManager.instance.getCheckpointPosition();
 		transform.position = spawnPosition;
 		_alive = true;
+		
+		speechBubble = GameObject.FindGameObjectWithTag("SpeechBubble");
+		if (speechBubble)
+		{
+			speechRenderer = speechBubble.gameObject.GetComponent<SpriteRenderer>();
+		}
+
+		if (!speechRenderer.enabled)
+		{
+			if (firstDeath)
+			{
+				firstDeath = false;
+				speechRenderer.enabled = true;
+				bubbleTextBox.text = "Woah.. what happened. Im whole again.. but some part of me feels missing...";
+				StartCoroutine(RespawnWait());
+
+			}
+			else
+			{
+				if (insideSafeZone)
+				{
+					speechRenderer.enabled = true;
+					bubbleTextBox.text = "The blue flame must have saved my soul from passing into the afterlife..";
+					StartCoroutine(RespawnWait());
+
+				}
+			}
+		}
 	}
 
 
@@ -424,6 +453,13 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds(1);
 		
 		GameManager.instance.DisplayDeathCanvas(true);
+	}
+
+	private IEnumerator RespawnWait()
+	{
+		yield return new WaitForSeconds(7);
+		speechRenderer.enabled = false;
+		bubbleTextBox.text = "";
 	}
 }
 

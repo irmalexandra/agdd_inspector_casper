@@ -23,6 +23,10 @@ public class GhostSense : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         playerController = GameManager.instance.getPlayerController();
+        if (!playerController)
+        {
+            return;
+        }
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         if (!(other is BoxCollider2D)) return;
         if (playerController._nervous) { return; }
