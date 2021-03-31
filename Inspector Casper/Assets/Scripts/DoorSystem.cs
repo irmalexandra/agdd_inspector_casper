@@ -15,7 +15,7 @@ public class DoorSystem : MonoBehaviour
     {
         if (playerInRange)
         {
-            GameManager.instance.getPlayerController().showInteractiveButton(true);
+            
             if (Input.GetKey("e"))
             {
                 Debug.Log("Pressed E");
@@ -32,10 +32,6 @@ public class DoorSystem : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            GameManager.instance.getPlayerController().showInteractiveButton(false);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,6 +39,7 @@ public class DoorSystem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            GameManager.instance.getPlayerController().showInteractiveButton(true);
         }
     }
     
@@ -51,6 +48,7 @@ public class DoorSystem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            GameManager.instance.getPlayerController().showInteractiveButton(false);
         }
     }
 }

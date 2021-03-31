@@ -470,15 +470,8 @@ public class PlayerController : MonoBehaviour
 
 	public void takeKey(string name, Sprite keySprite, Color keyColor)
 	{
-		
-		
 		keysHeld.Add(name, true);
 		addKeyToHUD(keySprite, keyColor);
-		foreach (var key in keysHeld)
-		{
-			Debug.Log(key);
-		}
-		
 	}
 
 	private void addKeyToHUD(Sprite keySprite, Color keyColor)

@@ -8,27 +8,23 @@ public class KeySystem : MonoBehaviour
     // Start is called before the first frame update
     
 
-    private bool playerInRange = false;
+    private bool playerInRange;
     public string name;
     
     private void Update()
     {
         if (playerInRange)
         {
-            GameManager.instance.getPlayerController().showInteractiveButton(true);
+            
             if (Input.GetKey("e"))
             {
                 gameObject.SetActive(false);
                 var keySprite = gameObject.GetComponent<SpriteRenderer>().sprite;
                 var keyColor = gameObject.GetComponent<SpriteRenderer>().color;
                 GameManager.instance.getPlayerController().takeKey(name, keySprite, keyColor);
-                GameManager.instance.getPlayerController().showInteractiveButton(false);
             }
         }
-        else
-        {
-            GameManager.instance.getPlayerController().showInteractiveButton(false);
-        }
+        
     }
 
 
@@ -37,6 +33,7 @@ public class KeySystem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            GameManager.instance.getPlayerController().showInteractiveButton(true);
         }
     }
     
@@ -45,6 +42,7 @@ public class KeySystem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            GameManager.instance.getPlayerController().showInteractiveButton(false);
         }
     }
 }
