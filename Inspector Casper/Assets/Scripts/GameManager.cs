@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     [Serializable]
     public struct SpawnPoints {
         public string name;
-        public GameObject spawnPoint;
+        public Transform spawnPoint;
     }
     public SpawnPoints[] spawnPoints;
     
@@ -39,6 +39,20 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        String playerSpawnPointKey = (PlayerPrefs.GetString("door"));
+        if (playerSpawnPointKey == "")
+        {
+            return;
+        }
+
+        foreach (var point in spawnPoints)
+        {
+            if (point.name == playerSpawnPointKey)
+            {
+                player.transform.position = point.spawnPoint.position;
+                break;
+            }
+        }
         _checkPointPosition = player.transform.position;
     }
 
@@ -57,12 +71,7 @@ public class GameManager : MonoBehaviour
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        
-        Debug.Log(spawnPoints[0].name);
-        Debug.Log(spawnPoints[0].spawnPoint);
-        
-       
-        
+  
     }
 
     public void flipGhostType()
