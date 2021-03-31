@@ -84,10 +84,10 @@ public class BaseGhostAI : MonoBehaviour
         // body.MovePosition((Vector2)transform.position + (direction * (moveSpeed * Time.deltaTime)));   
         transform.position = Vector3.MoveTowards(transform.position, position,  (moveSpeed * Time.deltaTime));   
 
-        if (position.x < 0 && !facingLeft){
+        if (transform.position.x - position.x > 0 && !facingLeft){
             Flip();
         }
-        else if (position.x > 0 && facingLeft){
+        else if (transform.position.x - position.x < 0 && facingLeft){
             Flip();
         }	
     }
