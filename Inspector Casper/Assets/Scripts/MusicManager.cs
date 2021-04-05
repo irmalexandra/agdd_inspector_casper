@@ -21,7 +21,7 @@ public class MusicManager : MonoBehaviour
     }
     private void Awake()
     {
-        Debug.Log("this is instance", _instance);
+        // Debug.Log("this is instance", _instance);
         if(_instance == null)
         {
 

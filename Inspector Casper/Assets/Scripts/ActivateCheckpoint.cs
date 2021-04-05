@@ -34,5 +34,4 @@ public class ActivateCheckpoint : MonoBehaviour
         GameManager.instance.setCheckpoint(transform.position);
         Activate();
     }
-
 }

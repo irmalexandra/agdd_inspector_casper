@@ -68,14 +68,15 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.name != "Player") return;
         var player = other.gameObject;
         player.transform.parent = transform;
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
+        if (other.gameObject.name != "Player") return;
         var player = other.gameObject;
-        Debug.Log(player);
         player.transform.parent = GameObject.FindGameObjectWithTag("BaseScene").transform;
     }
 }

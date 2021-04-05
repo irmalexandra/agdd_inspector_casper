@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 public class PlayerController : MonoBehaviour
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour
 	
 	
 	public GameObject interactiveButton;
+	private GameObject speechBubble;
+	private SpriteRenderer speechRenderer;
 	public TextMeshPro bubbleTextBox;
 	public List<string> deathTags;
 	public GameObject personalBlood;
@@ -49,6 +52,13 @@ public class PlayerController : MonoBehaviour
 	
 	public bool _alive = true;
 	public bool _nervous = false;
+	public bool insideSafeZone = false;
+	private bool firstDeath = true;
+
+	public GameObject inventoryHUD;
+	private int keyImageOffsetX = -340;
+	private int keyImageOffsetY = -150;
+	private Dictionary<string, bool> keysHeld = new Dictionary<string, bool>();
 
 	[Header("Events")] [Space] public UnityEvent onLandEvent;
 
@@ -79,8 +89,6 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
 		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
-		Debug.Log(GetComponent<CircleCollider2D>().transform.position);
-		Debug.Log(rigidbody2D.transform.position);
 	}
 
 	private void Update()
@@ -97,7 +105,6 @@ public class PlayerController : MonoBehaviour
 		{
 			GameManager.instance.DisplayDeathCanvas(false);
 			GameManager.instance.Reset();
-
 		}
 
 		bool wasGrounded = grounded;
@@ -165,9 +172,9 @@ public class PlayerController : MonoBehaviour
 
 		if (bubbleTextBox != null)
 		{
-			var quaternion = bubbleTextBox.GetComponent<RectTransform>().localScale;
+			var quaternion = bubbleTextBox.GetComponentInChildren<RectTransform>().localScale;
 			quaternion.x *= -1;
-			bubbleTextBox.GetComponent<RectTransform>().localScale = quaternion;
+			bubbleTextBox.GetComponentInChildren<RectTransform>().localScale = quaternion;
 		}
 		
 
@@ -308,15 +315,15 @@ public class PlayerController : MonoBehaviour
 				{
 					_effector.rotationalOffset += 180;
 				}*/
-				Debug.Log(_ground+"this is ground");
+				// Debug.Log(_ground+"this is ground");
 				if (_ground)
 				{
 					StairsController stairsController = _ground.GetComponent<StairsController>();
-					Debug.Log(stairsController+ "this is stairscontroller");
+					// Debug.Log(stairsController+ "this is stairscontroller");
 					
 					if (stairsController)
 					{
-						Debug.Log("Stairs Controller is not null");
+						// Debug.Log("Stairs Controller is not null");
 						stairsController.flip_effector();
 					}
 				}
@@ -366,7 +373,9 @@ public class PlayerController : MonoBehaviour
 				// Add a vertical force to the player.
 				mayJump = 0;
 				grounded = false;
-				rigidbody2D.AddForce(new Vector2(0f, jumpForce));
+				Vector2 newVelocity = new Vector2(rigidbody2D.velocity.x, jumpForce);
+				rigidbody2D.velocity = newVelocity;
+				//rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 			}
 		}
 	}
@@ -396,7 +405,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("player box collider:" + other.transform.name);
+		//  Debug.Log("player box collider:" + other.transform.name);
 		if (!deathTags.Contains(other.gameObject.tag) || !_alive) return;
 		
 		GameManager.instance.getPlayerGhost().SetActive(false);
@@ -414,6 +423,34 @@ public class PlayerController : MonoBehaviour
 		Vector3 spawnPosition = GameManager.instance.getCheckpointPosition();
 		transform.position = spawnPosition;
 		_alive = true;
+		
+		speechBubble = GameObject.FindGameObjectWithTag("SpeechBubble");
+		if (speechBubble)
+		{
+			speechRenderer = speechBubble.gameObject.GetComponent<SpriteRenderer>();
+		}
+
+		if (!speechRenderer.enabled)
+		{
+			if (firstDeath)
+			{
+				firstDeath = false;
+				speechRenderer.enabled = true;
+				bubbleTextBox.text = "Woah.. what happened. Im whole again.. but some part of me feels missing...";
+				StartCoroutine(RespawnWait());
+
+			}
+			else
+			{
+				if (insideSafeZone)
+				{
+					speechRenderer.enabled = true;
+					bubbleTextBox.text = "The blue flame must have saved my soul from passing into the afterlife..";
+					StartCoroutine(RespawnWait());
+
+				}
+			}
+		}
 	}
 
 
@@ -422,6 +459,48 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds(1);
 		
 		GameManager.instance.DisplayDeathCanvas(true);
+	}
+
+	private IEnumerator RespawnWait()
+	{
+		yield return new WaitForSeconds(7);
+		speechRenderer.enabled = false;
+		bubbleTextBox.text = "";
+	}
+
+	public void takeKey(string name, Sprite keySprite, Color keyColor)
+	{
+		keysHeld.Add(name, true);
+		addKeyToHUD(keySprite, keyColor);
+	}
+
+	private void addKeyToHUD(Sprite keySprite, Color keyColor)
+	{
+		GameObject newObj = new GameObject();
+		newObj.SetActive(true);
+		Image newImage = newObj.AddComponent<Image>();
+
+		
+		var transfrom = newObj.GetComponent<RectTransform>();
+		transfrom.SetParent(inventoryHUD.transform);
+		var scale = transfrom.localScale;
+		scale.x = 0.25f;
+		scale.y = 0.25f;
+		scale.z = 0.25f;
+		transfrom.localScale = scale;
+		
+		newImage.sprite = keySprite;
+		newImage.color = keyColor;
+		
+		var newPos = new Vector3(keyImageOffsetX, keyImageOffsetY, 0);
+		transfrom.localPosition = newPos;
+		
+		keyImageOffsetX += 40;
+	}
+
+	public Dictionary<string, bool> GetKeys()
+	{
+		return keysHeld;
 	}
 }
 

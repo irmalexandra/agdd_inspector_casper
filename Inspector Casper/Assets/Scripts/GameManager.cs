@@ -18,8 +18,14 @@ public class GameManager : MonoBehaviour
     public GameObject playerGhost;
     public GameObject[] enemies;
     public float ghostRespawnTimer;
+    [Serializable]
+    public struct SpawnPoints {
+        public string name;
+        public Transform spawnPoint;
+    }
+    public SpawnPoints[] spawnPoints;
+    
     private Vector3 _checkPointPosition;
-
     private SpriteRenderer _playerSpriteRenderer;
     private PlayerController _playerController;
     private PlayerMovement _playerMovement;
@@ -33,6 +39,19 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        String playerSpawnPointKey = (PlayerPrefs.GetString("door"));
+        if (playerSpawnPointKey != "")
+        {
+            foreach (var point in spawnPoints)
+            {
+                if (point.name == playerSpawnPointKey)
+                {
+                    player.transform.position = point.spawnPoint.position;
+                    break;
+                }
+            }
+        }
+        
         _checkPointPosition = player.transform.position;
     }
 
@@ -51,7 +70,7 @@ public class GameManager : MonoBehaviour
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        
+  
     }
 
     public void flipGhostType()
