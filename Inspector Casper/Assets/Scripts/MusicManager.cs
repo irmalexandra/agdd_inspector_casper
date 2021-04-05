@@ -19,33 +19,33 @@ public class MusicManager : MonoBehaviour
             return _instance;
         }
     }
-    private void Awake()
+    void Awake()
     {
-        // Debug.Log("this is instance", _instance);
-        if(_instance == null)
-        {
-
-            _instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            if(this != _instance)
-                Destroy(gameObject);
-        }
+        // if(_instance == null)
+        // {
+        //
+        //     _instance = this;
+        //     DontDestroyOnLoad(this);
+        // }
+        // else
+        // {
+        //     if(this != _instance)
+        //         Destroy(gameObject);
+        // }
         _musicSource = gameObject.GetComponent<AudioSource>();
         _musicSource.playOnAwake = false;
         PlayMusic();
     }
+    
 
-    public void PlayMusic()
+    public static void PlayMusic()
     {
         if (_musicSource.isPlaying) return;
         _musicSource.enabled = true;
         _musicSource.Play();
     }
  
-    public void StopMusic()
+    public static void StopMusic()
     {
         _musicSource.Stop();
     }

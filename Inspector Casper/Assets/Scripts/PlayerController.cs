@@ -453,7 +453,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-
+	static IEnumerator WaitForScreamCoroutine(float duration)
+	{
+		yield return new WaitForSeconds(duration);
+		SoundManager.PlaySoundEffect("Scream");
+	}
+	
 	private IEnumerator Wait()
 	{
 		yield return new WaitForSeconds(1);
@@ -471,6 +476,12 @@ public class PlayerController : MonoBehaviour
 	public void takeKey(string name, Sprite keySprite, Color keyColor)
 	{
 		keysHeld.Add(name, true);
+		SoundManager.PlaySoundEffect("KeyPickup");
+		if (name == "FinalKey")
+		{
+			MusicManager.StopMusic();
+			StartCoroutine(WaitForScreamCoroutine(2));
+		}
 		addKeyToHUD(keySprite, keyColor);
 	}
 
