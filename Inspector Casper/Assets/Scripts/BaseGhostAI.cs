@@ -48,11 +48,7 @@ public class BaseGhostAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (transform.name == "PlayerGhost")
-        {
-            Debug.Log(frozen);
 
-        }
         if (!frozen)
         {
             if (targetVisible && _playerScript._alive)
@@ -88,10 +84,10 @@ public class BaseGhostAI : MonoBehaviour
         // body.MovePosition((Vector2)transform.position + (direction * (moveSpeed * Time.deltaTime)));   
         transform.position = Vector3.MoveTowards(transform.position, position,  (moveSpeed * Time.deltaTime));   
 
-        if (position.x < 0 && !facingLeft){
+        if (transform.position.x - position.x > 0 && !facingLeft){
             Flip();
         }
-        else if (position.x > 0 && facingLeft){
+        else if (transform.position.x - position.x < 0 && facingLeft){
             Flip();
         }	
     }
@@ -203,6 +199,7 @@ public class BaseGhostAI : MonoBehaviour
     public void KillGhost(float duration)
     {
         // TODO start death animation
+        animator.SetBool("Dead", true);
         StartCoroutine(DeathAnimationCoroutine(duration));
     }
     
@@ -222,7 +219,9 @@ public class BaseGhostAI : MonoBehaviour
             yield return null;
         }
         transform.position = transform.parent.GetChild(0).position; // Index 0 is the game object "originalPosition"
+        animator.SetBool("Dead", false);
         transform.gameObject.SetActive(false);
+
     }
 
     private IEnumerator Wait(float seconds)
@@ -244,12 +243,20 @@ public class BaseGhostAI : MonoBehaviour
     }
 
     public void ResetPlayerGhost()
-    {        
+    {
         _player = GameManager.instance.getPlayer().GetComponent<Transform>();
-        transform.gameObject.SetActive(true);
-        transform.position = _player.position;
-        targetVisible = false;
-        originalPosition.position = _player.position;
+        if (!GameManager.instance.getPlayer().GetComponent<PlayerController>().insideSafeZone)
+        {
+            transform.gameObject.SetActive(true);
+            transform.position = _player.position;
+            targetVisible = false;
+            originalPosition.position = _player.position;
+        }
+        else
+        {
+            transform.gameObject.SetActive(false);
+        }
+        
     }
     
 }
