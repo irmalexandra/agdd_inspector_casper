@@ -45,4 +45,6 @@ public class KeySystem : MonoBehaviour
             GameManager.instance.getPlayerController().showInteractiveButton(false);
         }
     }
+    
+
 }
