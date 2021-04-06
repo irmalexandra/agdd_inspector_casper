@@ -9,8 +9,7 @@ public class KeySystem : MonoBehaviour
     
 
     private bool playerInRange;
-    public string name;
-    
+    public string keyName;
     private void Update()
     {
         if (playerInRange)
@@ -21,7 +20,7 @@ public class KeySystem : MonoBehaviour
                 gameObject.SetActive(false);
                 var keySprite = gameObject.GetComponent<SpriteRenderer>().sprite;
                 var keyColor = gameObject.GetComponent<SpriteRenderer>().color;
-                GameManager.instance.getPlayerController().takeKey(name, keySprite, keyColor);
+                GameManager.instance.getPlayer().GetComponent<PlayerController>().takeKey(keyName, keySprite, keyColor);
             }
         }
         
@@ -41,8 +40,12 @@ public class KeySystem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (keyName == "FinalKey")
+            {
+                GameManager.instance.getPlayer().GetComponent<PlayerController>().hunted = true;
+            }
             playerInRange = false;
-            GameManager.instance.getPlayerController().showInteractiveButton(false);
+            GameManager.instance.getPlayer().GetComponent<PlayerController>().showInteractiveButton(false);
         }
     }
     

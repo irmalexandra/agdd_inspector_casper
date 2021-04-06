@@ -47,9 +47,6 @@ public class FlashController : MonoBehaviour
         }
     }
 
-
-
-    
     private IEnumerator CooldownCoroutine()
     {
         onCooldown = true;

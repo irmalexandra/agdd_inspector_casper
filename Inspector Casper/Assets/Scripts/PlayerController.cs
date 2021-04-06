@@ -10,8 +10,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-	[HideInInspector]
-	public bool hunted;
+	[HideInInspector] public bool hunted;
 	[SerializeField] private float jumpForce = 400f; // Amount of force added when the player jumps.
 	[Range(0, 1)] [SerializeField]
 	private float crouchSpeed = .36f; // Amount of maxSpeed applied to crouching movement. 1 = 100%
@@ -403,6 +402,7 @@ public class PlayerController : MonoBehaviour
 	
 	public void showInteractiveButton(bool set)
 	{
+		Debug.Log("in interactive button display");
 		interactiveButton.SetActive(set);
 	}
 
@@ -476,25 +476,25 @@ public class PlayerController : MonoBehaviour
 		bubbleTextBox.text = "";
 	}
 
-	public void takeKey(string name, Sprite keySprite, Color keyColor)
+	public void takeKey(string keyName, Sprite keySprite, Color keyColor)
 	{
-		keysHeld.Add(name, true);
+		keysHeld.Add(keyName, true);
 		SoundManager.PlaySoundEffect("KeyPickup");
-		if (name == "FinalKey")
+		if (keyName == "FinalKey")
 		{
 			MusicManager.Instance.StopMusic();
 			StartCoroutine(WaitForScreamCoroutine(2));
 		}
-		addKeyToHUD(keySprite, keyColor);
+		addKeyToHUD(keyName, keySprite, keyColor);
 	}
 
-	private void addKeyToHUD(Sprite keySprite, Color keyColor)
+	private void addKeyToHUD(string keyName, Sprite keySprite, Color keyColor)
 	{
 		GameObject newObj = new GameObject();
 		newObj.SetActive(true);
 		Image newImage = newObj.AddComponent<Image>();
 
-		
+		newObj.transform.name = keyName;
 		var transfrom = newObj.GetComponent<RectTransform>();
 		transfrom.SetParent(inventoryHUD.transform);
 		var scale = transfrom.localScale;
