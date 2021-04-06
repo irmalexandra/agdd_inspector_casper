@@ -57,9 +57,7 @@ public class GhostSense : MonoBehaviour
                     StartCoroutine(tutorial ? Wait(5) : Wait(2));
                 }
             }
-            
         }
-        
     }
 
     private IEnumerator Wait(int seconds)
