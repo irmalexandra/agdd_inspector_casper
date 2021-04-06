@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
 
     public PlayerController getPlayerController()
     {
-        Debug.Log("Getting player controller: ", _playerController);
         return _playerController;
     }
 
@@ -108,7 +107,6 @@ public class GameManager : MonoBehaviour
         while(!done)
         {
             float perc;
-        
             perc = Time.time - startTime;
             if(perc > duration)
             {

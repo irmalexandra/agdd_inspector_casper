@@ -19,7 +19,7 @@ public class DoorHandler : MonoBehaviour
     {
         if (_inRange)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
                 if (_canTeleport)
                 {
@@ -29,31 +29,42 @@ public class DoorHandler : MonoBehaviour
                         MusicManager.Instance.PlayPart2();
                     }
                     GameManager.instance.getPlayer().transform.position = exit.transform.position;
-                    StartCoroutine(TeleportCooldownCoroutine());
+                    
                 }
             }
         }
     }
     
-    private IEnumerator TeleportCooldownCoroutine()
+    private IEnumerator TeleportCooldownCoroutine(PlayerController script)
     {
+        Debug.Log("starting coroutine");
+
         _canTeleport = false;
         yield return new WaitForSeconds(0.5f);
         _canTeleport = true;
+        script.showInteractiveButton(true);
+        Debug.Log("ending coroutine");
     }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        StartCoroutine(TeleportCooldownCoroutine());
+        if (!_canTeleport)
+        {
+            return;
+        }
         if (other.CompareTag("Player"))
         {
             var playerScript = other.GetComponent<PlayerController>();
+            StartCoroutine(TeleportCooldownCoroutine(playerScript));
+            //StartCoroutine(TeleportCooldownCoroutine());
+            
             
             if (PlayerPrefs.GetString("hunted") == "true" && doorName == "KeyChamber")
             {
                 GameManager.instance.flipGhostType();
             }
-            playerScript.showInteractiveButton(true);
+
+            
             _inRange = true;
         }
     }

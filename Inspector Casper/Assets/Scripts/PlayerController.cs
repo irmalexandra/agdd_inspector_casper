@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (Input.GetKeyDown(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
+		if (Input.GetKey(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
 		{
 			GameManager.instance.DisplayDeathCanvas(false);
 			GameManager.instance.Reset();
