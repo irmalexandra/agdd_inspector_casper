@@ -9,7 +9,8 @@ public class DoorSystem : MonoBehaviour
     public GameObject door;
     private bool playerInRange;
     public string keyName;
-    private bool unlocked = false;
+    private bool unlocked;
+    
 
     private void Update()
     {
