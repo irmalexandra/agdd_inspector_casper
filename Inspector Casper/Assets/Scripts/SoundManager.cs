@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -11,6 +8,8 @@ public class SoundManager : MonoBehaviour
     private static AudioClip _flashRechargeSound;
     private static AudioClip _ghostAware;
     private static AudioClip _heartbeat;
+    private static AudioClip _scream;
+    private static AudioClip _keyPickup;
 
     private static AudioSource _audioSource;
     void Start()
@@ -21,7 +20,9 @@ public class SoundManager : MonoBehaviour
         _flashRechargeSound = Resources.Load<AudioClip>("Audio/Sounds/FlashRecharge");
         _ghostAware = Resources.Load<AudioClip>("Audio/Sounds/ToasterGhostChasing");
         _heartbeat = Resources.Load<AudioClip>("Audio/Sounds/SingleHeartbeat");
-        
+        _scream = Resources.Load<AudioClip>("Audio/Sounds/DemonicScream");
+        _keyPickup = Resources.Load<AudioClip>("Audio/Sounds/KeyPickup");
+
         _audioSource = GetComponent<AudioSource>();
     }
     
@@ -51,7 +52,14 @@ public class SoundManager : MonoBehaviour
                     _audioSource.Stop();
                 }
                 break;
-            
+            case "Scream":
+                _audioSource.PlayOneShot(_scream);
+                break;
+            case "KeyPickup":
+                _audioSource.PlayOneShot(_keyPickup);
+                break;
         }
     }
+
+
 }

@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5821665c00a7634f9cf39fac96f1d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hunted: 0
   jumpForce: 16
   crouchSpeed: 0.36
   movementSmoothing: 0.05
@@ -299,7 +300,7 @@ MonoBehaviour:
   ceilingCheck: {fileID: 1773934386549073210}
   crouchDisableCollider: {fileID: 7039790114807343831}
   interactiveButton: {fileID: 2732012247702546998}
-  bubbleTextBox: {fileID: 0}
+  bubbleTextBox: {fileID: 8025659993537913348}
   deathTags:
   - Enemy
   - DeadlyProp
@@ -309,6 +310,8 @@ MonoBehaviour:
   slippery: {fileID: 0}
   _alive: 1
   _nervous: 0
+  insideSafeZone: 0
+  inventoryHUD: {fileID: 0}
   onLandEvent:
     m_PersistentCalls:
       m_Calls: []

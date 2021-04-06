@@ -68,8 +68,8 @@ public class GameManager : MonoBehaviour
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
         _playerController = player.gameObject.GetComponent<PlayerController>();
         _playerMovement = player.gameObject.GetComponent<PlayerMovement>();
-
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        PlayerPrefs.SetString("hunted", "false");
   
     }
 
@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerController getPlayerController()
     {
+        Debug.Log("Getting player controller: ", _playerController);
         return _playerController;
     }
 
