@@ -10,6 +10,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+	[HideInInspector]
+	public bool hunted;
 	[SerializeField] private float jumpForce = 400f; // Amount of force added when the player jumps.
 	[Range(0, 1)] [SerializeField]
 	private float crouchSpeed = .36f; // Amount of maxSpeed applied to crouching movement. 1 = 100%
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Transform ceilingCheck; // A position marking where to check for ceilings
 	[SerializeField] private Collider2D crouchDisableCollider; // A collider that will be disabled when crouching
 	private float mayJump;
+	
 	private const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	
 	
@@ -453,7 +456,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-
+	static IEnumerator WaitForScreamCoroutine(float duration)
+	{
+		yield return new WaitForSeconds(duration);
+		SoundManager.PlaySoundEffect("Scream");
+	}
+	
 	private IEnumerator Wait()
 	{
 		yield return new WaitForSeconds(1);
@@ -471,6 +479,12 @@ public class PlayerController : MonoBehaviour
 	public void takeKey(string name, Sprite keySprite, Color keyColor)
 	{
 		keysHeld.Add(name, true);
+		SoundManager.PlaySoundEffect("KeyPickup");
+		if (name == "FinalKey")
+		{
+			MusicManager.Instance.StopMusic();
+			StartCoroutine(WaitForScreamCoroutine(2));
+		}
 		addKeyToHUD(keySprite, keyColor);
 	}
 

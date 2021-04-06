@@ -20,6 +20,10 @@ public class DoorHandler : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 PlayerPrefs.SetString("door", doorName);
+                if (doorName == "KeyChamber")
+                {
+                    MusicManager.Instance.PlayPart2();
+                }
                 SceneManager.LoadScene(sceneIndex);
             }
         }
