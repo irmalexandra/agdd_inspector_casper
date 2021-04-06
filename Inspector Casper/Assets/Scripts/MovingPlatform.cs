@@ -16,6 +16,7 @@ public class MovingPlatform : MonoBehaviour
     private float _timer;
     private bool _stop;
     public Vector3 nextPos;
+    public bool active = true;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,7 @@ public class MovingPlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!active) { return; }
         if(_timer >= 0)
         {
             _timer -= Time.deltaTime;
@@ -78,6 +79,11 @@ public class MovingPlatform : MonoBehaviour
         if (other.gameObject.name != "Player") return;
         var player = other.gameObject;
         player.transform.parent = GameObject.FindGameObjectWithTag("BaseScene").transform;
+    }
+
+    public void Toggle()
+    {
+        active = !active;
     }
 }
 
