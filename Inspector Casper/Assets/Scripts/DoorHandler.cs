@@ -37,13 +37,11 @@ public class DoorHandler : MonoBehaviour
     
     private IEnumerator TeleportCooldownCoroutine(PlayerController script)
     {
-        Debug.Log("starting coroutine");
 
         _canTeleport = false;
         yield return new WaitForSeconds(0.5f);
         _canTeleport = true;
         script.showInteractiveButton(true);
-        Debug.Log("ending coroutine");
     }
     
     private void OnTriggerEnter2D(Collider2D other)

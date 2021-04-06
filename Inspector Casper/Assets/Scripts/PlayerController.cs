@@ -402,7 +402,6 @@ public class PlayerController : MonoBehaviour
 	
 	public void showInteractiveButton(bool set)
 	{
-		Debug.Log("in interactive button display");
 		interactiveButton.SetActive(set);
 	}
 
