@@ -95,9 +95,8 @@ public class PlayerController : MonoBehaviour
 	{
 		flashController = GetComponentInChildren<FlashController>();
 	}
-	
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		if (Input.GetButtonDown("Fire1") && _alive)
 		{
@@ -108,36 +107,15 @@ public class PlayerController : MonoBehaviour
 			GameManager.instance.DisplayDeathCanvas(false);
 			GameManager.instance.Reset();
 		}
+	}
+
+	private void FixedUpdate()
+	{
+
 
 		bool wasGrounded = grounded;
 		grounded = false;
 		
-		if (_fallingThroughGround && Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
-		{
-			/*Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround)
-				.GetComponent<Collider2D>();
-			foreach (var collider in _colliders)
-			{
-				Physics2D.IgnoreCollision(collider, ceiling, false);
-			}*/
-			//_fallingThroughGround = false;
-
-		}
-
-		if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround))
-		{
-			
-			Collider2D ceiling = Physics2D.OverlapCircle(ceilingCheck.position, CeilingRadius, whatIsGround);
-			/*if (ceiling.CompareTag("Stairs"))
-			{
-				foreach (var collider in _colliders)
-				{
-					//Physics2D.IgnoreCollision(collider, ceiling, true);
-
-				}
-			}*/
-
-		}
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
@@ -146,13 +124,6 @@ public class PlayerController : MonoBehaviour
 		{
 			if (colliders[i].gameObject != gameObject)
 			{
-				/*if (colliders[i].CompareTag("Stairs") && !_fallingThroughGround)
-				{
-					foreach (Collider2D playerCollider in _colliders)
-					{
-						Physics2D.IgnoreCollision(playerCollider, colliders[i], false);
-					}
-				}*/
 
 				if (!colliders[i].gameObject.CompareTag("Enemy"))
 				{

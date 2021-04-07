@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
     private static AudioClip _shutterSoundEcho;
     private static AudioClip _deathSound;
     private static AudioClip _flashRechargeSound;
+    private static AudioClip _flashRechargeSoundShort;
     private static AudioClip _ghostAware;
     private static AudioClip _heartbeat;
     private static AudioClip _scream;
@@ -18,6 +19,7 @@ public class SoundManager : MonoBehaviour
         _shutterSoundEcho = Resources.Load<AudioClip>("Audio/Sounds/CameraShutter1Echo");
         _deathSound = Resources.Load<AudioClip>("Audio/Sounds/Death1");
         _flashRechargeSound = Resources.Load<AudioClip>("Audio/Sounds/FlashRecharge");
+        _flashRechargeSoundShort = Resources.Load<AudioClip>("Audio/Sounds/FlashRechargeShort");
         _ghostAware = Resources.Load<AudioClip>("Audio/Sounds/ToasterGhostChasing");
         _heartbeat = Resources.Load<AudioClip>("Audio/Sounds/SingleHeartbeat");
         _scream = Resources.Load<AudioClip>("Audio/Sounds/DemonicScream");
@@ -37,6 +39,10 @@ public class SoundManager : MonoBehaviour
             case "ShutterEcho":
                 _audioSource.PlayOneShot(_shutterSoundEcho);
                 _audioSource.PlayOneShot(_flashRechargeSound);
+                break;            
+            case "ShutterEchoShort":
+                _audioSource.PlayOneShot(_shutterSoundEcho);
+                _audioSource.PlayOneShot(_flashRechargeSoundShort);
                 break;
             case "Death":
                 _audioSource.PlayOneShot(_deathSound);
@@ -44,7 +50,6 @@ public class SoundManager : MonoBehaviour
             case "StartHeartbeat":
                 _audioSource.clip = _heartbeat;
                 _audioSource.Play();
-
                 break;
             case "StopHeartbeat":
                 _audioSource.Stop();
