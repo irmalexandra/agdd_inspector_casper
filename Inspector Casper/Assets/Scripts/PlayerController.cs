@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
 	public PhysicsMaterial2D glue;
 	public PhysicsMaterial2D slippery;
+	[HideInInspector]
 	public FlashController flashController;
 
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
 	private bool facingRight = true; // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 	private Collider2D[] _colliders;
-	[HideInInspector]
+	
 	private bool _fallingThroughGround;
 	private Collider2D _ceiling;
 	private Collider2D _ground;
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
 	private bool firstDeath = true;
 
 	public GameObject inventoryHUD;
+	public bool hasFinalKey = false;
 	private int keyImageOffsetX = -340;
 	private int keyImageOffsetY = -150;
 	private Dictionary<string, bool> keysHeld = new Dictionary<string, bool>();
@@ -479,6 +481,7 @@ public class PlayerController : MonoBehaviour
 		SoundManager.PlaySoundEffect("KeyPickup");
 		if (keyName == "FinalKey")
 		{
+			hasFinalKey = true;
 			MusicManager.Instance.StopMusic();
 			StartCoroutine(WaitForScreamCoroutine(2));
 		}
