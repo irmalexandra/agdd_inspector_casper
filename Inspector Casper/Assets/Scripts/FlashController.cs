@@ -33,16 +33,6 @@ public class FlashController : MonoBehaviour
             SoundManager.PlaySoundEffect("ShutterEcho");
             _startTime = Time.time;
             StartCoroutine(FlashCoroutine());
-            // foreach (var target in _targets.ToList())
-            // {
-            //     Debug.Log("Ghost entry");
-            //
-            //     BaseGhostAI targetScript = target.GetComponent<BaseGhostAI>();
-            //     targetScript.RevealGhost(flashDuration);
-            //     targetScript.KillGhost(0.35f);
-            //     GameManager.instance.respawnGhost(targetScript.ghostRespawnTimer, target);
-            //
-            // }
             StartCoroutine(CooldownCoroutine());
         }
     }
@@ -50,18 +40,7 @@ public class FlashController : MonoBehaviour
     private IEnumerator CooldownCoroutine()
     {
         onCooldown = true;
-        bool done = false;
-        while(!done)
-        {
-
-            float perc;
-            perc = Time.time - _startTime;
-            if(perc > cooldownTimer)
-            {
-                done = true;
-            }
-            yield return null;
-        }
+        yield return new WaitForSeconds(cooldownTimer);
         onCooldown = false;
     }
     
