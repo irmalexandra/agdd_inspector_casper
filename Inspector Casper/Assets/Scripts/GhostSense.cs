@@ -54,6 +54,7 @@ public class GhostSense : MonoBehaviour
                 if (playerController._nervous)
                 {
                     StartCoroutine(tutorial ? Wait(5) : Wait(2));
+                    SoundManager.PlaySoundEffect("StopHeartbeat");
                 }
             }
         }
@@ -63,7 +64,6 @@ public class GhostSense : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         playerController._nervous = false;
-        SoundManager.PlaySoundEffect("StopHeartbeat");
         if (tutorial)
         {
             speechSpriteRenderer.enabled = false;

@@ -81,7 +81,9 @@ public class GameManager : MonoBehaviour
             enemy.SetActive(false);
             enemy.transform.parent.GetChild(1).gameObject.SetActive(true);
             enemy.transform.parent.GetChild(1).GetComponent<BaseGhostAI>().hunting = true;
+            playerGhost.GetComponent<BaseGhostAI>().hunting = true;
         }
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     public PlayerController getPlayerController()

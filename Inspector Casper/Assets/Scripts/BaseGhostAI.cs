@@ -111,30 +111,7 @@ public class BaseGhostAI : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            targetVisible = false;
-            animator.SetBool("Chasing", false);
-        }
-    }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        // if (other.gameObject.CompareTag("Player"))
-        // {
-        //     Collider2D[] colliders = _player.GetComponents<Collider2D>();
-        //     Collider2D ghostCollider = GetComponent<BoxCollider2D>();
-        //     foreach (Collider2D collider in colliders)
-        //     {
-        //         Physics2D.IgnoreCollision(collider, ghostCollider, true);
-        //     }
-        //     return;
-        // }
-        // Physics2D.IgnoreCollision(other.collider, gameObject.GetComponent<Collider2D>());
-        
-    }
 
     private void Flip()
 	{
@@ -170,30 +147,7 @@ public class BaseGhostAI : MonoBehaviour
             yield return null;
         }
         _spriteRenderer.enabled = false;
-    }    
-    // public void FreezeGhost(float duration)
-    // {
-    //     StartCoroutine(FreezeGhostCoroutine(duration));
-    // }
-
-    // IEnumerator FreezeGhostCoroutine(float duration)
-    // {
-    //     frozen = true;
-    //     float startTime = Time.time;
-    //     bool done = false;
-    //     while(!done)
-    //     {
-    //         float perc;
-    //     
-    //         perc = Time.time - startTime;
-    //         if(perc > duration)
-    //         {
-    //             done = true;
-    //         }
-    //         yield return null;
-    //     }
-    //     frozen = false;
-    // }
+    }
 
     public void KillGhost(float duration)
     {
@@ -231,6 +185,11 @@ public class BaseGhostAI : MonoBehaviour
     {
         transform.position = originalPosition.position;
         targetVisible = false;
+        
+        Collider2D playerCollider = _player.GetComponent<BoxCollider2D>();
+        Collider2D ghostCollider = GetComponent<BoxCollider2D>();
+        Physics2D.IgnoreCollision(playerCollider, ghostCollider, false);
+
     }
 
     public void ResetPlayerGhost()
@@ -250,4 +209,20 @@ public class BaseGhostAI : MonoBehaviour
         
     }
     
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            targetVisible = false;
+            animator.SetBool("Chasing", false);
+        }
+    }
+    
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            transform.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+    }
 }
