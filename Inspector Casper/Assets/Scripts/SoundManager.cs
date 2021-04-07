@@ -8,7 +8,6 @@ public class SoundManager : MonoBehaviour
     private static AudioClip _flashRechargeSound;
     private static AudioClip _flashRechargeSoundShort;
     private static AudioClip _ghostAware;
-    private static AudioClip _heartbeat;
     private static AudioClip _scream;
     private static AudioClip _keyPickup;
 
@@ -21,7 +20,6 @@ public class SoundManager : MonoBehaviour
         _flashRechargeSound = Resources.Load<AudioClip>("Audio/Sounds/FlashRecharge");
         _flashRechargeSoundShort = Resources.Load<AudioClip>("Audio/Sounds/FlashRechargeShort");
         _ghostAware = Resources.Load<AudioClip>("Audio/Sounds/ToasterGhostChasing");
-        _heartbeat = Resources.Load<AudioClip>("Audio/Sounds/SingleHeartbeat");
         _scream = Resources.Load<AudioClip>("Audio/Sounds/DemonicScream");
         _keyPickup = Resources.Load<AudioClip>("Audio/Sounds/KeyPickup");
 
@@ -46,13 +44,6 @@ public class SoundManager : MonoBehaviour
                 break;
             case "Death":
                 _audioSource.PlayOneShot(_deathSound);
-                break;
-            case "StartHeartbeat":
-                _audioSource.clip = _heartbeat;
-                _audioSource.Play();
-                break;
-            case "StopHeartbeat":
-                _audioSource.Stop();
                 break;
             case "Scream":
                 _audioSource.PlayOneShot(_scream);
