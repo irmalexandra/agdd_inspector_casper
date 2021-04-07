@@ -16,10 +16,16 @@ public class KeySystem : MonoBehaviour
         {
             if (Input.GetKey("e"))
             {
+                var playerController = GameManager.instance.getPlayer().GetComponent<PlayerController>();
                 gameObject.SetActive(false);
                 var keySprite = gameObject.GetComponent<SpriteRenderer>().sprite;
                 var keyColor = gameObject.GetComponent<SpriteRenderer>().color;
-                GameManager.instance.getPlayer().GetComponent<PlayerController>().takeKey(keyName, keySprite, keyColor);
+                if (keyName == "FinalKey")
+                {
+                    playerController.hunted = true;
+                    playerController.flashController.cooldownTimer = 2.5f;
+                }
+                playerController.takeKey(keyName, keySprite, keyColor);
             }
         }
     }
@@ -38,12 +44,7 @@ public class KeySystem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var playerController = GameManager.instance.getPlayer().GetComponent<PlayerController>();
-            if (keyName == "FinalKey")
-            {
-                playerController.hunted = true;
-                playerController.flashController.cooldownTimer = 2.5f;
 
-            }
             playerInRange = false;
             playerController.showInteractiveButton(false);
         }

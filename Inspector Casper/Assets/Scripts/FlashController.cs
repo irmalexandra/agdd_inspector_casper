@@ -30,7 +30,16 @@ public class FlashController : MonoBehaviour
     {
         if (!onCooldown)
         {
-            SoundManager.PlaySoundEffect("ShutterEcho");
+            if (Math.Abs(cooldownTimer - 5f) < 0.1f)
+            {
+                SoundManager.PlaySoundEffect("ShutterEcho");
+
+            }
+            else
+            {
+                SoundManager.PlaySoundEffect("ShutterEchoShort");
+            }
+            
             _startTime = Time.time;
             StartCoroutine(FlashCoroutine());
             StartCoroutine(CooldownCoroutine());
