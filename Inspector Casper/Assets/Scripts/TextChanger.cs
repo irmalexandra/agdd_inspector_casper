@@ -26,17 +26,20 @@ public class TextChanger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        StartCoroutine(Wait());
+        if (other.CompareTag("Player"))
+        {
+            StartCoroutine(Wait());
+        }
+        
     }
     
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         if (speechSpriteRenderer != null)
         {
             speechSpriteRenderer.enabled = false;
             textBox.text = "";
-            
         }
         
     }
