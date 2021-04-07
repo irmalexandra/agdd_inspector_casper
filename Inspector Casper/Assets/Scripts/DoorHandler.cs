@@ -23,13 +23,24 @@ public class DoorHandler : MonoBehaviour
             {
                 if (_canTeleport)
                 {
-                    
-                    if (doorName == "KeyChamber" && GameManager.instance.getPlayer().GetComponent<PlayerController>().hunted)
+                    var playerController = GameManager.instance.getPlayer().GetComponent<PlayerController>();
+                    if (doorName == "KeyChamber" && playerController.hunted)
                     {
                         MusicManager.Instance.PlayPart2();
                         GameManager.instance.flipGhostType();
+                    } else if (doorName == "FinalDoor" && playerController.hasFinalKey)
+                    {
+                        if (GameManager.instance.hasDied)
+                        {
+                            SceneManager.LoadScene("EndingB");
+
+                        }
+                        else
+                        {
+                            SceneManager.LoadScene("EndingA");
+                        }
                     }
-                    GameManager.instance.getPlayer().transform.position = exit.transform.position;
+                    playerController.transform.position = exit.transform.position;
                     
                 }
             }
@@ -66,7 +77,18 @@ public class DoorHandler : MonoBehaviour
             if (_canTeleport)
             {
                 var playerScript = other.GetComponent<PlayerController>();
-                playerScript.showInteractiveButton(true);
+
+                if (doorName == "FinalDoor")
+                {
+                    if (playerScript.hasFinalKey)
+                    {
+                        playerScript.showInteractiveButton(true);
+                    }
+                }
+                else 
+                {
+                    playerScript.showInteractiveButton(true);
+                }
             }
         }
     }
