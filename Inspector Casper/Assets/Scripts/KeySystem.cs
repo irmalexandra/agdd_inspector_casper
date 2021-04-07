@@ -37,12 +37,15 @@ public class KeySystem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            var playerController = GameManager.instance.getPlayer().GetComponent<PlayerController>();
             if (keyName == "FinalKey")
             {
-                GameManager.instance.getPlayer().GetComponent<PlayerController>().hunted = true;
+                playerController.hunted = true;
+                playerController.flashController.cooldownTimer = 2.5f;
+
             }
             playerInRange = false;
-            GameManager.instance.getPlayer().GetComponent<PlayerController>().showInteractiveButton(false);
+            playerController.showInteractiveButton(false);
         }
     }
 }
