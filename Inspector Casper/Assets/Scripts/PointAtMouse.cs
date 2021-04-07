@@ -11,8 +11,12 @@ public class PointAtMouse : MonoBehaviour
         _camera = Camera.main;
     }
 
-    void Update () 
+    void Update ()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
         //Get the Screen positions of the object
         Vector2 positionOnScreen = _camera.WorldToViewportPoint (transform.position);
          
