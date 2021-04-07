@@ -2,33 +2,72 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 using UnityEngine.SceneManagement;
 
 public class DoorHandler : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int sceneIndex;
+    public string doorName;
     private bool _inRange = false;
+    private bool _exiting;
+    public GameObject exit;
+    private bool _canTeleport = true;
 
 
     private void FixedUpdate()
     {
         if (_inRange)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
-                SceneManager.LoadScene(sceneIndex);
+                if (_canTeleport)
+                {
+                    
+                    if (doorName == "KeyChamber" && GameManager.instance.getPlayer().GetComponent<PlayerController>().hunted)
+                    {
+                        MusicManager.Instance.PlayPart2();
+                        GameManager.instance.flipGhostType();
+                    }
+                    GameManager.instance.getPlayer().transform.position = exit.transform.position;
+                    
+                }
             }
         }
     }
+    
+    private IEnumerator TeleportCooldownCoroutine(PlayerController script)
+    {
 
-    // Update is called once per frame
+        _canTeleport = false;
+        yield return new WaitForSeconds(0.5f);
+        _canTeleport = true;
+        
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!_canTeleport)
+        {
+            return;
+        }
+        if (other.CompareTag("Player"))
+        {
+            var playerScript = other.GetComponent<PlayerController>();
+            StartCoroutine(TeleportCooldownCoroutine(playerScript));
+            _inRange = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.getPlayerController().showInteractiveButton(true);
-            _inRange = true;
+            if (_canTeleport)
+            {
+                var playerScript = other.GetComponent<PlayerController>();
+                playerScript.showInteractiveButton(true);
+            }
         }
     }
 
@@ -36,7 +75,8 @@ public class DoorHandler : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.getPlayerController().showInteractiveButton(false);
+            var playerScript = other.GetComponent<PlayerController>();
+            playerScript.showInteractiveButton(false);
             _inRange = false;
         }
     }

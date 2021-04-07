@@ -1,6 +1,7 @@
  using System;
  using System.Collections;
-using UnityEngine;
+ using System.Collections.Generic;
+ using UnityEngine;
 
 public class BaseGhostAI : MonoBehaviour
 {
@@ -14,12 +15,14 @@ public class BaseGhostAI : MonoBehaviour
     private PlayerController _playerScript; 
 
     private bool facingLeft = true;
-
+    [HideInInspector]
+    public bool hunting;
     public float roamSpeed = 2.5f;
     public float chaseSpeed = 5f;
+    public float ghostRespawnTimer;
     
     private bool targetVisible = false;
-    private bool frozen;
+    // private bool frozen;
     //public Vector3 originalPosition;
 
     private SpriteRenderer _spriteRenderer;
@@ -32,44 +35,37 @@ public class BaseGhostAI : MonoBehaviour
         _spriteRenderer = transform.gameObject.GetComponent<SpriteRenderer>();
         _player = GameManager.instance.getPlayer().GetComponent<Transform>();
         _playerScript = _player.GetComponent<PlayerController>();
-        Physics2D.IgnoreLayerCollision(7, 10);
         body = GetComponent<Rigidbody2D>();
-        // originalPosition.position = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-        /*Vector3 directionToPlayer = _player.position - transform.position;  
-        
-        directionToPlayer.Normalize();
-        movement = directionToPlayer;*/
-    }
+  
+
 
     private void FixedUpdate()
     {
-        if (!frozen)
+        
+        if (hunting)
         {
-            if (targetVisible && _playerScript._alive)
+            targetVisible = true;
+        }
+        if (targetVisible && _playerScript._alive)
+        {
+            MoveCharacter(_player.position, chaseSpeed);
+        }
+        else
+        {
+            if (transform.position.x < originalPosition.position.x + 5f && transform.position.x >
+                                                                        originalPosition.position.x - 5f
+                                                                        && transform.position.y >
+                                                                        originalPosition.position.y - 5f &&
+                                                                        transform.position.y <
+                                                                        originalPosition.position.y + 5f)
             {
-                MoveCharacter(_player.position, chaseSpeed);
+                body.velocity = Vector2.zero;
             }
             else
             {
-                if (transform.position.x < originalPosition.position.x + 5f && transform.position.x >
-                                                                            originalPosition.position.x - 5f
-                                                                            && transform.position.y >
-                                                                            originalPosition.position.y - 5f &&
-                                                                            transform.position.y <
-                                                                            originalPosition.position.y + 5f)
-                {
-                    body.velocity = Vector2.zero;
-                }
-                else
-                {
-                    StartCoroutine(Wait(3f));
-                }
+                StartCoroutine(Wait(3f));
             }
         }
     }
@@ -84,10 +80,10 @@ public class BaseGhostAI : MonoBehaviour
         // body.MovePosition((Vector2)transform.position + (direction * (moveSpeed * Time.deltaTime)));   
         transform.position = Vector3.MoveTowards(transform.position, position,  (moveSpeed * Time.deltaTime));   
 
-        if (position.x < 0 && !facingLeft){
+        if (transform.position.x - position.x > 0 && !facingLeft){
             Flip();
         }
-        else if (position.x > 0 && facingLeft){
+        else if (transform.position.x - position.x < 0 && facingLeft){
             Flip();
         }	
     }
@@ -108,33 +104,7 @@ public class BaseGhostAI : MonoBehaviour
                     animator.SetBool("Chasing", false);
                 }
             }
- 
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            targetVisible = false;
-            animator.SetBool("Chasing", false);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Collider2D[] colliders = _player.GetComponents<Collider2D>();
-            Collider2D ghostCollider = GetComponent<BoxCollider2D>();
-            foreach (Collider2D collider in colliders)
-            {
-                Physics2D.IgnoreCollision(collider, ghostCollider, true);
-            }
-            return;
-        }
-        Physics2D.IgnoreCollision(other.collider, gameObject.GetComponent<Collider2D>());
-        
     }
 
     private void Flip()
@@ -147,21 +117,20 @@ public class BaseGhostAI : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
-
     
-    public void RevealGhost(float duration)
+    public void KillGhost(float duration)
     {
-        StartCoroutine(RevealGhostCoroutine(duration));
+        animator.SetBool("Dead", true);
+        StartCoroutine(DeathAnimationCoroutine(duration));
     }
-
-    private IEnumerator RevealGhostCoroutine(float duration)
+    
+    private IEnumerator DeathAnimationCoroutine(float duration)
     {
         _spriteRenderer.enabled = true;
         float startTime = Time.time;
         bool done = false;
         while(!done)
         {
-
             float perc;
         
             perc = Time.time - startTime;
@@ -172,37 +141,14 @@ public class BaseGhostAI : MonoBehaviour
             yield return null;
         }
         _spriteRenderer.enabled = false;
-    }    
-    public void FreezeGhost(float duration)
-    {
-        StartCoroutine(FreezeGhostCoroutine(duration));
-    }
-
-    IEnumerator FreezeGhostCoroutine(float duration)
-    {
-        frozen = true;
-        float startTime = Time.time;
-        bool done = false;
-        while(!done)
-        {
-
-            float perc;
-        
-            perc = Time.time - startTime;
-            if(perc > duration)
-            {
-                done = true;
-            }
-            yield return null;
-        }
-        frozen = false;
+        transform.position = transform.parent.GetChild(0).position; // Index 0 is the game object "originalPosition"
+        animator.SetBool("Dead", false);
+        transform.gameObject.SetActive(false);
     }
 
     private IEnumerator Wait(float seconds)
     {
-  
         yield return new WaitForSeconds(seconds);
-        Debug.Log("ET phone home");
         MoveCharacter(originalPosition.position, roamSpeed);
     }
     
@@ -210,11 +156,39 @@ public class BaseGhostAI : MonoBehaviour
     {
         transform.position = originalPosition.position;
         targetVisible = false;
-        Collider2D[] colliders = _player.GetComponents<Collider2D>();
-        Collider2D ghostCollider = GetComponent<BoxCollider2D>();
-        foreach (Collider2D collider in colliders)
+    }
+
+    public void ResetPlayerGhost()
+    {
+        _player = GameManager.instance.getPlayer().GetComponent<Transform>();
+        if (!GameManager.instance.getPlayer().GetComponent<PlayerController>().insideSafeZone)
         {
-            Physics2D.IgnoreCollision(collider, ghostCollider, false);
+            transform.gameObject.SetActive(true);
+            transform.position = _player.position;
+            targetVisible = false;
+            originalPosition.position = _player.position;
+        }
+        else
+        {
+            transform.gameObject.SetActive(false);
+        }
+        
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            targetVisible = false;
+            animator.SetBool("Chasing", false);
+        }
+    }
+    
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            transform.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
 }
