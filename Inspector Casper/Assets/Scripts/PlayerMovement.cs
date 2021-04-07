@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         animator.SetBool("Dead", !controller._alive);
+        animator.SetBool("HasKey", controller.hasFinalKey);
             
     }
 
