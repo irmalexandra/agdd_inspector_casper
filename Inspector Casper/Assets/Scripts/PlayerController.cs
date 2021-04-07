@@ -92,17 +92,14 @@ public class PlayerController : MonoBehaviour
 	{
 		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
 	}
+	
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		if (Input.GetButtonDown("Fire1") && _alive)
 		{
 			flashController.CameraFlash();
 		}
-	}
-
-	private void FixedUpdate()
-	{
 		if (Input.GetKey(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
 		{
 			GameManager.instance.DisplayDeathCanvas(false);
