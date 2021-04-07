@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (Input.GetKeyDown(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
+		if (Input.GetKey(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
 		{
 			GameManager.instance.DisplayDeathCanvas(false);
 			GameManager.instance.Reset();
@@ -402,7 +402,6 @@ public class PlayerController : MonoBehaviour
 	
 	public void showInteractiveButton(bool set)
 	{
-		Debug.Log("in interactive button display");
 		interactiveButton.SetActive(set);
 	}
 
