@@ -33,7 +33,7 @@ public class GhostSense : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             playerController._nervous = true;
-            SoundManager.PlaySoundEffect("Heartbeat");
+            HeartbeatController.PlayHeartbeat("Start");
         }
 
         if (!tutorial) return;
@@ -53,27 +53,28 @@ public class GhostSense : MonoBehaviour
             {
                 if (playerController._nervous)
                 {
-                    // Debug.Log("Starting Coroutine in GhostSense");
                     StartCoroutine(tutorial ? Wait(5) : Wait(2));
+                    StartCoroutine(HeartbeatCoroutine(1));
                 }
             }
-            
         }
-        
     }
 
     private IEnumerator Wait(int seconds)
     {
         yield return new WaitForSeconds(seconds);
         playerController._nervous = false;
-        SoundManager.PlaySoundEffect("Heartbeat");
         if (tutorial)
         {
-            // Debug.Log("Turning off tutorial text");
             speechSpriteRenderer.enabled = false;
             textBox.text = "";
             tutorial = false;
         }
-        
+    }
+
+    private IEnumerator HeartbeatCoroutine(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        HeartbeatController.PlayHeartbeat("Stop");
     }
 }

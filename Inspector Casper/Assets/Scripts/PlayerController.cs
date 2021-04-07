@@ -92,17 +92,14 @@ public class PlayerController : MonoBehaviour
 	{
 		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
 	}
+	
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		if (Input.GetButtonDown("Fire1") && _alive)
 		{
 			flashController.CameraFlash();
 		}
-	}
-
-	private void FixedUpdate()
-	{
 		if (Input.GetKey(KeyCode.R) && !_alive && GameManager.instance.deathCanvas.activeSelf)
 		{
 			GameManager.instance.DisplayDeathCanvas(false);
@@ -402,7 +399,6 @@ public class PlayerController : MonoBehaviour
 	
 	public void showInteractiveButton(bool set)
 	{
-		Debug.Log("in interactive button display");
 		interactiveButton.SetActive(set);
 	}
 
@@ -439,7 +435,7 @@ public class PlayerController : MonoBehaviour
 			{
 				firstDeath = false;
 				speechRenderer.enabled = true;
-				bubbleTextBox.text = "Woah.. what happened. Im whole again.. but some part of me feels missing...";
+				bubbleTextBox.text = "I'm alive! How can this be? Though it feels as though a part of me is missing...";
 				StartCoroutine(RespawnWait());
 
 			}
@@ -448,7 +444,7 @@ public class PlayerController : MonoBehaviour
 				if (insideSafeZone)
 				{
 					speechRenderer.enabled = true;
-					bubbleTextBox.text = "The blue flame must have saved my soul from passing into the afterlife..";
+					bubbleTextBox.text = "The blue flame seems to protect my soul.";
 					StartCoroutine(RespawnWait());
 
 				}

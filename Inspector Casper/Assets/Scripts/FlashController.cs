@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
@@ -8,17 +9,20 @@ using UnityEngine.UI;
 public class FlashController : MonoBehaviour
 {
     public float flashDuration;
-    public float freezeDuration;
+    // public float freezeDuration;
     private float _startTime;
     public float cooldownTimer;
     private bool onCooldown;
     private Light2D _flash;
+    private PolygonCollider2D flashCone;
     
 
     private List<GameObject> _targets = new List<GameObject>();
     
     void Start()
     {
+        flashCone = GetComponent<PolygonCollider2D>();
+        flashCone.enabled = false;
         _flash = GetComponent<Light2D>();
     }
 
@@ -29,20 +33,16 @@ public class FlashController : MonoBehaviour
             SoundManager.PlaySoundEffect("ShutterEcho");
             _startTime = Time.time;
             StartCoroutine(FlashCoroutine());
-            foreach (var target in _targets)
-            {
-                BaseGhostAI targetScript = target.GetComponent<BaseGhostAI>();
-                targetScript.RevealGhost(flashDuration);
-                if (target.gameObject.name == "GhostSmall")
-                {
-                    targetScript.KillGhost(0.35f);
-                    GameManager.instance.respawnGhost(target);
-                }
-                else
-                {
-                    targetScript.FreezeGhost(freezeDuration);
-                }
-            }
+            // foreach (var target in _targets.ToList())
+            // {
+            //     Debug.Log("Ghost entry");
+            //
+            //     BaseGhostAI targetScript = target.GetComponent<BaseGhostAI>();
+            //     targetScript.RevealGhost(flashDuration);
+            //     targetScript.KillGhost(0.35f);
+            //     GameManager.instance.respawnGhost(targetScript.ghostRespawnTimer, target);
+            //
+            // }
             StartCoroutine(CooldownCoroutine());
         }
     }
@@ -67,7 +67,10 @@ public class FlashController : MonoBehaviour
     
     private IEnumerator FlashCoroutine()
     {
-        if (!onCooldown){
+        
+        if (!onCooldown)
+        {
+            flashCone.enabled = true;
             bool done = false;
             _flash.intensity = 3;
 
@@ -83,6 +86,7 @@ public class FlashController : MonoBehaviour
                 yield return null;
             }
             _flash.intensity = 0;
+            flashCone.enabled = false;
         }
     }
     
@@ -90,19 +94,11 @@ public class FlashController : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         if (_targets.Contains(other.gameObject)) { return; }
-        if (other is BoxCollider2D)
-        {
-            _targets.Add(other.gameObject);
-        }
-    }
-    
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (!other.gameObject.CompareTag("Enemy")) { return; }
-        if (other is BoxCollider2D)
-        {
-            _targets.Remove(other.gameObject);
-        }
+        
+        BaseGhostAI targetScript = other.gameObject.GetComponent<BaseGhostAI>();
+        targetScript.KillGhost(flashDuration);
+        GameManager.instance.respawnGhost(targetScript.ghostRespawnTimer, other.gameObject);
+
     }
 }
 

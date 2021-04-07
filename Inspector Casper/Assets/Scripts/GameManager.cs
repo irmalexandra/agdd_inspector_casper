@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject playerGhost;
     public GameObject[] enemies;
-    public float ghostRespawnTimer;
+
     [Serializable]
     public struct SpawnPoints {
         public string name;
@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(10, 10); // Ignore self layer and Ignore self layer
         Physics2D.IgnoreLayerCollision(7, 10); // Enemy layer and Ignore self layer
         Physics2D.IgnoreLayerCollision(0, 7); // Default layer and Enemy layer
+        Physics2D.IgnoreLayerCollision(8, 7); // Stairs layer and Enemy layer
 
         _playerRigidBody = player.gameObject.GetComponent<Rigidbody2D>();
         _playerSpriteRenderer = player.gameObject.GetComponent<SpriteRenderer>();
@@ -77,8 +78,12 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject enemy in enemies)
         {
-            enemy.SetActive(!enemy.activeSelf);
+            enemy.SetActive(false);
+            enemy.transform.parent.GetChild(1).gameObject.SetActive(true);
+            enemy.transform.parent.GetChild(1).GetComponent<BaseGhostAI>().hunting = true;
+            playerGhost.GetComponent<BaseGhostAI>().hunting = true;
         }
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     public PlayerController getPlayerController()
@@ -95,7 +100,7 @@ public class GameManager : MonoBehaviour
         return playerGhost;
     }
 
-    public void respawnGhost(GameObject target)
+    public void respawnGhost(float ghostRespawnTimer, GameObject target)
     {
         StartCoroutine(RespawnTimerCoroutine(ghostRespawnTimer, target));
     }

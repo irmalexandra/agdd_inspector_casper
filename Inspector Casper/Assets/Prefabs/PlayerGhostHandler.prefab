@@ -120,8 +120,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 8279590365740335718}
   originalPosition: {fileID: 5827744331737383746}
+  hunting: 0
   roamSpeed: 2.5
-  chaseSpeed: 5
+  chaseSpeed: 3
+  ghostRespawnTimer: 15
 --- !u!50 &1094226967342676496
 Rigidbody2D:
   serializedVersion: 4
