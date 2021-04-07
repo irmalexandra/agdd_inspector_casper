@@ -660,7 +660,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a583facb01f83f48b8e16ea5c5a372f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToDisplay: Cold spot... There must be a ghost nearby! I can see my breath!
+  textToDisplay: The air grows cold and a chill runs down my spine. There must be
+    paranormal activity nearby.
 --- !u!1 &8904601188436094159
 GameObject:
   m_ObjectHideFlags: 0

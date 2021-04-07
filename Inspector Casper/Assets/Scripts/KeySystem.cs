@@ -14,7 +14,6 @@ public class KeySystem : MonoBehaviour
     {
         if (playerInRange)
         {
-            
             if (Input.GetKey("e"))
             {
                 gameObject.SetActive(false);
@@ -23,10 +22,8 @@ public class KeySystem : MonoBehaviour
                 GameManager.instance.getPlayer().GetComponent<PlayerController>().takeKey(keyName, keySprite, keyColor);
             }
         }
-        
     }
-
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -48,6 +45,4 @@ public class KeySystem : MonoBehaviour
             GameManager.instance.getPlayer().GetComponent<PlayerController>().showInteractiveButton(false);
         }
     }
-    
-
 }

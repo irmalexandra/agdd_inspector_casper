@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class FlashController : MonoBehaviour
 {
     public float flashDuration;
-    public float freezeDuration;
+    // public float freezeDuration;
     private float _startTime;
     public float cooldownTimer;
     private bool onCooldown;
@@ -33,15 +33,15 @@ public class FlashController : MonoBehaviour
             {
                 BaseGhostAI targetScript = target.GetComponent<BaseGhostAI>();
                 targetScript.RevealGhost(flashDuration);
-                if (target.gameObject.name == "GhostSmall")
-                {
-                    targetScript.KillGhost(0.35f);
-                    GameManager.instance.respawnGhost(target);
-                }
-                else
-                {
-                    targetScript.FreezeGhost(freezeDuration);
-                }
+                // if (target.gameObject.name == "GhostSmall")
+                // {
+                targetScript.KillGhost(0.35f);
+                GameManager.instance.respawnGhost(targetScript.ghostRespawnTimer, target);
+                // }
+                // else
+                // {
+                //     targetScript.FreezeGhost(freezeDuration);
+                // }
             }
             StartCoroutine(CooldownCoroutine());
         }

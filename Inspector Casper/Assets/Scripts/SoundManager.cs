@@ -41,16 +41,13 @@ public class SoundManager : MonoBehaviour
             case "Death":
                 _audioSource.PlayOneShot(_deathSound);
                 break;
-            case "Heartbeat":
-                if (!_audioSource.isPlaying)
-                {
-                    _audioSource.clip = _heartbeat;
-                    _audioSource.Play();
-                }
-                else
-                {
-                    _audioSource.Stop();
-                }
+            case "StartHeartbeat":
+                _audioSource.clip = _heartbeat;
+                _audioSource.Play();
+
+                break;
+            case "StopHeartbeat":
+                _audioSource.Stop();
                 break;
             case "Scream":
                 _audioSource.PlayOneShot(_scream);
