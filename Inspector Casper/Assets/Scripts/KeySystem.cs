@@ -22,6 +22,8 @@ public class KeySystem : MonoBehaviour
                 var keyColor = gameObject.GetComponent<SpriteRenderer>().color;
                 if (keyName == "FinalKey")
                 {
+                    GameObject.FindGameObjectWithTag("drawnText").gameObject.GetComponent<BoxCollider2D>().enabled =
+                        true;
                     playerController.hunted = true;
                     playerController.flashController.cooldownTimer = 2.5f;
                 }
@@ -43,10 +45,8 @@ public class KeySystem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            var playerController = GameManager.instance.getPlayer().GetComponent<PlayerController>();
-
             playerInRange = false;
-            playerController.showInteractiveButton(false);
+            GameManager.instance.getPlayer().GetComponent<PlayerController>().showInteractiveButton(false);
         }
     }
 }

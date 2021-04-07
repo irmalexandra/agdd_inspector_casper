@@ -14,12 +14,25 @@ public class GhostSense : MonoBehaviour
     private GameObject speechBubble;
     private SpriteRenderer speechSpriteRenderer;
     private TextMeshPro textBox;
-    
-    private void Start()
-    {
 
+    private IEnumerator Wait(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        playerController._nervous = false;
+        if (tutorial)
+        {
+            speechSpriteRenderer.enabled = false;
+            textBox.text = "";
+            tutorial = false;
+        }
     }
 
+    private IEnumerator HeartbeatCoroutine(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        HeartbeatController.PlayHeartbeat("Stop");
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         playerController = GameManager.instance.getPlayerController();
@@ -29,7 +42,7 @@ public class GhostSense : MonoBehaviour
         }
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         if (!(other is BoxCollider2D)) return;
-        if (playerController._nervous) { return; }
+        // if (playerController._nervous) { return; }
         if (other.gameObject.CompareTag("Enemy"))
         {
             playerController._nervous = true;
@@ -58,23 +71,5 @@ public class GhostSense : MonoBehaviour
                 }
             }
         }
-    }
-
-    private IEnumerator Wait(int seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        playerController._nervous = false;
-        if (tutorial)
-        {
-            speechSpriteRenderer.enabled = false;
-            textBox.text = "";
-            tutorial = false;
-        }
-    }
-
-    private IEnumerator HeartbeatCoroutine(int seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        HeartbeatController.PlayHeartbeat("Stop");
     }
 }
