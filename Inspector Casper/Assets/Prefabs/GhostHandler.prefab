@@ -342,8 +342,8 @@ MonoBehaviour:
   originalPosition: {fileID: 5827744331737383746}
   hunting: 0
   roamSpeed: 2.5
-  chaseSpeed: 5
-  ghostRespawnTimer: 10
+  chaseSpeed: 2.5
+  ghostRespawnTimer: 15
 --- !u!50 &5545873188330515357
 Rigidbody2D:
   serializedVersion: 4

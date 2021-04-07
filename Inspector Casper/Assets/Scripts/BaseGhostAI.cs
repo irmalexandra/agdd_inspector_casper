@@ -43,9 +43,7 @@ public class BaseGhostAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-        // if (!frozen)
-        // {
+        
         if (hunting)
         {
             targetVisible = true;
@@ -70,7 +68,6 @@ public class BaseGhostAI : MonoBehaviour
                 StartCoroutine(Wait(3f));
             }
         }
-        // }
     }
 
     private void MoveCharacter(Vector3 position, float moveSpeed)
@@ -107,11 +104,8 @@ public class BaseGhostAI : MonoBehaviour
                     animator.SetBool("Chasing", false);
                 }
             }
- 
         }
     }
-
-
 
     private void Flip()
 	{
@@ -123,14 +117,14 @@ public class BaseGhostAI : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
-
     
-    public void RevealGhost(float duration)
+    public void KillGhost(float duration)
     {
-        StartCoroutine(RevealGhostCoroutine(duration));
+        animator.SetBool("Dead", true);
+        StartCoroutine(DeathAnimationCoroutine(duration));
     }
-
-    private IEnumerator RevealGhostCoroutine(float duration)
+    
+    private IEnumerator DeathAnimationCoroutine(float duration)
     {
         _spriteRenderer.enabled = true;
         float startTime = Time.time;
@@ -147,29 +141,6 @@ public class BaseGhostAI : MonoBehaviour
             yield return null;
         }
         _spriteRenderer.enabled = false;
-    }
-
-    public void KillGhost(float duration)
-    {
-        animator.SetBool("Dead", true);
-        StartCoroutine(DeathAnimationCoroutine(duration));
-    }
-    
-    private IEnumerator DeathAnimationCoroutine(float duration)
-    {
-        float startTime = Time.time;
-        bool done = false;
-        while(!done)
-        {
-            float perc;
-        
-            perc = Time.time - startTime;
-            if(perc > duration)
-            {
-                done = true;
-            }
-            yield return null;
-        }
         transform.position = transform.parent.GetChild(0).position; // Index 0 is the game object "originalPosition"
         animator.SetBool("Dead", false);
         transform.gameObject.SetActive(false);
