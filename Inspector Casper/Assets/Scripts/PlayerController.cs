@@ -438,7 +438,7 @@ public class PlayerController : MonoBehaviour
 			{
 				firstDeath = false;
 				speechRenderer.enabled = true;
-				bubbleTextBox.text = "Woah.. what happened. Im whole again.. but some part of me feels missing...";
+				bubbleTextBox.text = "I'm alive! How can this be? Though it feels as though a part of me is missing...";
 				StartCoroutine(RespawnWait());
 
 			}
@@ -447,7 +447,7 @@ public class PlayerController : MonoBehaviour
 				if (insideSafeZone)
 				{
 					speechRenderer.enabled = true;
-					bubbleTextBox.text = "The blue flame must have saved my soul from passing into the afterlife..";
+					bubbleTextBox.text = "The blue flame seems to protect my soul.";
 					StartCoroutine(RespawnWait());
 
 				}
