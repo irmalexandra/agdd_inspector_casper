@@ -35,7 +35,7 @@ public class TextChanger : MonoBehaviour
     
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7);
         if (speechSpriteRenderer != null)
         {
             speechSpriteRenderer.enabled = false;
