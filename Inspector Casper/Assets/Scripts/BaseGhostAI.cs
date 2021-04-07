@@ -15,12 +15,14 @@ public class BaseGhostAI : MonoBehaviour
     private PlayerController _playerScript; 
 
     private bool facingLeft = true;
-
+    [HideInInspector]
+    public bool hunting;
     public float roamSpeed = 2.5f;
     public float chaseSpeed = 5f;
+    public float ghostRespawnTimer;
     
     private bool targetVisible = false;
-    private bool frozen;
+    // private bool frozen;
     //public Vector3 originalPosition;
 
     private SpriteRenderer _spriteRenderer;
@@ -36,42 +38,39 @@ public class BaseGhostAI : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-        /*Vector3 directionToPlayer = _player.position - transform.position;  
-        
-        directionToPlayer.Normalize();
-        movement = directionToPlayer;*/
-    }
+  
+
 
     private void FixedUpdate()
     {
 
-        if (!frozen)
+        // if (!frozen)
+        // {
+        if (hunting)
         {
-            if (targetVisible && _playerScript._alive)
+            targetVisible = true;
+        }
+        if (targetVisible && _playerScript._alive)
+        {
+            MoveCharacter(_player.position, chaseSpeed);
+        }
+        else
+        {
+            if (transform.position.x < originalPosition.position.x + 5f && transform.position.x >
+                                                                        originalPosition.position.x - 5f
+                                                                        && transform.position.y >
+                                                                        originalPosition.position.y - 5f &&
+                                                                        transform.position.y <
+                                                                        originalPosition.position.y + 5f)
             {
-                MoveCharacter(_player.position, chaseSpeed);
+                body.velocity = Vector2.zero;
             }
             else
             {
-                if (transform.position.x < originalPosition.position.x + 5f && transform.position.x >
-                                                                            originalPosition.position.x - 5f
-                                                                            && transform.position.y >
-                                                                            originalPosition.position.y - 5f &&
-                                                                            transform.position.y <
-                                                                            originalPosition.position.y + 5f)
-                {
-                    body.velocity = Vector2.zero;
-                }
-                else
-                {
-                    StartCoroutine(Wait(3f));
-                }
+                StartCoroutine(Wait(3f));
             }
         }
+        // }
     }
 
     private void MoveCharacter(Vector3 position, float moveSpeed)
@@ -172,33 +171,32 @@ public class BaseGhostAI : MonoBehaviour
         }
         _spriteRenderer.enabled = false;
     }    
-    public void FreezeGhost(float duration)
-    {
-        StartCoroutine(FreezeGhostCoroutine(duration));
-    }
+    // public void FreezeGhost(float duration)
+    // {
+    //     StartCoroutine(FreezeGhostCoroutine(duration));
+    // }
 
-    IEnumerator FreezeGhostCoroutine(float duration)
-    {
-        frozen = true;
-        float startTime = Time.time;
-        bool done = false;
-        while(!done)
-        {
-            float perc;
-        
-            perc = Time.time - startTime;
-            if(perc > duration)
-            {
-                done = true;
-            }
-            yield return null;
-        }
-        frozen = false;
-    }
+    // IEnumerator FreezeGhostCoroutine(float duration)
+    // {
+    //     frozen = true;
+    //     float startTime = Time.time;
+    //     bool done = false;
+    //     while(!done)
+    //     {
+    //         float perc;
+    //     
+    //         perc = Time.time - startTime;
+    //         if(perc > duration)
+    //         {
+    //             done = true;
+    //         }
+    //         yield return null;
+    //     }
+    //     frozen = false;
+    // }
 
     public void KillGhost(float duration)
     {
-        // TODO start death animation
         animator.SetBool("Dead", true);
         StartCoroutine(DeathAnimationCoroutine(duration));
     }
@@ -221,7 +219,6 @@ public class BaseGhostAI : MonoBehaviour
         transform.position = transform.parent.GetChild(0).position; // Index 0 is the game object "originalPosition"
         animator.SetBool("Dead", false);
         transform.gameObject.SetActive(false);
-
     }
 
     private IEnumerator Wait(float seconds)
@@ -234,12 +231,6 @@ public class BaseGhostAI : MonoBehaviour
     {
         transform.position = originalPosition.position;
         targetVisible = false;
-        // Collider2D[] colliders = _player.GetComponents<Collider2D>();
-        // Collider2D ghostCollider = GetComponent<BoxCollider2D>();
-        // foreach (Collider2D collider in colliders)
-        // {
-        //     Physics2D.IgnoreCollision(collider, ghostCollider, false);
-        // }
     }
 
     public void ResetPlayerGhost()

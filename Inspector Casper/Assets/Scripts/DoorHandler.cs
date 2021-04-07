@@ -27,6 +27,7 @@ public class DoorHandler : MonoBehaviour
                     if (doorName == "KeyChamber" && GameManager.instance.getPlayer().GetComponent<PlayerController>().hunted)
                     {
                         MusicManager.Instance.PlayPart2();
+                        GameManager.instance.flipGhostType();
                     }
                     GameManager.instance.getPlayer().transform.position = exit.transform.position;
                     
@@ -41,7 +42,7 @@ public class DoorHandler : MonoBehaviour
         _canTeleport = false;
         yield return new WaitForSeconds(0.5f);
         _canTeleport = true;
-        script.showInteractiveButton(true);
+        
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -54,16 +55,19 @@ public class DoorHandler : MonoBehaviour
         {
             var playerScript = other.GetComponent<PlayerController>();
             StartCoroutine(TeleportCooldownCoroutine(playerScript));
-            //StartCoroutine(TeleportCooldownCoroutine());
-            
-            
-            if (PlayerPrefs.GetString("hunted") == "true" && doorName == "KeyChamber")
-            {
-                GameManager.instance.flipGhostType();
-            }
-
-            
             _inRange = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (_canTeleport)
+            {
+                var playerScript = other.GetComponent<PlayerController>();
+                playerScript.showInteractiveButton(true);
+            }
         }
     }
 
