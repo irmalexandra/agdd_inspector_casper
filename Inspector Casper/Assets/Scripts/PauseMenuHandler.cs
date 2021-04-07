@@ -26,7 +26,6 @@ public void onPauseToggle()
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
-        Debug.Log("Resume!");
         _onScreen = false;
 
     }
@@ -34,7 +33,6 @@ public void onPauseToggle()
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
-        Debug.Log("PAUSE!");
         _onScreen = true;
     }
 }
