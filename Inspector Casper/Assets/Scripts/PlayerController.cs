@@ -37,13 +37,14 @@ public class PlayerController : MonoBehaviour
 
 	public PhysicsMaterial2D glue;
 	public PhysicsMaterial2D slippery;
-	
+	public FlashController flashController;
+
 	private const float CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private new Rigidbody2D rigidbody2D;
 	private bool facingRight = true; // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 	private Collider2D[] _colliders;
-	private FlashController flashController;
+	[HideInInspector]
 	private bool _fallingThroughGround;
 	private Collider2D _ceiling;
 	private Collider2D _ground;
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Start()
 	{
-		flashController = GameObject.FindWithTag("Player").GetComponentInChildren<FlashController>();
+		flashController = GetComponentInChildren<FlashController>();
 	}
 	
 
