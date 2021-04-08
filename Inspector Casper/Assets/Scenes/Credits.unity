@@ -197,9 +197,9 @@ MonoBehaviour:
     Kristj\xE1nsson\nLoki Alexander Hopkins\n\nOfelia's Dream - Bensound\nInstinct
     - Bensound\n\nCamera effects - RynoStols (freesound.org)\nDemonic Scream - nick121087
     (freesound.org)\nHeartbeat - InspectorJ (freesound.org)\nKey Pickup - NenadSimic
-    (freesound.org)\nDeath Gurgle - Sara\n\nCastle assets - Szadi art\nMore castle
-    assets - rubberduck\nToaster ghosts - GroovyMaster\nScary ghosts - RGS_DEV\nJournalist
-    - Jesse Munguia\n"
+    (freesound.org)\nDoor Creak - sjturia (freesound.org)\nDeath Gurgle - Sara\n\nCastle
+    assets - Szadi art\nMore castle assets - rubberduck\nToaster ghosts - GroovyMaster\nScary
+    ghosts - RGS_DEV\nJournalist - Jesse Munguia\n"
 --- !u!222 &60393084
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -355,6 +355,7 @@ MonoBehaviour:
 
 
     Sound effects courtesy of
+
 
 
 

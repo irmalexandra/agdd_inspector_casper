@@ -26,6 +26,7 @@ public class HeartbeatController : MonoBehaviour
         switch (toggle)
         {
             case "Start":
+                if (_audioSource.isPlaying) { return; }
                 _audioSource.clip = _heartbeat;
                 _audioSource.Play();
                 break;

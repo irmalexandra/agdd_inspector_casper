@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
     private static AudioClip _ghostAware;
     private static AudioClip _scream;
     private static AudioClip _keyPickup;
+    private static AudioClip _doorCreak;
+    private static AudioClip _rechargeClick;
 
     private static AudioSource _audioSource;
     void Start()
@@ -22,6 +24,8 @@ public class SoundManager : MonoBehaviour
         _ghostAware = Resources.Load<AudioClip>("Audio/Sounds/ToasterGhostChasing");
         _scream = Resources.Load<AudioClip>("Audio/Sounds/DemonicScream");
         _keyPickup = Resources.Load<AudioClip>("Audio/Sounds/KeyPickup");
+        _doorCreak = Resources.Load<AudioClip>("Audio/Sounds/DoorCreak");
+        _rechargeClick = Resources.Load<AudioClip>("Audio/Sounds/FlashRechargeClick");
 
         _audioSource = GetComponent<AudioSource>();
     }
@@ -41,6 +45,12 @@ public class SoundManager : MonoBehaviour
             case "ShutterEchoShort":
                 _audioSource.PlayOneShot(_shutterSoundEcho);
                 _audioSource.PlayOneShot(_flashRechargeSoundShort);
+                break;
+            case "RechargeClick":
+                _audioSource.PlayOneShot(_rechargeClick);
+                break;
+            case "DoorCreak":
+                _audioSource.PlayOneShot(_doorCreak);
                 break;
             case "Death":
                 _audioSource.PlayOneShot(_deathSound);

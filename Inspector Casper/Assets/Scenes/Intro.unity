@@ -259,11 +259,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "You are a novice ghost hunter that has never been taken seriously. \n\nYour
-    biggest ambition is to prove the existence of ghosts.\r\n\nTherefore you decide
-    to go to an isolated rumored-to-be-haunted castle. \n\nWhen you enter the castle
-    the door SLAMS shut behind you and is mysteriously locked!\r\n\nMight as well
-    look for a key to the front door whilst you do your investigating."
+  m_Text: "You are a novice journalist of the paranormal that has never been taken
+    seriously. \n\nYour biggest ambition is to prove the existence of ghosts.\r\n\nTherefore
+    you decide to go to an isolated rumored-to-be haunted castle. \n\nWhen you enter
+    the castle the door SLAMS shut behind you and is mysteriously locked!\r\n\nMight
+    as well look for a key to the front door whilst you do your investigating."
 --- !u!222 &597080121
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -561,8 +561,8 @@ Canvas:
   m_GameObject: {fileID: 1437966140}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1633598622}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
