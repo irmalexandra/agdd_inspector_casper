@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject playerGhost;
     public GameObject[] enemies;
-
+    [HideInInspector]
+    public bool hasDied;
     [Serializable]
     public struct SpawnPoints {
         public string name;
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
     
     public void Reset()
     {
+        hasDied = true;
         playerGhost.GetComponent<BaseGhostAI>().ResetPlayerGhost();
         foreach (GameObject enemy in enemies)
         {

@@ -262,12 +262,12 @@ MonoBehaviour:
   m_Text: "You've made it out alive! \n\nThe photos serve as proof of the paranormal
     and make you a millionaire. \n\nYou changed the world, humanity has a better
     understanding of the afterlife and as a result life expectancy has been increased
-    tenfold.\n  \nYou live a long life, though you are unable to take much join in
+    tenfold.\n  \nYou live a long life, though you are unable to take much joy in
     it. Your every success as a journalist is met with your own apathy, food tastes
     like ash and the touch of another human being leaves you shivering with cold.\n\nSlowly
-    you fade into obscurity and pverty, not being able to keep up with the celebrity
+    you fade into obscurity and poverty, not being able to keep up with the celebrity
     life society demanded of you,  until finally, your neglected children find you
-    hanging a chandlier in your run down home with a noose around your neck."
+    hanging from a chandelier in your run down home with a noose around your neck."
 --- !u!222 &597080121
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -404,7 +404,7 @@ Animator:
   m_GameObject: {fileID: 784573322}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e1689b906b99ac246be900cb5a1d5801, type: 2}
+  m_Controller: {fileID: 9100000, guid: 99b234679ef710646a4f1589a1c14d54, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
