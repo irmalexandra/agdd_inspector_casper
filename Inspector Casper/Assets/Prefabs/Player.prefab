@@ -276,7 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 816970502026644923}
   animator: {fileID: 42766787633582525}
-  runSpeed: 40
+  runSpeed: 35
 --- !u!114 &816970502026644923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,10 +309,12 @@ MonoBehaviour:
   grounded: 0
   glue: {fileID: 0}
   slippery: {fileID: 0}
+  flashController: {fileID: 0}
   _alive: 1
   _nervous: 0
   insideSafeZone: 0
   inventoryHUD: {fileID: 0}
+  hasFinalKey: 0
   onLandEvent:
     m_PersistentCalls:
       m_Calls: []
