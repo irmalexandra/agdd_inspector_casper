@@ -72,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 3616069956217800647}
   keyName: EnterKeyNameHere
+  openDoorSprite: {fileID: 21300000, guid: 04a83a600d8103d49803515dbb34940f, type: 3}
 --- !u!1 &3616069956217800647
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +123,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 3.25}
+    oldSize: {x: 0.18181819, y: 1.1818181}
     newSize: {x: 1.22, y: 1.22}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

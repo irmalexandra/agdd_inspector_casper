@@ -10,7 +10,9 @@ public class DoorSystem : MonoBehaviour
     private bool playerInRange;
     public string keyName;
     private bool unlocked;
-    
+    public Sprite openDoorSprite;
+
+
 
     private void Update()
     {
@@ -19,16 +21,14 @@ public class DoorSystem : MonoBehaviour
             
             if (Input.GetKey("e"))
             {
-                Debug.Log("Pressed E");
                 var keys = GameManager.instance.getPlayerController().GetKeys();
                 if (keys.ContainsKey(keyName))
                 {
-                    Debug.Log("Player has key");
                     if (keys[keyName])
                     {
-                        Debug.Log("Door Unlocked");
                         door.gameObject.GetComponent<Collider2D>().enabled = false;
                         unlocked = true;
+                        door.GetComponent<SpriteRenderer>().sprite = openDoorSprite;
                     }
                 }
             }
