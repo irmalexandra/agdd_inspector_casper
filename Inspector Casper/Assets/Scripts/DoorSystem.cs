@@ -28,6 +28,10 @@ public class DoorSystem : MonoBehaviour
                     {
                         door.gameObject.GetComponent<Collider2D>().enabled = false;
                         unlocked = true;
+                        if (!unlocked)
+                        {
+                            SoundManager.PlaySoundEffect("DoorCreak");
+                        }
                         door.GetComponent<SpriteRenderer>().sprite = openDoorSprite;
                     }
                 }

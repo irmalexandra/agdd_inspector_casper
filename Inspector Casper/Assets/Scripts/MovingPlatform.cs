@@ -83,7 +83,7 @@ public class MovingPlatform : MonoBehaviour
 
     public void Toggle()
     {
-        active = !active;
+        active = true;
     }
 }
 

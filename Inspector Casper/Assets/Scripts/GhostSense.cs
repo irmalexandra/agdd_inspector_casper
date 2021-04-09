@@ -42,7 +42,6 @@ public class GhostSense : MonoBehaviour
         }
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         if (!(other is BoxCollider2D)) return;
-        // if (playerController._nervous) { return; }
         if (other.gameObject.CompareTag("Enemy"))
         {
             playerController._nervous = true;

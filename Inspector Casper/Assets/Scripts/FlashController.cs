@@ -50,6 +50,7 @@ public class FlashController : MonoBehaviour
     {
         onCooldown = true;
         yield return new WaitForSeconds(cooldownTimer);
+        SoundManager.PlaySoundEffect("RechargeClick");
         onCooldown = false;
     }
     

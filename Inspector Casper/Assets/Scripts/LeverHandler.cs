@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LeverHandler : MonoBehaviour
@@ -9,6 +8,7 @@ public class LeverHandler : MonoBehaviour
     private MovingPlatform movingPlatform;
     private bool playerInRange;
     private bool interactable = true;
+    public string textToDisplay;
 
     private void Start()
     {
@@ -23,11 +23,25 @@ public class LeverHandler : MonoBehaviour
         {
             if (Input.GetKey("e"))
             {
-                Debug.Log(movingPlatform);
                 movingPlatform.Toggle();
-                StartCoroutine(ToggleCooldown());
+                GetComponent<SpriteRenderer>().flipX = true;
+                interactable = false;
+                var speechBubble = GameObject.FindGameObjectWithTag("SpeechBubble");
+                var speechSpriteRenderer = speechBubble.GetComponent<SpriteRenderer>();
+                speechSpriteRenderer.enabled = true;
+                var textBox = speechBubble.GetComponentInChildren<TextMeshPro>();
+                textBox.text = textToDisplay;
+                StartCoroutine(Wait(5, speechSpriteRenderer, textBox));
             }
         }
+    }
+    
+    private IEnumerator Wait(int seconds, SpriteRenderer speechSpriteRenderer, TextMeshPro textBox)
+    {
+        yield return new WaitForSeconds(seconds);
+        
+        speechSpriteRenderer.enabled = false;
+        textBox.text = "";
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -46,12 +60,5 @@ public class LeverHandler : MonoBehaviour
             playerInRange = false;
             GameManager.instance.getPlayerController().showInteractiveButton(false);
         }
-    }
-
-    private IEnumerator ToggleCooldown()
-    {
-        interactable = false;
-        yield return new WaitForSeconds(0.5f);
-        interactable = true;
     }
 }

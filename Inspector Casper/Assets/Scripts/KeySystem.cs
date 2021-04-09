@@ -25,6 +25,7 @@ public class KeySystem : MonoBehaviour
                     GameObject.FindGameObjectWithTag("drawnText").gameObject.GetComponent<BoxCollider2D>().enabled =
                         true;
                     playerController.hunted = true;
+                    
                     playerController.flashController.cooldownTimer = 2.5f;
                 }
                 playerController.takeKey(keyName, keySprite, keyColor);

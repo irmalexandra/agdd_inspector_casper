@@ -9,6 +9,8 @@ public class TextChanger : MonoBehaviour
 {
     public string textToDisplay;
     private bool triggered = false;
+    public float displayTimer = 5;
+
     private GameObject speechBubble;
     private SpriteRenderer speechSpriteRenderer;
     private TextMeshPro textBox;
@@ -21,26 +23,27 @@ public class TextChanger : MonoBehaviour
         speechSpriteRenderer.enabled = true;
         textBox = speechBubble.GetComponentInChildren<TextMeshPro>();
         textBox.text = textToDisplay;
-        triggered = true;
+        
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (triggered) return;
         if (other.CompareTag("Player"))
         {
             StartCoroutine(Wait());
         }
-        
     }
     
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(displayTimer);
         if (speechSpriteRenderer != null)
         {
             speechSpriteRenderer.enabled = false;
             textBox.text = "";
         }
+        triggered = true;
         
     }
 }
