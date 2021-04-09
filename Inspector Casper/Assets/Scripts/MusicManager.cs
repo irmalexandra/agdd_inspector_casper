@@ -48,6 +48,7 @@ public class MusicManager : MonoBehaviour
     }
      public void PlayPart2()
      {
+         _musicSource.volume = 0.3f;
          _musicSource.clip = _gameplaySong2;
          _musicSource.Play();
      }
