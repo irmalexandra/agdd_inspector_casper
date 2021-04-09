@@ -36,18 +36,9 @@ public class GhostSense : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         playerController = GameManager.instance.getPlayerController();
-        if (!playerController)
-        {
-            return;
-        }
+        if (!playerController) { return; }
         if (!other.gameObject.CompareTag("Enemy")) { return; }
         if (!(other is BoxCollider2D)) return;
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            playerController._nervous = true;
-            HeartbeatController.PlayHeartbeat("Start");
-        }
-
         if (!tutorial) return;
        
         speechBubble = GameObject.FindGameObjectWithTag("SpeechBubble");
@@ -55,6 +46,18 @@ public class GhostSense : MonoBehaviour
         speechSpriteRenderer.enabled = true;
         textBox = speechBubble.GetComponentInChildren<TextMeshPro>();
         textBox.text = textToDisplay;
+        SoundManager.PlaySoundEffect("GhostSighting");
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (!playerController) { return; }
+        if (!other.gameObject.CompareTag("Enemy")) { return; }
+        if (!(other is BoxCollider2D)) return;
+
+        playerController._nervous = true;
+        HeartbeatController.PlayHeartbeat("Start");
+
     }
 
     private void OnTriggerExit2D(Collider2D other)

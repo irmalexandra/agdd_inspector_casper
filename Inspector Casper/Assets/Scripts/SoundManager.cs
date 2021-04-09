@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     private static AudioClip _keyPickup;
     private static AudioClip _doorCreak;
     private static AudioClip _rechargeClick;
+    private static AudioClip _firstGhostSighting;
 
     private static AudioSource _audioSource;
     void Start()
@@ -26,6 +27,7 @@ public class SoundManager : MonoBehaviour
         _keyPickup = Resources.Load<AudioClip>("Audio/Sounds/KeyPickup");
         _doorCreak = Resources.Load<AudioClip>("Audio/Sounds/DoorCreak");
         _rechargeClick = Resources.Load<AudioClip>("Audio/Sounds/FlashRechargeClick");
+        _firstGhostSighting = Resources.Load<AudioClip>("Audio/Sounds/GhostMeetup");
 
         _audioSource = GetComponent<AudioSource>();
     }
@@ -60,6 +62,9 @@ public class SoundManager : MonoBehaviour
                 break;
             case "KeyPickup":
                 _audioSource.PlayOneShot(_keyPickup);
+                break;
+            case "GhostSighting":
+                _audioSource.PlayOneShot(_firstGhostSighting);
                 break;
         }
     }
