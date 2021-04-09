@@ -198,9 +198,9 @@ MonoBehaviour:
     - Bensound\n\nCamera effects - RynoStols (freesound.org)\nRecharge effect - LordForklift
     (freesound.org)\nDemonic Scream - nick121087 (freesound.org)\nHeartbeat - InspectorJ
     (freesound.org)\nKey Pickup - NenadSimic (freesound.org)\nDoor Creak - sjturia
-    (freesound.org)\nDeath Gurgle - Sara\n\nCastle assets - Szadi art\nMore castle
-    assets - rubberduck\nToaster ghosts - GroovyMaster\nScary ghosts - RGS_DEV\nJournalist
-    - Jesse Munguia\n"
+    (freesound.org)\nGhost Sighting - PhilStrahl (freesound.org\nDeath Gurgle - Sara\n\nCastle
+    assets - Szadi art\nMore castle assets - rubberduck\nToaster ghosts - GroovyMaster\nScary
+    ghosts - RGS_DEV\nJournalist - Jesse Munguia\n"
 --- !u!222 &60393084
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -356,6 +356,7 @@ MonoBehaviour:
 
 
     Sound effects courtesy of
+
 
 
 
@@ -561,7 +562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -751}
+  m_AnchoredPosition: {x: 0, y: -874}
   m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &838685430
