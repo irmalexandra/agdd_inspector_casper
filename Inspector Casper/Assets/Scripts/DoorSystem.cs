@@ -27,11 +27,11 @@ public class DoorSystem : MonoBehaviour
                     if (keys[keyName])
                     {
                         door.gameObject.GetComponent<Collider2D>().enabled = false;
-                        unlocked = true;
                         if (!unlocked)
                         {
                             SoundManager.PlaySoundEffect("DoorCreak");
                         }
+                        unlocked = true;
                         door.GetComponent<SpriteRenderer>().sprite = openDoorSprite;
                     }
                 }
